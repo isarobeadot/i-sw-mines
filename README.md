@@ -1,2 +1,2 @@
-# i-sw-mines
+# I-SW Mines
 I-SW Mines
