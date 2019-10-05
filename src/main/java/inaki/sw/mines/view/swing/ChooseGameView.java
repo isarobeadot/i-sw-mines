@@ -292,6 +292,11 @@ public class ChooseGameView extends javax.swing.JFrame implements ChooseGameView
     }
 
     @Override
+    public void enableStatistics(boolean b) {
+        jbStatistics.setEnabled(b);
+    }
+
+    @Override
     public int getHorizontal() {
         return (int) jsHorizontal.getValue();
     }

@@ -78,6 +78,7 @@ public class Controller implements java.awt.event.ActionListener {
         snv.setController(this);
         chrono.setActionlistener(this);
 
+        cgv.enableStatistics(!readStatisticSet().isEmpty());
         cgv.startView();
     }
 
@@ -117,6 +118,7 @@ public class Controller implements java.awt.event.ActionListener {
                 shv.startView();
                 break;
             case MV_NEW:
+                cgv.enableStatistics(!readStatisticSet().isEmpty());
                 cgv.startView();
                 break;
             case MV_RESTART:

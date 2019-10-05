@@ -23,6 +23,8 @@ public interface ChooseGameViewInterface extends ViewInterface {
     @Override
     public void hideView();
 
+    public void enableStatistics(final boolean b);
+
     public int getHorizontal();
 
     public int getVertical();
