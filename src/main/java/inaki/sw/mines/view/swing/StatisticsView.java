@@ -13,12 +13,16 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 import inaki.sw.mines.view.StatisticsViewInterface;
+import java.awt.Dimension;
+import java.text.DecimalFormat;
+import javax.swing.JFrame;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
  * @author inaki
  */
-public class StatisticsView extends javax.swing.JFrame implements StatisticsViewInterface {
+public class StatisticsView extends JFrame implements StatisticsViewInterface {
 
     /**
      * Creates new form StatisticsView
@@ -243,7 +247,7 @@ public class StatisticsView extends javax.swing.JFrame implements StatisticsView
             setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
             updateComponentTreeUI(this);
             this.repaint();
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             getLogger(MainView.class.getName()).log(SEVERE, null, ex);
         } finally {
             this.pack();
@@ -270,13 +274,12 @@ public class StatisticsView extends javax.swing.JFrame implements StatisticsView
 
     @Override
     public void setRatio(double ratio) {
-        final java.text.DecimalFormat df = new java.text.DecimalFormat("#.#");
+        final DecimalFormat df = new DecimalFormat("#.#");
         jlRatio3.setText(df.format(ratio) + "");
     }
 
     @Override
     public void setDiscoveredHistory(List<Integer> discoveredHistory) {
-        // TODO: to do
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         for (int i = 0; i < discoveredHistory.size(); i++) {
             dataset.addValue(discoveredHistory.get(i), "", i + "");
@@ -286,10 +289,17 @@ public class StatisticsView extends javax.swing.JFrame implements StatisticsView
 
         ChartPanel chartPanel = new ChartPanel(lineChart);
         chartPanel.setMouseWheelEnabled(true);
-        chartPanel.setPreferredSize(new java.awt.Dimension(512, 300));
-        jpChart.setLayout(new java.awt.BorderLayout());
+        chartPanel.setPreferredSize(new Dimension(512, 300));
+        jpChart.removeAll();
+        jpChart.setLayout(new BorderLayout());
         jpChart.add(chartPanel, BorderLayout.CENTER);
         jpChart.validate();
+    }
+
+    @Override
+    public void setReadOnly(boolean readOnly) {
+        jpWin.setVisible(!readOnly);
+        jbSave.setVisible(!readOnly);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -10,19 +10,21 @@ import java.io.IOException;
 import static java.lang.Math.min;
 import static java.util.logging.Level.SEVERE;
 import static java.util.logging.Logger.getLogger;
+import javax.swing.JFrame;
 import static javax.swing.SwingUtilities.updateComponentTreeUI;
 import static javax.swing.UIManager.setLookAndFeel;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
  * @author inaki
  */
-public class ChooseGameView extends javax.swing.JFrame implements ChooseGameViewInterface {
+public class ChooseGameView extends JFrame implements ChooseGameViewInterface {
 
     /**
      * Creates new form ChooseGameView
      *
-     * @throws java.io.IOException
+     * @throws IOException
      */
     public ChooseGameView() throws IOException {
         initComponents();
@@ -39,7 +41,6 @@ public class ChooseGameView extends javax.swing.JFrame implements ChooseGameView
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("I-SW Mines");
-        setAlwaysOnTop(true);
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/icon/isw-mines-96.png")).getImage());
         setResizable(false);
 
@@ -157,7 +158,7 @@ public class ChooseGameView extends javax.swing.JFrame implements ChooseGameView
 
         jlTxtVersion.setText("Version:");
 
-        jlNumVersion.setText("2.1.1");
+        jlNumVersion.setText("2.2");
 
         jbStatistics.setText("Statistics");
         jbStatistics.setFocusable(false);
@@ -276,7 +277,7 @@ public class ChooseGameView extends javax.swing.JFrame implements ChooseGameView
             setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
             updateComponentTreeUI(this);
             this.repaint();
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             getLogger(ChooseGameView.class.getName()).log(SEVERE, null, ex);
         } finally {
             this.pack();

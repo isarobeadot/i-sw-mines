@@ -28,4 +28,6 @@ public interface StatisticsViewInterface extends ViewInterface {
 
     public void setDiscoveredHistory(List<Integer> discoveredHistory);
 
+    public void setReadOnly(boolean readOnly);
+
 }

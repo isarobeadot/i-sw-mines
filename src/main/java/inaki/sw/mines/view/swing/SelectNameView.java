@@ -4,14 +4,16 @@ import inaki.sw.mines.controller.Controller;
 import inaki.sw.mines.view.SelectNameViewInterface;
 import static java.util.logging.Level.SEVERE;
 import static java.util.logging.Logger.getLogger;
+import javax.swing.JFrame;
 import static javax.swing.SwingUtilities.updateComponentTreeUI;
 import static javax.swing.UIManager.setLookAndFeel;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
  * @author inaki
  */
-public class SelectNameView extends javax.swing.JFrame implements SelectNameViewInterface {
+public class SelectNameView extends JFrame implements SelectNameViewInterface {
 
     /**
      * Creates new form SelectNameView
@@ -38,6 +40,7 @@ public class SelectNameView extends javax.swing.JFrame implements SelectNameView
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("I-SW Mines");
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/icon/isw-mines-96.png")).getImage());
         setResizable(false);
 
         jlSelectName.setText("Select your name:");
@@ -143,7 +146,7 @@ public class SelectNameView extends javax.swing.JFrame implements SelectNameView
             updateComponentTreeUI(this);
             this.repaint();
         }
-        catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+        catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             getLogger(ChooseGameView.class.getName()).log(SEVERE, null, ex);
         }
         finally {

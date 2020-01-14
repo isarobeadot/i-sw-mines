@@ -6,6 +6,10 @@ import inaki.sw.mines.view.MainViewInterface;
 import static java.awt.Color.black;
 import static java.awt.Color.decode;
 import static java.awt.Color.red;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
 import static java.awt.event.KeyEvent.VK_C;
 import static java.awt.event.KeyEvent.VK_E;
 import static java.awt.event.KeyEvent.VK_L;
@@ -14,32 +18,36 @@ import static java.awt.event.KeyEvent.VK_O;
 import static java.awt.event.KeyEvent.VK_R;
 import static java.awt.event.KeyEvent.VK_S;
 import static java.awt.event.KeyEvent.VK_V;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import static java.awt.event.MouseEvent.BUTTON1;
 import static java.awt.event.MouseEvent.BUTTON3;
 import static java.lang.Integer.parseInt;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
+import java.util.HashMap;
+import java.util.Map;
 import static java.util.concurrent.ThreadLocalRandom.current;
 import static java.util.logging.Level.SEVERE;
 import static java.util.logging.Logger.getLogger;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import static javax.swing.SwingUtilities.updateComponentTreeUI;
 import static javax.swing.UIManager.setLookAndFeel;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
  * @author inaki
  */
-public class MainView extends javax.swing.JFrame implements MainViewInterface {
+public class MainView extends JFrame implements MainViewInterface {
 
     private Board b;
-    private javax.swing.JButton[][] jbBoardButtons;
-    private final javax.swing.JButton jbHiddenSolve = new javax.swing.JButton();
-    private final javax.swing.JButton jbHiddenLost = new javax.swing.JButton();
-    private final javax.swing.JButton jbHiddenWin = new javax.swing.JButton();
-    private final javax.swing.JButton jbHiddenStartChrono = new javax.swing.JButton();
+    private JButton[][] jbBoardButtons;
     private int trucoSOLVE = 0;
     private int primaryClikNumber = 0;
     private int secondaryClikNumber = 0;
+    private Controller c;
 
     /**
      * Creates new form MainView
@@ -226,7 +234,7 @@ public class MainView extends javax.swing.JFrame implements MainViewInterface {
                 break;
             case VK_E:
                 if (trucoSOLVE == 4) {
-                    jbHiddenSolve.doClick();
+                    c.actionPerformed(new ActionEvent(this, 0, MV_SOLVE));
                 }
                 trucoSOLVE = 0;
                 break;
@@ -275,15 +283,15 @@ public class MainView extends javax.swing.JFrame implements MainViewInterface {
         jmiClue3.setEnabled(false);
     }//GEN-LAST:event_jmiClue3ActionPerformed
 
-    private void jbActionPerformed(java.awt.event.ActionEvent evt) {
+    private void jbActionPerformed(ActionEvent evt) {
         String[] s = evt.getActionCommand().split("x");
         int _m = parseInt(s[0]);
         int _n = parseInt(s[1]);
         uncover(_m, _n);
     }
 
-    private void jbMouseReleased(java.awt.event.MouseEvent evt) {
-        String[] s = ((javax.swing.JButton) evt.getComponent()).getActionCommand().split("x");
+    private void jbMouseReleased(MouseEvent evt) {
+        String[] s = ((JButton) evt.getComponent()).getActionCommand().split("x");
         int _m = parseInt(s[0]);
         int _n = parseInt(s[1]);
         if (evt.getButton() == BUTTON1) {
@@ -324,18 +332,11 @@ public class MainView extends javax.swing.JFrame implements MainViewInterface {
      */
     @Override
     public void setController(Controller c) {
-        jbNew.addActionListener(c);
+        this.c = c;
+        jbNew.addActionListener(this.c);
         jbNew.setActionCommand(MV_NEW);
-        jbRestart.addActionListener(c);
+        jbRestart.addActionListener(this.c);
         jbRestart.setActionCommand(MV_RESTART);
-        jbHiddenSolve.addActionListener(c);
-        jbHiddenSolve.setActionCommand(MV_SOLVE);
-        jbHiddenLost.addActionListener(c);
-        jbHiddenLost.setActionCommand(MV_LOST);
-        jbHiddenWin.addActionListener(c);
-        jbHiddenWin.setActionCommand(MV_WIN);
-        jbHiddenStartChrono.addActionListener(c);
-        jbHiddenStartChrono.setActionCommand(MV_START_CHRONO);
     }
 
     @Override
@@ -346,7 +347,7 @@ public class MainView extends javax.swing.JFrame implements MainViewInterface {
             setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
             updateComponentTreeUI(this);
             this.repaint();
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             getLogger(MainView.class.getName()).log(SEVERE, null, ex);
         } finally {
             this.pack();
@@ -398,7 +399,7 @@ public class MainView extends javax.swing.JFrame implements MainViewInterface {
     public void setBoard(final Board b) {
         this.b = b;
         jpMain.removeAll();
-        jpMain.setLayout(new java.awt.GridLayout(b.getHeight(), b.getWidth()));
+        jpMain.setLayout(new GridLayout(b.getHeight(), b.getWidth()));
         initializeButtons();
         for (int i = 0; i < b.getHeight(); i++) {
             for (int j = 0; j < b.getWidth(); j++) {
@@ -442,24 +443,24 @@ public class MainView extends javax.swing.JFrame implements MainViewInterface {
     }
 
     private void initializeButtons() {
-        final java.awt.Dimension d = new java.awt.Dimension(40, 35);
-        jbBoardButtons = new javax.swing.JButton[b.getHeight()][b.getWidth()];
+        final Dimension d = new Dimension(40, 35);
+        jbBoardButtons = new JButton[b.getHeight()][b.getWidth()];
         for (int i = 0; i < b.getHeight(); i++) {
             for (int j = 0; j < b.getWidth(); j++) {
-                jbBoardButtons[i][j] = new javax.swing.JButton(" ");
+                jbBoardButtons[i][j] = new JButton(" ");
                 jbBoardButtons[i][j].setFocusable(false);
                 jbBoardButtons[i][j].addActionListener(this::jbActionPerformed);
                 jbBoardButtons[i][j].setActionCommand(i + "x" + j);
-                jbBoardButtons[i][j].addMouseListener(new java.awt.event.MouseAdapter() {
+                jbBoardButtons[i][j].addMouseListener(new MouseAdapter() {
                     @Override
-                    public void mouseReleased(java.awt.event.MouseEvent evt) {
+                    public void mouseReleased(MouseEvent evt) {
                         jbMouseReleased(evt);
                     }
                 });
                 jbBoardButtons[i][j].setPreferredSize(d);
                 jbBoardButtons[i][j].setMaximumSize(d);
                 jbBoardButtons[i][j].setMinimumSize(d);
-                jbBoardButtons[i][j].setFont(new java.awt.Font("Arial", 1, 11));
+                jbBoardButtons[i][j].setFont(new Font("Arial", 1, 11));
             }
         }
     }
@@ -481,10 +482,10 @@ public class MainView extends javax.swing.JFrame implements MainViewInterface {
             jbBoardButtons[_m][_n].setEnabled(false);
             int discovered = countDiscoveredCells();
             if (discovered == 1) {
-                jbHiddenStartChrono.doClick();
+                c.actionPerformed(new ActionEvent(this, 0, MV_START_CHRONO));
             }
             if (discovered == b.getHeight() * b.getWidth() - b.getMines()) {
-                jbHiddenWin.doClick();
+                c.actionPerformed(new ActionEvent(this, 0, MV_WIN));
             }
             final float p = (float) discovered / (float) (b.getHeight() * b.getWidth() - b.getMines()) * 100f;
             jlDiscovered2.setText((int) p + "%");
@@ -507,7 +508,7 @@ public class MainView extends javax.swing.JFrame implements MainViewInterface {
                     jmiClue1.setEnabled(false);
                     jmiClue2.setEnabled(false);
                     jmiClue3.setEnabled(false);
-                    jbHiddenLost.doClick();
+                    c.actionPerformed(new ActionEvent(this, 0, MV_LOST));
                     break;
                 case 0:
                     final int m1 = max(0, _m - 1);
@@ -635,7 +636,7 @@ public class MainView extends javax.swing.JFrame implements MainViewInterface {
     }
 
     private void showClue1() {
-        final java.util.HashMap<Integer, javax.swing.JButton> hm = new java.util.HashMap();
+        final Map<Integer, JButton> hm = new HashMap();
         for (int i = 0; i < b.getHeight(); i++) {
             for (int j = 0; j < b.getWidth(); j++) {
                 if (jbBoardButtons[i][j].isEnabled() && b.getBoard(i, j) == 0) {
@@ -649,7 +650,7 @@ public class MainView extends javax.swing.JFrame implements MainViewInterface {
     }
 
     private void showClue2() {
-        final java.util.HashMap<Integer, javax.swing.JButton> hm = new java.util.HashMap();
+        final Map<Integer, JButton> hm = new HashMap();
         for (int i = 0; i < b.getHeight(); i++) {
             for (int j = 0; j < b.getWidth(); j++) {
                 if (jbBoardButtons[i][j].isEnabled() && b.getBoard(i, j) > 0) {
@@ -663,7 +664,7 @@ public class MainView extends javax.swing.JFrame implements MainViewInterface {
     }
 
     private void showClue3() {
-        final java.util.HashMap<Integer, javax.swing.JButton> hm = new java.util.HashMap();
+        final Map<Integer, JButton> hm = new HashMap();
         for (int i = 0; i < b.getHeight(); i++) {
             for (int j = 0; j < b.getWidth(); j++) {
                 if (jbBoardButtons[i][j].isEnabled() && b.getBoard(i, j) == -1 && !jbBoardButtons[i][j].getText().equals(":)")) {

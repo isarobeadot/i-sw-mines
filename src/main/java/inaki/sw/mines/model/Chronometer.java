@@ -1,5 +1,6 @@
 package inaki.sw.mines.model;
 
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,7 +17,7 @@ public class Chronometer implements Runnable {
     private boolean instanceRunning;
     private final int step = 100;
     private Integer minutes, seconds, miliseconds;
-    private java.awt.event.ActionListener actionlistener;
+    private ActionListener actionlistener;
     private int eventNo = 0;
 
     public Integer getMinutes() {
@@ -35,7 +36,7 @@ public class Chronometer implements Runnable {
             seconds = 0;
             miliseconds = 0;
             LOGGER.info("Chronometer started");
-            actionlistener.actionPerformed(new java.awt.event.ActionEvent(this, eventNo, C_UPDATE_CHRONO));
+            actionlistener.actionPerformed(new ActionEvent(this, eventNo, C_UPDATE_CHRONO));
             eventNo++;
             while (instanceRunning) {
                 try {
@@ -52,7 +53,7 @@ public class Chronometer implements Runnable {
                             seconds = 0;
                             minutes++;
                         }
-                        actionlistener.actionPerformed(new java.awt.event.ActionEvent(this, eventNo, C_UPDATE_CHRONO));
+                        actionlistener.actionPerformed(new ActionEvent(this, eventNo, C_UPDATE_CHRONO));
                         eventNo++;
                     }
                 } catch (InterruptedException ex) {

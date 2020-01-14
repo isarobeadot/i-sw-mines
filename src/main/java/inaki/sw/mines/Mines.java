@@ -11,7 +11,7 @@ public class Mines {
 
     /**
      * @param args the command line arguments
-     * @throws java.io.IOException
+     * @throws IOException
      */
     public static void main(String[] args) throws IOException {
         final Controller c = new Controller();

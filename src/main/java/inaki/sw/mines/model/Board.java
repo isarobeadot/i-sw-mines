@@ -1,5 +1,6 @@
 package inaki.sw.mines.model;
 
+import java.awt.Dimension;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 import static java.lang.System.exit;
@@ -40,7 +41,7 @@ public class Board {
      * @param d the dimension of the board
      * @param mines the number of mines of the board
      */
-    public Board(final java.awt.Dimension d, final int mines) {
+    public Board(final Dimension d, final int mines) {
         this.height = d.height;
         this.width = d.width;
         this.mines = mines;

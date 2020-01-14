@@ -4,25 +4,34 @@ import inaki.sw.mines.controller.Controller;
 import inaki.sw.mines.model.GameType;
 import inaki.sw.mines.model.StatisticSet;
 import inaki.sw.mines.view.StatisticHistoryViewInterface;
+import java.awt.event.ActionEvent;
+import java.util.Date;
 import static java.util.logging.Level.SEVERE;
 import static java.util.logging.Logger.getLogger;
+import javax.swing.JFrame;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import static javax.swing.SwingUtilities.updateComponentTreeUI;
 import static javax.swing.UIManager.setLookAndFeel;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author inaki
  */
-public class StatisticHistoryView extends javax.swing.JFrame implements StatisticHistoryViewInterface {
+public class StatisticHistoryView extends JFrame implements StatisticHistoryViewInterface {
 
     String[] columnNames = {"Date", "Name", "Time"};
     String[] columnNamesCustom = {"Date", "Name", "Time", "Size", "Mines"};
     Class[] types = new Class[]{
-        java.util.Date.class, java.lang.String.class, java.lang.String.class
+        Date.class, String.class, String.class
     };
     Class[] typesCustom = new Class[]{
-        java.util.Date.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Long.class
+        Date.class, String.class, String.class, String.class, Long.class
     };
+    private Controller c;
+    private int eventNo = 0;
 
     /**
      * Creates new form StatisticHistoryView
@@ -50,7 +59,8 @@ public class StatisticHistoryView extends javax.swing.JFrame implements Statisti
         jspCustom = new javax.swing.JScrollPane();
         jtCustom = new javax.swing.JTable();
 
-        setAlwaysOnTop(true);
+        setTitle("I-SW Mines");
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/icon/isw-mines-96.png")).getImage());
 
         jtpMain.setFocusable(false);
 
@@ -86,6 +96,7 @@ public class StatisticHistoryView extends javax.swing.JFrame implements Statisti
 
     @Override
     public void setController(Controller c) {
+        this.c = c;
     }
 
     @Override
@@ -96,11 +107,9 @@ public class StatisticHistoryView extends javax.swing.JFrame implements Statisti
             setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
             updateComponentTreeUI(this);
             this.repaint();
-        }
-        catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             getLogger(ChooseGameView.class.getName()).log(SEVERE, null, ex);
-        }
-        finally {
+        } finally {
             this.pack();
         }
         //</editor-fold>
@@ -136,8 +145,8 @@ public class StatisticHistoryView extends javax.swing.JFrame implements Statisti
         }).toArray(Object[][]::new);
     }
 
-    private void configureTable(javax.swing.JTable table, Object[][] data, String[] columns, Class[] defaultTypes) {
-        table.setModel(new javax.swing.table.DefaultTableModel(data, columns) {
+    private void configureTable(JTable table, Object[][] data, String[] columns, Class[] defaultTypes) {
+        table.setModel(new DefaultTableModel(data, columns) {
             @Override
             public Class getColumnClass(int columnIndex) {
                 return defaultTypes[columnIndex];
@@ -148,9 +157,34 @@ public class StatisticHistoryView extends javax.swing.JFrame implements Statisti
                 return false;
             }
         });
-        javax.swing.ListSelectionModel cellSelectionModel = table.getSelectionModel();
-        cellSelectionModel.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        cellSelectionModel.addListSelectionListener(e -> table.clearSelection());
+        ListSelectionModel cellSelectionModel = table.getSelectionModel();
+        cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        cellSelectionModel.addListSelectionListener(e -> {
+            int row = table.getSelectedRow();
+            if (row >= 0) {
+                String tab;
+                switch (jtpMain.getSelectedIndex()) {
+                    case 0:
+                        tab = SHV_EASY;
+                        break;
+                    case 1:
+                        tab = SHV_MEDIUM;
+                        break;
+                    case 2:
+                        tab = SHV_HARD;
+                        break;
+                    case 3:
+                        tab = SHV_CUSTOM;
+                        break;
+                    default:
+                        tab = SHV_NONE;
+                }
+                c.actionPerformed(new ActionEvent(this, eventNo, SHV_DETAIL + "," + tab + "," + ((Date) table.getValueAt(row, 0)).getTime()));
+                eventNo++;
+            }
+            table.clearSelection();
+        }
+        );
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
