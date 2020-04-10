@@ -2,9 +2,13 @@ package inaki.sw.mines.view.swing;
 
 import inaki.sw.mines.controller.Controller;
 import inaki.sw.mines.view.SelectNameViewInterface;
+import inaki.sw.mines.view.swing.utils.Autocomplete;
+import java.util.ArrayList;
+import java.util.List;
 import static java.util.logging.Level.SEVERE;
 import static java.util.logging.Logger.getLogger;
 import javax.swing.JFrame;
+import javax.swing.KeyStroke;
 import static javax.swing.SwingUtilities.updateComponentTreeUI;
 import static javax.swing.UIManager.setLookAndFeel;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -14,6 +18,9 @@ import javax.swing.UnsupportedLookAndFeelException;
  * @author inaki
  */
 public class SelectNameView extends JFrame implements SelectNameViewInterface {
+
+    private static final String COMMIT_ACTION = "commit";
+    Autocomplete autoComplete;
 
     /**
      * Creates new form SelectNameView
@@ -165,5 +172,22 @@ public class SelectNameView extends JFrame implements SelectNameViewInterface {
     @Override
     public String getSelectedName() {
         return this.jtfSelectName.getText();
+    }
+
+    @Override
+    public void setSavedNameSet(List<String> names) {
+        // Without this, cursor always leaves text field
+        jtfSelectName.setFocusTraversalKeysEnabled(false);
+
+        if (autoComplete != null) {
+            jtfSelectName.getDocument().removeDocumentListener(autoComplete);
+        }
+        autoComplete = new Autocomplete(jtfSelectName, names);
+        jtfSelectName.getDocument().addDocumentListener(autoComplete);
+
+        // Maps the tab key to the commit action, which finishes the autocomplete
+        // when given a suggestion
+        jtfSelectName.getInputMap().put(KeyStroke.getKeyStroke("TAB"), COMMIT_ACTION);
+        jtfSelectName.getActionMap().put(COMMIT_ACTION, autoComplete.new CommitAction());
     }
 }
