@@ -7,7 +7,7 @@ import inaki.sw.mines.model.StatisticSet;
  * @author inaki
  */
 public interface StatisticHistoryViewInterface extends ViewInterface {
-    
+
     static final String SHV_DETAIL = "SHV_DETAIL";
     static final String SHV_NONE = "SHV_NONE";
     static final String SHV_EASY = "SHV_EASY";
@@ -16,5 +16,5 @@ public interface StatisticHistoryViewInterface extends ViewInterface {
     static final String SHV_CUSTOM = "SHV_CUSTOM";
 
     public void setStatistics(StatisticSet set);
-    
+
 }

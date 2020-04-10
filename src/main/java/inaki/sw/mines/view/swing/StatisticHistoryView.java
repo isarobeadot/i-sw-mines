@@ -107,9 +107,11 @@ public class StatisticHistoryView extends JFrame implements StatisticHistoryView
             setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
             updateComponentTreeUI(this);
             this.repaint();
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+        }
+        catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             getLogger(ChooseGameView.class.getName()).log(SEVERE, null, ex);
-        } finally {
+        }
+        finally {
             this.pack();
         }
         //</editor-fold>

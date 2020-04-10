@@ -247,9 +247,11 @@ public class StatisticsView extends JFrame implements StatisticsViewInterface {
             setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
             updateComponentTreeUI(this);
             this.repaint();
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+        }
+        catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             getLogger(MainView.class.getName()).log(SEVERE, null, ex);
-        } finally {
+        }
+        finally {
             this.pack();
         }
         //</editor-fold>

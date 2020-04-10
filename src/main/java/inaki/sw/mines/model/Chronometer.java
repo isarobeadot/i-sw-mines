@@ -56,7 +56,8 @@ public class Chronometer implements Runnable {
                         actionlistener.actionPerformed(new ActionEvent(this, eventNo, C_UPDATE_CHRONO));
                         eventNo++;
                     }
-                } catch (InterruptedException ex) {
+                }
+                catch (InterruptedException ex) {
                     LOGGER.log(Level.SEVERE, "Chronometer interrupted: {0}", ex);
                 }
             }
