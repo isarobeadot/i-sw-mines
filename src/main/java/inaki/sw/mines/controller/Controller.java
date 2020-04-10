@@ -172,6 +172,7 @@ public class Controller implements ActionListener {
                 discoveredHistory.add(mv.getDiscoveredPrecentage());
                 break;
             case SV_SAVE:
+                snv.setSavedNameSet(statistics.stream().map(s -> s.getName()).collect(Collectors.toList()));
                 snv.startView();
                 break;
             case SNV_OK:
@@ -190,6 +191,7 @@ public class Controller implements ActionListener {
                 s.setWinDate(new Date());
                 statistics.add(s);
                 saveStatisticSet(statistics);
+                sv.setReadOnly(true);
                 break;
             case SHV_DETAIL:
                 if (actions.length == 3) {
