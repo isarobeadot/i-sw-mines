@@ -63,9 +63,11 @@ public class Controller implements ActionListener {
     private final SelectNameViewInterface snv;
     private final StatisticHistoryViewInterface shv;
     private final StatisticsViewInterface sv;
+
     private final List<Integer> discoveredHistory = new ArrayList<>();
     private Board b;
     private GameType type;
+    private StatisticSet statistics = new StatisticSet();
 
     private final Chronometer chrono;
     private Thread chronoThread;
@@ -81,6 +83,7 @@ public class Controller implements ActionListener {
         this.shv = new StatisticHistoryView();
         this.sv = new StatisticsView();
         this.chrono = new Chronometer();
+        this.statistics = readStatisticSet();
     }
 
     /**
@@ -94,7 +97,7 @@ public class Controller implements ActionListener {
         sv.setController(this);
         chrono.setActionlistener(this);
 
-        cgv.enableStatistics(!readStatisticSet().isEmpty());
+        cgv.enableStatistics(!statistics.isEmpty());
         cgv.startView();
     }
 
@@ -106,7 +109,6 @@ public class Controller implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String[] actions = e.getActionCommand().split(",");
         LOGGER.info(Arrays.toString(actions));
-        StatisticSet statistics = readStatisticSet();
         switch (actions[0]) {
             case CGV_EASY:
                 b = new Board(8, 8, 10);
