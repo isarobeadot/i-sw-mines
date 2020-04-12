@@ -64,7 +64,7 @@ public class Controller implements ActionListener {
     private final StatisticHistoryViewInterface shv;
     private final StatisticsViewInterface sv;
 
-    private final List<Integer> discoveredHistory = new ArrayList<>();
+    private List<Integer> discoveredHistory = new ArrayList<>();
     private Board b;
     private GameType type;
     private StatisticSet statistics = new StatisticSet();
@@ -240,7 +240,7 @@ public class Controller implements ActionListener {
         mv.setBoard(b);
         mv.startView();
         chrono.stopChronometer();
-        discoveredHistory.clear();
+        discoveredHistory = new ArrayList<>();
     }
 
     private StatisticSet readStatisticSet() {
@@ -248,8 +248,7 @@ public class Controller implements ActionListener {
         StatisticSet set = new StatisticSet();
         try {
             set = mapper.readValue(new File("statistics.json"), StatisticSet.class);
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             LOGGER.warning(ex.getMessage());
         }
         return set;
@@ -259,8 +258,7 @@ public class Controller implements ActionListener {
         ObjectMapper mapper = new ObjectMapper();
         try {
             mapper.writeValue(new File("statistics.json"), set);
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             LOGGER.severe(ex.getMessage());
         }
     }
