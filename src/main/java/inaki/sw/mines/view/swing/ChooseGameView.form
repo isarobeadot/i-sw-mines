@@ -255,7 +255,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jlNumVersion">
           <Properties>
-            <Property name="text" type="java.lang.String" value="2.2.1"/>
+            <Property name="text" type="java.lang.String" value="2.2.2"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="jbStatistics">

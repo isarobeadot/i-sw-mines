@@ -158,7 +158,7 @@ public class ChooseGameView extends JFrame implements ChooseGameViewInterface {
 
         jlTxtVersion.setText("Version:");
 
-        jlNumVersion.setText("2.2.1");
+        jlNumVersion.setText("2.2.2");
 
         jbStatistics.setText("Statistics");
         jbStatistics.setFocusable(false);
