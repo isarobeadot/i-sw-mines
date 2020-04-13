@@ -14,11 +14,19 @@ public class Chronometer implements Runnable {
 
     private static final Logger LOGGER = getLogger(Chronometer.class.getName());
     public static final String C_UPDATE_CHRONO = "UPDATE_CHRONO";
-    private boolean instanceRunning;
+    private boolean instancePaused, instanceRunning;
     private final int step = 100;
     private Integer minutes, seconds, miliseconds;
     private ActionListener actionlistener;
     private int eventNo = 0;
+
+    public boolean isInstancePaused() {
+        return instancePaused;
+    }
+
+    public boolean isInstanceRunning() {
+        return instanceRunning;
+    }
 
     public Integer getMinutes() {
         return minutes;
@@ -28,7 +36,16 @@ public class Chronometer implements Runnable {
         return seconds;
     }
 
+    public void pauseChronometer() {
+        instancePaused = true;
+    }
+
+    public void resumeChronometer() {
+        instancePaused = false;
+    }
+
     @Override
+    @SuppressWarnings("SleepWhileInLoop")
     public void run() {
         if (!instanceRunning) {
             instanceRunning = true;
@@ -42,19 +59,21 @@ public class Chronometer implements Runnable {
                 try {
                     // Wait for an step
                     Thread.sleep(step);
-                    miliseconds += step;
+                    if (!instancePaused) {
+                        miliseconds += step;
 
-                    // One more second
-                    if (miliseconds == 1000) {
-                        miliseconds = 0;
-                        seconds += 1;
-                        // One more minute
-                        if (seconds == 60) {
-                            seconds = 0;
-                            minutes++;
+                        // One more second
+                        if (miliseconds == 1000) {
+                            miliseconds = 0;
+                            seconds += 1;
+                            // One more minute
+                            if (seconds == 60) {
+                                seconds = 0;
+                                minutes++;
+                            }
+                            actionlistener.actionPerformed(new ActionEvent(this, eventNo, C_UPDATE_CHRONO));
+                            eventNo++;
                         }
-                        actionlistener.actionPerformed(new ActionEvent(this, eventNo, C_UPDATE_CHRONO));
-                        eventNo++;
                     }
                 }
                 catch (InterruptedException ex) {

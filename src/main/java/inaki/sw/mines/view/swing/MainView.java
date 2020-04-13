@@ -73,7 +73,7 @@ public class MainView extends JFrame implements MainViewInterface {
         jbNew = new javax.swing.JButton();
         jbRestart = new javax.swing.JButton();
         jbClue = new javax.swing.JButton();
-        jlChrono = new javax.swing.JLabel();
+        jbChrono = new javax.swing.JButton();
         jpMain = new javax.swing.JPanel();
         jpBottom = new javax.swing.JPanel();
         jlFlag1 = new javax.swing.JLabel();
@@ -82,6 +82,7 @@ public class MainView extends JFrame implements MainViewInterface {
         jlFlag4 = new javax.swing.JLabel();
         jlDiscovered1 = new javax.swing.JLabel();
         jlDiscovered2 = new javax.swing.JLabel();
+        jlPaused = new javax.swing.JLabel();
 
         jmiClue1.setText("Clue 1: White area");
         jmiClue1.addActionListener(new java.awt.event.ActionListener() {
@@ -146,8 +147,15 @@ public class MainView extends JFrame implements MainViewInterface {
         });
         jtbTop.add(jbClue);
 
-        jlChrono.setText("<html> <body> <h3>00:00</h3> </body> </html>");
-        jtbTop.add(jlChrono);
+        jbChrono.setText("<html> <body> <h3>00:00</h3> </body> </html>");
+        jbChrono.setComponentPopupMenu(jpmClue);
+        jbChrono.setFocusable(false);
+        jbChrono.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jbChrono.setMargin(new java.awt.Insets(0, 10, 0, 10));
+        jbChrono.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jtbTop.add(jbChrono);
+
+        jpMain.setToolTipText("<html> <body> <h1>Paused</h1> </body> </html>");
 
         javax.swing.GroupLayout jpMainLayout = new javax.swing.GroupLayout(jpMain);
         jpMain.setLayout(jpMainLayout);
@@ -172,6 +180,8 @@ public class MainView extends JFrame implements MainViewInterface {
 
         jlDiscovered2.setText("0%");
 
+        jlPaused.setText("<html> <body> <b>Paused</b> </body> </html>");
+
         javax.swing.GroupLayout jpBottomLayout = new javax.swing.GroupLayout(jpBottom);
         jpBottom.setLayout(jpBottomLayout);
         jpBottomLayout.setHorizontalGroup(
@@ -189,6 +199,8 @@ public class MainView extends JFrame implements MainViewInterface {
                 .addComponent(jlDiscovered1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jlDiscovered2)
+                .addGap(18, 18, 18)
+                .addComponent(jlPaused, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jpBottomLayout.setVerticalGroup(
@@ -201,7 +213,8 @@ public class MainView extends JFrame implements MainViewInterface {
                     .addComponent(jlFlag3)
                     .addComponent(jlFlag4)
                     .addComponent(jlDiscovered1)
-                    .addComponent(jlDiscovered2))
+                    .addComponent(jlDiscovered2)
+                    .addComponent(jlPaused, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -308,16 +321,17 @@ public class MainView extends JFrame implements MainViewInterface {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jbChrono;
     private javax.swing.JButton jbClue;
     private javax.swing.JButton jbNew;
     private javax.swing.JButton jbRestart;
-    private javax.swing.JLabel jlChrono;
     private javax.swing.JLabel jlDiscovered1;
     private javax.swing.JLabel jlDiscovered2;
     private javax.swing.JLabel jlFlag1;
     private javax.swing.JLabel jlFlag2;
     private javax.swing.JLabel jlFlag3;
     private javax.swing.JLabel jlFlag4;
+    private javax.swing.JLabel jlPaused;
     private javax.swing.JMenuItem jmiClue1;
     private javax.swing.JMenuItem jmiClue2;
     private javax.swing.JMenuItem jmiClue3;
@@ -337,6 +351,8 @@ public class MainView extends JFrame implements MainViewInterface {
         jbNew.setActionCommand(MV_NEW);
         jbRestart.addActionListener(this.c);
         jbRestart.setActionCommand(MV_RESTART);
+        jbChrono.addActionListener(this.c);
+        jbChrono.setActionCommand(MV_CHRONO);
     }
 
     @Override
@@ -360,6 +376,7 @@ public class MainView extends JFrame implements MainViewInterface {
         updateChronometer(0, 0);
         this.primaryClikNumber = 0;
         this.secondaryClikNumber = 0;
+        this.jlPaused.setVisible(false);
         this.setVisible(true);
     }
 
@@ -441,7 +458,17 @@ public class MainView extends JFrame implements MainViewInterface {
         String pre = "<html><body><h3>";
         String time = (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
         String post = "</h3></body></html>";
-        jlChrono.setText(pre + time + post);
+        jbChrono.setText(pre + time + post);
+    }
+
+    @Override
+    public void setReadOnly(boolean readOnly) {
+        for (int i = 0; i < b.getHeight(); i++) {
+            for (int j = 0; j < b.getWidth(); j++) {
+                jbBoardButtons[i][j].setVisible(!readOnly);
+            }
+        }
+        jlPaused.setVisible(readOnly);
     }
 
     private void initializeButtons() {

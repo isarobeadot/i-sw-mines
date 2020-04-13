@@ -11,6 +11,7 @@ public interface MainViewInterface extends ViewInterface {
 
     static final String MV_NEW = "MV_NEW";
     static final String MV_RESTART = "MV_RESTART";
+    static final String MV_CHRONO = "MV_CHRONO";
     static final String MV_SOLVE = "MV_SOLVE";
     static final String MV_LOST = "MV_LOST";
     static final String MV_WIN = "MV_WIN";
@@ -42,4 +43,6 @@ public interface MainViewInterface extends ViewInterface {
     public void updateChronometer(int m, int s);
 
     public int getDiscoveredPrecentage();
+
+    public void setReadOnly(boolean readOnly);
 }

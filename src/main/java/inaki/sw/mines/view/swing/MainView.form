@@ -129,14 +129,26 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbClueActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="jlChrono">
+        <Component class="javax.swing.JButton" name="jbChrono">
           <Properties>
             <Property name="text" type="java.lang.String" value="&lt;html&gt; &lt;body&gt; &lt;h3&gt;00:00&lt;/h3&gt; &lt;/body&gt; &lt;/html&gt;"/>
+            <Property name="componentPopupMenu" type="javax.swing.JPopupMenu" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="jpmClue"/>
+            </Property>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+              <Insets value="[0, 10, 0, 10]"/>
+            </Property>
+            <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
         </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="jpMain">
+      <Properties>
+        <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt; &lt;body&gt; &lt;h1&gt;Paused&lt;/h1&gt; &lt;/body&gt; &lt;/html&gt;"/>
+      </Properties>
 
       <Layout>
         <DimensionLayout dim="0">
@@ -169,6 +181,8 @@
                   <Component id="jlDiscovered1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jlDiscovered2" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="jlPaused" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -184,6 +198,7 @@
                       <Component id="jlFlag4" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jlDiscovered1" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jlDiscovered2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jlPaused" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -219,6 +234,11 @@
         <Component class="javax.swing.JLabel" name="jlDiscovered2">
           <Properties>
             <Property name="text" type="java.lang.String" value="0%"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jlPaused">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="&lt;html&gt; &lt;body&gt; &lt;b&gt;Paused&lt;/b&gt; &lt;/body&gt; &lt;/html&gt;"/>
           </Properties>
         </Component>
       </SubComponents>

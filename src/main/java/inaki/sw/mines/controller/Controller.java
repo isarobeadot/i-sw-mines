@@ -14,6 +14,7 @@ import static inaki.sw.mines.view.ChooseGameViewInterface.CGV_MEDIUM;
 import static inaki.sw.mines.view.ChooseGameViewInterface.CGV_START;
 import static inaki.sw.mines.view.ChooseGameViewInterface.CGV_STATISTICS;
 import inaki.sw.mines.view.MainViewInterface;
+import static inaki.sw.mines.view.MainViewInterface.MV_CHRONO;
 import static inaki.sw.mines.view.MainViewInterface.MV_LOST;
 import static inaki.sw.mines.view.MainViewInterface.MV_NEW;
 import static inaki.sw.mines.view.MainViewInterface.MV_RESTART;
@@ -144,6 +145,17 @@ public class Controller implements ActionListener {
                         mv.getMines());
                 doSTART();
                 break;
+            case MV_CHRONO:
+                if (chrono.isInstanceRunning()) {
+                    if (chrono.isInstancePaused()) {
+                        chrono.resumeChronometer();
+                        mv.setReadOnly(false);
+                    } else {
+                        chrono.pauseChronometer();
+                        mv.setReadOnly(true);
+                    }
+                }
+                break;
             case MV_SOLVE:
                 mv.solveBoard();
                 break;
@@ -248,7 +260,8 @@ public class Controller implements ActionListener {
         StatisticSet set = new StatisticSet();
         try {
             set = mapper.readValue(new File("statistics.json"), StatisticSet.class);
-        } catch (IOException ex) {
+        }
+        catch (IOException ex) {
             LOGGER.warning(ex.getMessage());
         }
         return set;
@@ -258,7 +271,8 @@ public class Controller implements ActionListener {
         ObjectMapper mapper = new ObjectMapper();
         try {
             mapper.writeValue(new File("statistics.json"), set);
-        } catch (IOException ex) {
+        }
+        catch (IOException ex) {
             LOGGER.severe(ex.getMessage());
         }
     }
