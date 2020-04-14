@@ -252,6 +252,7 @@ public class Controller implements ActionListener {
         mv.setBoard(b);
         mv.startView();
         chrono.stopChronometer();
+        chrono.resumeChronometer();
         discoveredHistory = new ArrayList<>();
     }
 

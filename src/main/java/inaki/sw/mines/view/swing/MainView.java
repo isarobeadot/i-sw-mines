@@ -15,6 +15,7 @@ import static java.awt.event.KeyEvent.VK_E;
 import static java.awt.event.KeyEvent.VK_L;
 import static java.awt.event.KeyEvent.VK_N;
 import static java.awt.event.KeyEvent.VK_O;
+import static java.awt.event.KeyEvent.VK_P;
 import static java.awt.event.KeyEvent.VK_R;
 import static java.awt.event.KeyEvent.VK_S;
 import static java.awt.event.KeyEvent.VK_V;
@@ -111,6 +112,13 @@ public class MainView extends JFrame implements MainViewInterface {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("I-SW Mines");
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/icon/isw-mines-96.png")).getImage());
+        addWindowFocusListener(new java.awt.event.WindowFocusListener() {
+            public void windowGainedFocus(java.awt.event.WindowEvent evt) {
+            }
+            public void windowLostFocus(java.awt.event.WindowEvent evt) {
+                formWindowLostFocus(evt);
+            }
+        });
         addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 formKeyTyped(evt);
@@ -261,6 +269,9 @@ public class MainView extends JFrame implements MainViewInterface {
             case VK_O:
                 trucoSOLVE = (trucoSOLVE == 1) ? 2 : 0;
                 break;
+            case VK_P:
+                jbChrono.doClick();
+                break;
             case VK_R:
                 trucoSOLVE = 0;
                 jbRestart.doClick();
@@ -295,6 +306,10 @@ public class MainView extends JFrame implements MainViewInterface {
         showClue(3);
         jmiClue3.setEnabled(false);
     }//GEN-LAST:event_jmiClue3ActionPerformed
+
+    private void formWindowLostFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowLostFocus
+        jbChrono.doClick();
+    }//GEN-LAST:event_formWindowLostFocus
 
     private void jbActionPerformed(ActionEvent evt) {
         String[] s = evt.getActionCommand().split("x");
