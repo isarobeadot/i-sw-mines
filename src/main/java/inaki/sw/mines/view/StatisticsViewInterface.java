@@ -10,6 +10,7 @@ import java.util.List;
 public interface StatisticsViewInterface extends ViewInterface {
 
     static final String SV_SAVE = "SV_SAVE";
+    static final String SV_OK = "SV_OK";
 
     @Override
     public void setController(final Controller c);

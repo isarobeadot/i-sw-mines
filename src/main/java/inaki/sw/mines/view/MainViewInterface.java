@@ -2,6 +2,7 @@ package inaki.sw.mines.view;
 
 import inaki.sw.mines.controller.Controller;
 import inaki.sw.mines.model.Board;
+import inaki.sw.mines.model.Clue;
 
 /**
  *
@@ -16,6 +17,9 @@ public interface MainViewInterface extends ViewInterface {
     static final String MV_LOST = "MV_LOST";
     static final String MV_WIN = "MV_WIN";
     static final String MV_START_CHRONO = "MV_START_CHRONO";
+    static final String MV_CLUE_WHITE_AREA = "MV_CLUE_WHITE_AREA";
+    static final String MV_CLUE_A_NUMBER = "MV_CLUE_A_NUMBER";
+    static final String MV_CLUE_A_FLAG = "MV_CLUE_A_FLAG";
 
     @Override
     public void setController(final Controller c);
@@ -45,4 +49,6 @@ public interface MainViewInterface extends ViewInterface {
     public int getDiscoveredPrecentage();
 
     public void setReadOnly(boolean readOnly);
+
+    public void showClue(final Clue clue);
 }

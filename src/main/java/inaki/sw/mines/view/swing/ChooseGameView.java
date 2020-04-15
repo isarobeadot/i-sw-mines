@@ -21,6 +21,8 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 public class ChooseGameView extends JFrame implements ChooseGameViewInterface {
 
+    private boolean disableNimbus;
+
     /**
      * Creates new form ChooseGameView
      *
@@ -273,16 +275,16 @@ public class ChooseGameView extends JFrame implements ChooseGameViewInterface {
     public void startView() {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code ">
-        try {
-            setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-            updateComponentTreeUI(this);
-            this.repaint();
-        }
-        catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-            getLogger(ChooseGameView.class.getName()).log(SEVERE, null, ex);
-        }
-        finally {
-            this.pack();
+        if (!disableNimbus) {
+            try {
+                setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+                updateComponentTreeUI(this);
+                this.repaint();
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+                getLogger(ChooseGameView.class.getName()).log(SEVERE, null, ex);
+            } finally {
+                this.pack();
+            }
         }
         //</editor-fold>
         this.setLocationRelativeTo(null);
@@ -312,6 +314,11 @@ public class ChooseGameView extends JFrame implements ChooseGameViewInterface {
     @Override
     public int getMines() {
         return (int) jsMines.getValue();
+    }
+
+    @Override
+    public void disableNimbus(boolean disableNimbus) {
+        this.disableNimbus = disableNimbus;
     }
 
 }

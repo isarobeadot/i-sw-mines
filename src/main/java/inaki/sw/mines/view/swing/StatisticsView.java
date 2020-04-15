@@ -24,6 +24,8 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 public class StatisticsView extends JFrame implements StatisticsViewInterface {
 
+    private boolean disableNimbus;
+
     /**
      * Creates new form StatisticsView
      */
@@ -171,11 +173,6 @@ public class StatisticsView extends JFrame implements StatisticsViewInterface {
         );
 
         jbOK.setText("OK");
-        jbOK.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbOKActionPerformed(evt);
-            }
-        });
 
         jbSave.setText("Save");
         jbSave.setFocusPainted(false);
@@ -229,30 +226,28 @@ public class StatisticsView extends JFrame implements StatisticsViewInterface {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jbOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbOKActionPerformed
-        this.setVisible(false);
-    }//GEN-LAST:event_jbOKActionPerformed
-
     @Override
     public void setController(Controller c) {
         jbSave.addActionListener(c);
         jbSave.setActionCommand(SV_SAVE);
+        jbOK.addActionListener(c);
+        jbOK.setActionCommand(SV_OK);
     }
 
     @Override
     public void startView() {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code">
-        try {
-            setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-            updateComponentTreeUI(this);
-            this.repaint();
-        }
-        catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-            getLogger(MainView.class.getName()).log(SEVERE, null, ex);
-        }
-        finally {
-            this.pack();
+        if (!disableNimbus) {
+            try {
+                setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+                updateComponentTreeUI(this);
+                this.repaint();
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+                getLogger(MainView.class.getName()).log(SEVERE, null, ex);
+            } finally {
+                this.pack();
+            }
         }
         //</editor-fold>
         this.setLocationRelativeTo(null);
@@ -261,6 +256,7 @@ public class StatisticsView extends JFrame implements StatisticsViewInterface {
 
     @Override
     public void hideView() {
+        this.setVisible(false);
     }
 
     @Override
@@ -302,6 +298,11 @@ public class StatisticsView extends JFrame implements StatisticsViewInterface {
     public void setReadOnly(boolean readOnly) {
         jpWin.setVisible(!readOnly);
         jbSave.setVisible(!readOnly);
+    }
+
+    @Override
+    public void disableNimbus(boolean disableNimbus) {
+        this.disableNimbus = disableNimbus;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

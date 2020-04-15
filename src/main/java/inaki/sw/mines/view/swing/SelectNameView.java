@@ -3,7 +3,6 @@ package inaki.sw.mines.view.swing;
 import inaki.sw.mines.controller.Controller;
 import inaki.sw.mines.view.SelectNameViewInterface;
 import inaki.sw.mines.view.swing.utils.Autocomplete;
-import java.util.ArrayList;
 import java.util.List;
 import static java.util.logging.Level.SEVERE;
 import static java.util.logging.Logger.getLogger;
@@ -21,6 +20,7 @@ public class SelectNameView extends JFrame implements SelectNameViewInterface {
 
     private static final String COMMIT_ACTION = "commit";
     Autocomplete autoComplete;
+    private boolean disableNimbus;
 
     /**
      * Creates new form SelectNameView
@@ -148,16 +148,16 @@ public class SelectNameView extends JFrame implements SelectNameViewInterface {
     public void startView() {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code ">
-        try {
-            setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-            updateComponentTreeUI(this);
-            this.repaint();
-        }
-        catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-            getLogger(ChooseGameView.class.getName()).log(SEVERE, null, ex);
-        }
-        finally {
-            this.pack();
+        if (!disableNimbus) {
+            try {
+                setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+                updateComponentTreeUI(this);
+                this.repaint();
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+                getLogger(ChooseGameView.class.getName()).log(SEVERE, null, ex);
+            } finally {
+                this.pack();
+            }
         }
         //</editor-fold>
         this.setLocationRelativeTo(null);
@@ -189,5 +189,10 @@ public class SelectNameView extends JFrame implements SelectNameViewInterface {
         // when given a suggestion
         jtfSelectName.getInputMap().put(KeyStroke.getKeyStroke("TAB"), COMMIT_ACTION);
         jtfSelectName.getActionMap().put(COMMIT_ACTION, autoComplete.new CommitAction());
+    }
+
+    @Override
+    public void disableNimbus(boolean disableNimbus) {
+        this.disableNimbus = disableNimbus;
     }
 }

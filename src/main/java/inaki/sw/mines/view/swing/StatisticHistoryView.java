@@ -32,6 +32,7 @@ public class StatisticHistoryView extends JFrame implements StatisticHistoryView
     };
     private Controller c;
     private int eventNo = 0;
+    private boolean disableNimbus;
 
     /**
      * Creates new form StatisticHistoryView
@@ -103,16 +104,16 @@ public class StatisticHistoryView extends JFrame implements StatisticHistoryView
     public void startView() {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code ">
-        try {
-            setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-            updateComponentTreeUI(this);
-            this.repaint();
-        }
-        catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-            getLogger(ChooseGameView.class.getName()).log(SEVERE, null, ex);
-        }
-        finally {
-            this.pack();
+        if (!disableNimbus) {
+            try {
+                setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+                updateComponentTreeUI(this);
+                this.repaint();
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+                getLogger(ChooseGameView.class.getName()).log(SEVERE, null, ex);
+            } finally {
+                this.pack();
+            }
         }
         //</editor-fold>
         this.setLocationRelativeTo(null);
@@ -138,6 +139,11 @@ public class StatisticHistoryView extends JFrame implements StatisticHistoryView
         configureTable(jtMedium, medium, columnNames, types);
         configureTable(jtHard, hard, columnNames, types);
         configureTable(jtCustom, custom, columnNamesCustom, typesCustom);
+    }
+
+    @Override
+    public void disableNimbus(boolean disableNimbus) {
+        this.disableNimbus = disableNimbus;
     }
 
     private Object[][] filterAndPrepareData(StatisticSet set, GameType type) {

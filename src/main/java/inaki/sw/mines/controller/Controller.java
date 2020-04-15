@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import inaki.sw.mines.model.Board;
 import inaki.sw.mines.model.Chronometer;
 import static inaki.sw.mines.model.Chronometer.C_UPDATE_CHRONO;
+import inaki.sw.mines.model.Clue;
 import inaki.sw.mines.model.GameType;
 import inaki.sw.mines.model.Statistic;
 import inaki.sw.mines.model.StatisticSet;
@@ -15,6 +16,9 @@ import static inaki.sw.mines.view.ChooseGameViewInterface.CGV_START;
 import static inaki.sw.mines.view.ChooseGameViewInterface.CGV_STATISTICS;
 import inaki.sw.mines.view.MainViewInterface;
 import static inaki.sw.mines.view.MainViewInterface.MV_CHRONO;
+import static inaki.sw.mines.view.MainViewInterface.MV_CLUE_A_FLAG;
+import static inaki.sw.mines.view.MainViewInterface.MV_CLUE_A_NUMBER;
+import static inaki.sw.mines.view.MainViewInterface.MV_CLUE_WHITE_AREA;
 import static inaki.sw.mines.view.MainViewInterface.MV_LOST;
 import static inaki.sw.mines.view.MainViewInterface.MV_NEW;
 import static inaki.sw.mines.view.MainViewInterface.MV_RESTART;
@@ -44,6 +48,7 @@ import static java.util.logging.Logger.getLogger;
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import static javax.swing.JOptionPane.showMessageDialog;
 import inaki.sw.mines.view.StatisticsViewInterface;
+import static inaki.sw.mines.view.StatisticsViewInterface.SV_OK;
 import inaki.sw.mines.view.swing.StatisticHistoryView;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -66,7 +71,7 @@ public class Controller implements ActionListener {
     private final StatisticsViewInterface sv;
 
     private List<Integer> discoveredHistory = new ArrayList<>();
-    private Board b;
+    private Board board;
     private GameType type;
     private StatisticSet statistics = new StatisticSet();
 
@@ -87,8 +92,12 @@ public class Controller implements ActionListener {
         this.statistics = readStatisticSet();
     }
 
+    public Board getBoard() {
+        return board;
+    }
+
     /**
-     *
+     * Starts the controller.
      */
     public void startController() {
         cgv.setController(this);
@@ -103,6 +112,17 @@ public class Controller implements ActionListener {
     }
 
     /**
+     * Disables Nimbus L&F. Use this only for testing.
+     */
+    public void disableNimbus() {
+        cgv.disableNimbus(true);
+        mv.disableNimbus(true);
+        snv.disableNimbus(true);
+        shv.disableNimbus(true);
+        sv.disableNimbus(true);
+    }
+
+    /**
      *
      * @param e
      */
@@ -112,22 +132,22 @@ public class Controller implements ActionListener {
         LOGGER.info(Arrays.toString(actions));
         switch (actions[0]) {
             case CGV_EASY:
-                b = new Board(8, 8, 10);
+                board = new Board(8, 8, 10);
                 type = GameType.EASY;
                 doSTART();
                 break;
             case CGV_MEDIUM:
-                b = new Board(16, 16, 40);
+                board = new Board(16, 16, 40);
                 type = GameType.MEDIUM;
                 doSTART();
                 break;
             case CGV_HARD:
-                b = new Board(30, 16, 99);
+                board = new Board(30, 16, 99);
                 type = GameType.HARD;
                 doSTART();
                 break;
             case CGV_START:
-                b = new Board(cgv.getHorizontal(), cgv.getVertical(),
+                board = new Board(cgv.getHorizontal(), cgv.getVertical(),
                         cgv.getMines());
                 type = GameType.CUSTOM;
                 doSTART();
@@ -141,7 +161,7 @@ public class Controller implements ActionListener {
                 cgv.startView();
                 break;
             case MV_RESTART:
-                b = new Board(mv.getHorizontal(), mv.getVertical(),
+                board = new Board(mv.getHorizontal(), mv.getVertical(),
                         mv.getMines());
                 doSTART();
                 break;
@@ -179,6 +199,15 @@ public class Controller implements ActionListener {
                 chronoThread.start();
                 discoveredHistory.add(0);
                 break;
+            case MV_CLUE_WHITE_AREA:
+                mv.showClue(Clue.WHITE_AREA);
+                break;
+            case MV_CLUE_A_NUMBER:
+                mv.showClue(Clue.NUMBER);
+                break;
+            case MV_CLUE_A_FLAG:
+                mv.showClue(Clue.FLAG);
+                break;
             case C_UPDATE_CHRONO:
                 mv.updateChronometer(chrono.getMinutes(), chrono.getSeconds());
                 discoveredHistory.add(mv.getDiscoveredPrecentage());
@@ -186,6 +215,9 @@ public class Controller implements ActionListener {
             case SV_SAVE:
                 snv.setSavedNameSet(statistics.stream().map(s -> s.getName()).collect(Collectors.toList()));
                 snv.startView();
+                break;
+            case SV_OK:
+                sv.hideView();
                 break;
             case SNV_OK:
                 String name = snv.getSelectedName();
@@ -246,10 +278,10 @@ public class Controller implements ActionListener {
 
     private void doSTART() {
         cgv.hideView();
-        if (b != null) {
-            b.generate();
+        if (board != null) {
+            board.generate();
         }
-        mv.setBoard(b);
+        mv.setBoard(board);
         mv.startView();
         chrono.stopChronometer();
         chrono.resumeChronometer();
@@ -261,8 +293,7 @@ public class Controller implements ActionListener {
         StatisticSet set = new StatisticSet();
         try {
             set = mapper.readValue(new File("statistics.json"), StatisticSet.class);
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             LOGGER.warning(ex.getMessage());
         }
         return set;
@@ -272,8 +303,7 @@ public class Controller implements ActionListener {
         ObjectMapper mapper = new ObjectMapper();
         try {
             mapper.writeValue(new File("statistics.json"), set);
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             LOGGER.severe(ex.getMessage());
         }
     }

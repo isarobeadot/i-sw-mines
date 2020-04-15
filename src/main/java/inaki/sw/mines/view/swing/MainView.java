@@ -2,6 +2,7 @@ package inaki.sw.mines.view.swing;
 
 import inaki.sw.mines.controller.Controller;
 import inaki.sw.mines.model.Board;
+import inaki.sw.mines.model.Clue;
 import inaki.sw.mines.view.MainViewInterface;
 import static java.awt.Color.black;
 import static java.awt.Color.decode;
@@ -43,12 +44,13 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 public class MainView extends JFrame implements MainViewInterface {
 
-    private Board b;
+    private Board board;
     private JButton[][] jbBoardButtons;
     private int trucoSOLVE = 0;
     private int primaryClikNumber = 0;
     private int secondaryClikNumber = 0;
     private Controller c;
+    private boolean disableNimbus;
 
     /**
      * Creates new form MainView
@@ -293,17 +295,17 @@ public class MainView extends JFrame implements MainViewInterface {
     }//GEN-LAST:event_jbClueActionPerformed
 
     private void jmiClue1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiClue1ActionPerformed
-        showClue(1);
+        c.actionPerformed(new ActionEvent(this, 0, MV_CLUE_WHITE_AREA));
         jmiClue1.setEnabled(false);
     }//GEN-LAST:event_jmiClue1ActionPerformed
 
     private void jmiClue2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiClue2ActionPerformed
-        showClue(2);
+        c.actionPerformed(new ActionEvent(this, 0, MV_CLUE_A_NUMBER));
         jmiClue2.setEnabled(false);
     }//GEN-LAST:event_jmiClue2ActionPerformed
 
     private void jmiClue3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiClue3ActionPerformed
-        showClue(3);
+        c.actionPerformed(new ActionEvent(this, 0, MV_CLUE_A_FLAG));
         jmiClue3.setEnabled(false);
     }//GEN-LAST:event_jmiClue3ActionPerformed
 
@@ -374,16 +376,16 @@ public class MainView extends JFrame implements MainViewInterface {
     public void startView() {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code">
-        try {
-            setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-            updateComponentTreeUI(this);
-            this.repaint();
-        }
-        catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-            getLogger(MainView.class.getName()).log(SEVERE, null, ex);
-        }
-        finally {
-            this.pack();
+        if (!disableNimbus) {
+            try {
+                setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+                updateComponentTreeUI(this);
+                this.repaint();
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+                getLogger(MainView.class.getName()).log(SEVERE, null, ex);
+            } finally {
+                this.pack();
+            }
         }
         //</editor-fold>
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -401,17 +403,17 @@ public class MainView extends JFrame implements MainViewInterface {
 
     @Override
     public int getHorizontal() {
-        return b.getWidth();
+        return board.getWidth();
     }
 
     @Override
     public int getVertical() {
-        return b.getHeight();
+        return board.getHeight();
     }
 
     @Override
     public int getMines() {
-        return b.getMines();
+        return board.getMines();
     }
 
     @Override
@@ -431,7 +433,7 @@ public class MainView extends JFrame implements MainViewInterface {
 
     @Override
     public void setBoard(final Board b) {
-        this.b = b;
+        this.board = b;
         jpMain.removeAll();
         jpMain.setLayout(new GridLayout(b.getHeight(), b.getWidth()));
         initializeButtons();
@@ -456,9 +458,9 @@ public class MainView extends JFrame implements MainViewInterface {
         jmiClue1.setEnabled(false);
         jmiClue2.setEnabled(false);
         jmiClue3.setEnabled(false);
-        for (int i = 0; i < b.getHeight(); i++) {
-            for (int j = 0; j < b.getWidth(); j++) {
-                if (b.getBoard(i, j) != -1) {
+        for (int i = 0; i < board.getHeight(); i++) {
+            for (int j = 0; j < board.getWidth(); j++) {
+                if (board.getBoard(i, j) != -1) {
                     uncover(i, j);
                 } else {
                     jbBoardButtons[i][j].setText(":)");
@@ -478,19 +480,39 @@ public class MainView extends JFrame implements MainViewInterface {
 
     @Override
     public void setReadOnly(boolean readOnly) {
-        for (int i = 0; i < b.getHeight(); i++) {
-            for (int j = 0; j < b.getWidth(); j++) {
+        for (int i = 0; i < board.getHeight(); i++) {
+            for (int j = 0; j < board.getWidth(); j++) {
                 jbBoardButtons[i][j].setVisible(!readOnly);
             }
         }
         jlPaused.setVisible(readOnly);
     }
 
+    @Override
+    public void showClue(final Clue clue) {
+        switch (clue) {
+            case WHITE_AREA:
+                showClue1();
+                break;
+            case NUMBER:
+                showClue2();
+                break;
+            case FLAG:
+                showClue3();
+                break;
+        }
+    }
+
+    @Override
+    public void disableNimbus(boolean disableNimbus) {
+        this.disableNimbus = disableNimbus;
+    }
+
     private void initializeButtons() {
         final Dimension d = new Dimension(40, 35);
-        jbBoardButtons = new JButton[b.getHeight()][b.getWidth()];
-        for (int i = 0; i < b.getHeight(); i++) {
-            for (int j = 0; j < b.getWidth(); j++) {
+        jbBoardButtons = new JButton[board.getHeight()][board.getWidth()];
+        for (int i = 0; i < board.getHeight(); i++) {
+            for (int j = 0; j < board.getWidth(); j++) {
                 jbBoardButtons[i][j] = new JButton(" ");
                 jbBoardButtons[i][j].setFocusable(false);
                 jbBoardButtons[i][j].addActionListener(this::jbActionPerformed);
@@ -511,8 +533,8 @@ public class MainView extends JFrame implements MainViewInterface {
 
     private int countDiscoveredCells() {
         int discovered = 0;
-        for (int i = 0; i < b.getHeight(); i++) {
-            for (int j = 0; j < b.getWidth(); j++) {
+        for (int i = 0; i < board.getHeight(); i++) {
+            for (int j = 0; j < board.getWidth(); j++) {
                 if (!jbBoardButtons[i][j].isEnabled()) {
                     discovered++;
                 }
@@ -528,16 +550,16 @@ public class MainView extends JFrame implements MainViewInterface {
             if (discovered == 1) {
                 c.actionPerformed(new ActionEvent(this, 0, MV_START_CHRONO));
             }
-            if (discovered == b.getHeight() * b.getWidth() - b.getMines()) {
+            if (discovered == board.getHeight() * board.getWidth() - board.getMines()) {
                 c.actionPerformed(new ActionEvent(this, 0, MV_WIN));
             }
-            final float p = (float) discovered / (float) (b.getHeight() * b.getWidth() - b.getMines()) * 100f;
+            final float p = (float) discovered / (float) (board.getHeight() * board.getWidth() - board.getMines()) * 100f;
             jlDiscovered2.setText((int) p + "%");
-            switch (b.getBoard(_m, _n)) {
+            switch (board.getBoard(_m, _n)) {
                 case -1:
-                    for (int i = 0; i < b.getHeight(); i++) {
-                        for (int j = 0; j < b.getWidth(); j++) {
-                            if (b.getBoard(i, j) == -1) {
+                    for (int i = 0; i < board.getHeight(); i++) {
+                        for (int j = 0; j < board.getWidth(); j++) {
+                            if (board.getBoard(i, j) == -1) {
                                 jbBoardButtons[i][j].setText(":(");
                                 jbBoardButtons[i][j].setForeground(decode("#000000"));
                             }
@@ -556,9 +578,9 @@ public class MainView extends JFrame implements MainViewInterface {
                     break;
                 case 0:
                     final int m1 = max(0, _m - 1);
-                    final int m2 = min(b.getHeight() - 1, _m + 1);
+                    final int m2 = min(board.getHeight() - 1, _m + 1);
                     final int n1 = max(0, _n - 1);
-                    final int n2 = min(b.getWidth() - 1, _n + 1);
+                    final int n2 = min(board.getWidth() - 1, _n + 1);
                     for (int _i = m1; _i <= m2; _i++) {
                         for (int _j = n1; _j <= n2; _j++) {
                             if (jbBoardButtons[_i][_j].isEnabled()) {
@@ -568,39 +590,39 @@ public class MainView extends JFrame implements MainViewInterface {
                     }
                     break;
                 case 1:
-                    jbBoardButtons[_m][_n].setText(b.getBoard(_m, _n) + "");
+                    jbBoardButtons[_m][_n].setText(board.getBoard(_m, _n) + "");
                     jbBoardButtons[_m][_n].setForeground(decode("#2222FF"));
                     break;
                 case 2:
-                    jbBoardButtons[_m][_n].setText(b.getBoard(_m, _n) + "");
+                    jbBoardButtons[_m][_n].setText(board.getBoard(_m, _n) + "");
                     jbBoardButtons[_m][_n].setForeground(decode("#008800"));
                     break;
                 case 3:
-                    jbBoardButtons[_m][_n].setText(b.getBoard(_m, _n) + "");
+                    jbBoardButtons[_m][_n].setText(board.getBoard(_m, _n) + "");
                     jbBoardButtons[_m][_n].setForeground(decode("#FF0000"));
                     break;
                 case 4:
-                    jbBoardButtons[_m][_n].setText(b.getBoard(_m, _n) + "");
+                    jbBoardButtons[_m][_n].setText(board.getBoard(_m, _n) + "");
                     jbBoardButtons[_m][_n].setForeground(decode("#000088"));
                     break;
                 case 5:
-                    jbBoardButtons[_m][_n].setText(b.getBoard(_m, _n) + "");
+                    jbBoardButtons[_m][_n].setText(board.getBoard(_m, _n) + "");
                     jbBoardButtons[_m][_n].setForeground(decode("#800000"));
                     break;
                 case 6:
-                    jbBoardButtons[_m][_n].setText(b.getBoard(_m, _n) + "");
+                    jbBoardButtons[_m][_n].setText(board.getBoard(_m, _n) + "");
                     jbBoardButtons[_m][_n].setForeground(decode("#0099CC"));
                     break;
                 case 7:
-                    jbBoardButtons[_m][_n].setText(b.getBoard(_m, _n) + "");
+                    jbBoardButtons[_m][_n].setText(board.getBoard(_m, _n) + "");
                     jbBoardButtons[_m][_n].setForeground(decode("#990099"));
                     break;
                 case 8:
-                    jbBoardButtons[_m][_n].setText(b.getBoard(_m, _n) + "");
+                    jbBoardButtons[_m][_n].setText(board.getBoard(_m, _n) + "");
                     jbBoardButtons[_m][_n].setForeground(decode("#CC9900"));
                     break;
                 default:
-                    jbBoardButtons[_m][_n].setText(b.getBoard(_m, _n) + "");
+                    jbBoardButtons[_m][_n].setText(board.getBoard(_m, _n) + "");
                     break;
             }
         }
@@ -635,12 +657,12 @@ public class MainView extends JFrame implements MainViewInterface {
 
     private void uncoverSurrounding(final int _m, final int _n) {
         if (!jbBoardButtons[_m][_n].isEnabled()) {
-            final int number = b.getBoard(_m, _n);
+            final int number = board.getBoard(_m, _n);
             if (number > 0) {
                 final int m1 = max(0, _m - 1);
-                final int m2 = min(b.getHeight() - 1, _m + 1);
+                final int m2 = min(board.getHeight() - 1, _m + 1);
                 final int n1 = max(0, _n - 1);
-                final int n2 = min(b.getWidth() - 1, _n + 1);
+                final int n2 = min(board.getWidth() - 1, _n + 1);
                 /* Check how many cells are marked surround it */
                 int marked = 0;
                 for (int _i = m1; _i <= m2; _i++) {
@@ -665,25 +687,11 @@ public class MainView extends JFrame implements MainViewInterface {
         }
     }
 
-    private void showClue(final int clue) {
-        switch (clue) {
-            case 1:
-                showClue1();
-                break;
-            case 2:
-                showClue2();
-                break;
-            case 3:
-                showClue3();
-                break;
-        }
-    }
-
     private void showClue1() {
         final Map<Integer, JButton> hm = new HashMap();
-        for (int i = 0; i < b.getHeight(); i++) {
-            for (int j = 0; j < b.getWidth(); j++) {
-                if (jbBoardButtons[i][j].isEnabled() && b.getBoard(i, j) == 0) {
+        for (int i = 0; i < board.getHeight(); i++) {
+            for (int j = 0; j < board.getWidth(); j++) {
+                if (jbBoardButtons[i][j].isEnabled() && board.getBoard(i, j) == 0) {
                     hm.put(hm.size(), jbBoardButtons[i][j]);
                 }
             }
@@ -695,9 +703,9 @@ public class MainView extends JFrame implements MainViewInterface {
 
     private void showClue2() {
         final Map<Integer, JButton> hm = new HashMap();
-        for (int i = 0; i < b.getHeight(); i++) {
-            for (int j = 0; j < b.getWidth(); j++) {
-                if (jbBoardButtons[i][j].isEnabled() && b.getBoard(i, j) > 0) {
+        for (int i = 0; i < board.getHeight(); i++) {
+            for (int j = 0; j < board.getWidth(); j++) {
+                if (jbBoardButtons[i][j].isEnabled() && board.getBoard(i, j) > 0) {
                     hm.put(hm.size(), jbBoardButtons[i][j]);
                 }
             }
@@ -709,9 +717,9 @@ public class MainView extends JFrame implements MainViewInterface {
 
     private void showClue3() {
         final Map<Integer, JButton> hm = new HashMap();
-        for (int i = 0; i < b.getHeight(); i++) {
-            for (int j = 0; j < b.getWidth(); j++) {
-                if (jbBoardButtons[i][j].isEnabled() && b.getBoard(i, j) == -1 && !jbBoardButtons[i][j].getText().equals(":)")) {
+        for (int i = 0; i < board.getHeight(); i++) {
+            for (int j = 0; j < board.getWidth(); j++) {
+                if (jbBoardButtons[i][j].isEnabled() && board.getBoard(i, j) == -1 && !jbBoardButtons[i][j].getText().equals(":)")) {
                     hm.put(hm.size(), jbBoardButtons[i][j]);
                 }
             }

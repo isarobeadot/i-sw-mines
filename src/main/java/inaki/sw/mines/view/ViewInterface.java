@@ -14,4 +14,5 @@ interface ViewInterface {
 
     public void hideView();
 
+    public void disableNimbus(boolean disableNimbus);
 }
