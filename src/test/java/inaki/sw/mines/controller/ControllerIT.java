@@ -3,6 +3,7 @@ package inaki.sw.mines.controller;
 import inaki.sw.mines.model.Board;
 import inaki.sw.mines.view.ChooseGameViewInterface;
 import inaki.sw.mines.view.MainViewInterface;
+import inaki.sw.mines.view.SelectNameViewInterface;
 import inaki.sw.mines.view.StatisticsViewInterface;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
@@ -19,7 +20,7 @@ import org.junit.jupiter.api.Test;
  */
 public class ControllerIT {
 
-    private static final int DELAY = 500;
+    private static final int DELAY = 50;
 
     private static Controller c;
 
@@ -37,7 +38,7 @@ public class ControllerIT {
     @BeforeEach
     public void setUp() throws IOException, InterruptedException {
         c = new Controller();
-        c.disableNimbus();
+        c.testingConfig();
         c.startController();
         Thread.sleep(DELAY);
     }
@@ -99,6 +100,11 @@ public class ControllerIT {
         // Play
         playGame(board);
         Thread.sleep(DELAY);
+        // Save game
+        c.actionPerformed(new ActionEvent(c, 0, StatisticsViewInterface.SV_SAVE));
+        Thread.sleep(DELAY);
+        c.actionPerformed(new ActionEvent(c, 0, SelectNameViewInterface.SNV_OK));
+        Thread.sleep(DELAY);
         // Close statistics view
         c.actionPerformed(new ActionEvent(c, 0, StatisticsViewInterface.SV_OK));
         Thread.sleep(DELAY);
@@ -107,6 +113,11 @@ public class ControllerIT {
         Thread.sleep(DELAY);
         // Solve
         c.actionPerformed(new ActionEvent(c, 0, MainViewInterface.MV_SOLVE));
+        Thread.sleep(DELAY);
+        // Save game
+        c.actionPerformed(new ActionEvent(c, 0, StatisticsViewInterface.SV_SAVE));
+        Thread.sleep(DELAY);
+        c.actionPerformed(new ActionEvent(c, 0, SelectNameViewInterface.SNV_OK));
         Thread.sleep(DELAY);
         // Close statistics view
         c.actionPerformed(new ActionEvent(c, 0, StatisticsViewInterface.SV_OK));

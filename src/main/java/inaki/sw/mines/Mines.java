@@ -15,8 +15,8 @@ public class Mines {
      */
     public static void main(String[] args) throws IOException {
         final Controller c = new Controller();
-        if (args.length > 0 && args[0].equals("--no-nimbus")) {
-            c.disableNimbus();
+        if (args.length > 0 && args[0].equals("--testing")) {
+            c.testingConfig();
         }
         c.startController();
     }

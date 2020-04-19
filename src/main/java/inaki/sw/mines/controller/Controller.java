@@ -64,6 +64,7 @@ public class Controller implements ActionListener {
 
     private static final Logger LOGGER = getLogger(Controller.class.getName());
 
+    private boolean testing = false;
     private final ChooseGameViewInterface cgv;
     private final MainViewInterface mv;
     private final SelectNameViewInterface snv;
@@ -114,7 +115,8 @@ public class Controller implements ActionListener {
     /**
      * Disables Nimbus L&F. Use this only for testing.
      */
-    public void disableNimbus() {
+    public void testingConfig() {
+        this.testing = true;
         cgv.disableNimbus(true);
         mv.disableNimbus(true);
         snv.disableNimbus(true);
@@ -220,7 +222,7 @@ public class Controller implements ActionListener {
                 sv.hideView();
                 break;
             case SNV_OK:
-                String name = snv.getSelectedName();
+                String name = this.testing ? "test" : snv.getSelectedName();
                 snv.hideView();
                 Statistic s = new Statistic();
                 s.setDiscoveredHistory(discoveredHistory);
@@ -293,7 +295,8 @@ public class Controller implements ActionListener {
         StatisticSet set = new StatisticSet();
         try {
             set = mapper.readValue(new File("statistics.json"), StatisticSet.class);
-        } catch (IOException ex) {
+        }
+        catch (IOException ex) {
             LOGGER.warning(ex.getMessage());
         }
         return set;
@@ -303,7 +306,8 @@ public class Controller implements ActionListener {
         ObjectMapper mapper = new ObjectMapper();
         try {
             mapper.writeValue(new File("statistics.json"), set);
-        } catch (IOException ex) {
+        }
+        catch (IOException ex) {
             LOGGER.severe(ex.getMessage());
         }
     }

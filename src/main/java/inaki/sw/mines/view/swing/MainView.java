@@ -46,7 +46,7 @@ public class MainView extends JFrame implements MainViewInterface {
 
     private Board board;
     private JButton[][] jbBoardButtons;
-    private int trucoSOLVE = 0;
+    private int cheatSOLVE = 0;
     private int primaryClikNumber = 0;
     private int secondaryClikNumber = 0;
     private Controller c;
@@ -252,40 +252,41 @@ public class MainView extends JFrame implements MainViewInterface {
     private void formKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyTyped
         switch (evt.getKeyChar()) {
             case VK_C:
-                trucoSOLVE = 0;
+                cheatSOLVE = 0;
                 jbClue.doClick();
                 break;
             case VK_E:
-                if (trucoSOLVE == 4) {
+                if (cheatSOLVE == 4) {
                     c.actionPerformed(new ActionEvent(this, 0, MV_SOLVE));
                 }
-                trucoSOLVE = 0;
+                cheatSOLVE = 0;
                 break;
             case VK_L:
-                trucoSOLVE = (trucoSOLVE == 2) ? 3 : 0;
+                cheatSOLVE = (cheatSOLVE == 2) ? 3 : 0;
                 break;
             case VK_N:
-                trucoSOLVE = 0;
+                cheatSOLVE = 0;
                 jbNew.doClick();
                 break;
             case VK_O:
-                trucoSOLVE = (trucoSOLVE == 1) ? 2 : 0;
+                cheatSOLVE = (cheatSOLVE == 1) ? 2 : 0;
                 break;
             case VK_P:
                 jbChrono.doClick();
+                cheatSOLVE = 0;
                 break;
             case VK_R:
-                trucoSOLVE = 0;
+                cheatSOLVE = 0;
                 jbRestart.doClick();
                 break;
             case VK_S:
-                trucoSOLVE = 1;
+                cheatSOLVE = 1;
                 break;
             case VK_V:
-                trucoSOLVE = (trucoSOLVE == 3) ? 4 : 0;
+                cheatSOLVE = (cheatSOLVE == 3) ? 4 : 0;
                 break;
             default:
-                trucoSOLVE = 0;
+                cheatSOLVE = 0;
                 break;
         }
     }//GEN-LAST:event_formKeyTyped
@@ -381,9 +382,11 @@ public class MainView extends JFrame implements MainViewInterface {
                 setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
                 updateComponentTreeUI(this);
                 this.repaint();
-            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+            }
+            catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
                 getLogger(MainView.class.getName()).log(SEVERE, null, ex);
-            } finally {
+            }
+            finally {
                 this.pack();
             }
         }
