@@ -5,6 +5,7 @@ import inaki.sw.mines.controller.Controller;
 /**
  *
  * @author inaki
+ * @since 2.1 or before
  */
 interface IView {
 

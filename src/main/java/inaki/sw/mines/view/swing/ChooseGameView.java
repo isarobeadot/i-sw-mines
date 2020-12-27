@@ -18,6 +18,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 /**
  *
  * @author inaki
+ * @since 2.1 or before
  */
 public class ChooseGameView extends JFrame implements IChooseGameView {
 

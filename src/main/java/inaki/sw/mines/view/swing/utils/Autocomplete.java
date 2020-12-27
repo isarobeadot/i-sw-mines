@@ -16,6 +16,7 @@ import javax.swing.text.BadLocationException;
  * From https://stackabuse.com/example-adding-autocomplete-to-jtextfield/
  *
  * @author inaki
+ * @since 2.2.1
  */
 public class Autocomplete implements DocumentListener {
 

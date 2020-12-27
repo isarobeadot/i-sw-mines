@@ -15,6 +15,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 /**
  *
  * @author inaki
+ * @since 2.1 or before
  */
 public class SelectNameView extends JFrame implements ISelectNameView {
 

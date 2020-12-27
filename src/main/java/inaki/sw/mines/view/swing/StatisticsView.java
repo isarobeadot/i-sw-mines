@@ -21,6 +21,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 /**
  *
  * @author inaki
+ * @since 2.1 or before
  */
 public class StatisticsView extends JFrame implements IStatisticsView {
 

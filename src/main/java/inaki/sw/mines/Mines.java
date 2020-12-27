@@ -6,6 +6,7 @@ import java.io.IOException;
 /**
  *
  * @author inaki
+ * @since 2.1 or before
  */
 public class Mines {
 

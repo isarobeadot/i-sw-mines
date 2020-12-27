@@ -7,6 +7,7 @@ import inaki.sw.mines.model.Clue;
 /**
  *
  * @author inaki
+ * @since 2.1 or before
  */
 public interface IMainView extends IView {
 

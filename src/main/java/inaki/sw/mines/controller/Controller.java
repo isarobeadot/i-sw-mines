@@ -59,6 +59,7 @@ import static javax.swing.JOptionPane.showMessageDialog;
 /**
  *
  * @author inaki
+ * @since 2.1 or before
  */
 public class Controller implements ActionListener {
 

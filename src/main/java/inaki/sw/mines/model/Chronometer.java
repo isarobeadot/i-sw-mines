@@ -9,6 +9,7 @@ import static java.util.logging.Logger.getLogger;
 /**
  *
  * @author inaki
+ * @since 2.1 or before
  */
 public class Chronometer implements Runnable {
 

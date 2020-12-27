@@ -6,6 +6,7 @@ import java.util.List;
 /**
  *
  * @author inaki
+ * @since 2.1 or before
  */
 public interface IStatisticsView extends IView {
 

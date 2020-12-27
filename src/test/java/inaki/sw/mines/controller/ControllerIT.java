@@ -17,6 +17,7 @@ import org.junit.jupiter.api.Test;
 /**
  *
  * @author inaki
+ * @since 2.3.1
  */
 public class ControllerIT {
 

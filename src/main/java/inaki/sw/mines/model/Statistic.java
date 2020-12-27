@@ -7,6 +7,7 @@ import java.util.Objects;
 /**
  *
  * @author inaki
+ * @since 2.1 or before
  */
 public class Statistic {
 

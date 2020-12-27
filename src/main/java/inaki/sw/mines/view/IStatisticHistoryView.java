@@ -5,6 +5,7 @@ import inaki.sw.mines.model.StatisticSet;
 /**
  *
  * @author inaki
+ * @since 2.1 or before
  */
 public interface IStatisticHistoryView extends IView {
 

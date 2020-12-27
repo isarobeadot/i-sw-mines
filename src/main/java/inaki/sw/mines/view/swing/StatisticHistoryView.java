@@ -19,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author inaki
+ * @since 2.1 or before
  */
 public class StatisticHistoryView extends JFrame implements IStatisticHistoryView {
 
