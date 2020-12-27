@@ -3,7 +3,7 @@ package inaki.sw.mines.view.swing;
 import inaki.sw.mines.controller.Controller;
 import inaki.sw.mines.model.Board;
 import inaki.sw.mines.model.Clue;
-import inaki.sw.mines.view.MainViewInterface;
+import inaki.sw.mines.view.IMainView;
 import static java.awt.Color.black;
 import static java.awt.Color.decode;
 import static java.awt.Color.red;
@@ -42,7 +42,7 @@ import javax.swing.UnsupportedLookAndFeelException;
  *
  * @author inaki
  */
-public class MainView extends JFrame implements MainViewInterface {
+public class MainView extends JFrame implements IMainView {
 
     private Board board;
     private JButton[][] jbBoardButtons;

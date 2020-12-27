@@ -3,7 +3,7 @@ package inaki.sw.mines.view.swing;
 import inaki.sw.mines.controller.Controller;
 import inaki.sw.mines.model.GameType;
 import inaki.sw.mines.model.StatisticSet;
-import inaki.sw.mines.view.StatisticHistoryViewInterface;
+import inaki.sw.mines.view.IStatisticHistoryView;
 import java.awt.event.ActionEvent;
 import java.util.Date;
 import static java.util.logging.Level.SEVERE;
@@ -20,7 +20,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author inaki
  */
-public class StatisticHistoryView extends JFrame implements StatisticHistoryViewInterface {
+public class StatisticHistoryView extends JFrame implements IStatisticHistoryView {
 
     String[] columnNames = {"Date", "Name", "Time"};
     String[] columnNamesCustom = {"Date", "Name", "Time", "Size", "Mines"};

@@ -6,7 +6,7 @@ import java.util.List;
  *
  * @author inaki
  */
-public interface SelectNameViewInterface extends ViewInterface {
+public interface ISelectNameView extends IView {
 
     static final String SNV_OK = "SNV_OK";
 

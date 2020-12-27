@@ -6,7 +6,7 @@ import inaki.sw.mines.controller.Controller;
  *
  * @author inaki
  */
-public interface ChooseGameViewInterface extends ViewInterface {
+public interface IChooseGameView extends IView {
 
     static final String CGV_EASY = "CGV_EASY";
     static final String CGV_MEDIUM = "CGV_MEDIUM";

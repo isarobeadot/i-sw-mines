@@ -8,7 +8,7 @@ import inaki.sw.mines.model.Clue;
  *
  * @author inaki
  */
-public interface MainViewInterface extends ViewInterface {
+public interface IMainView extends IView {
 
     static final String MV_NEW = "MV_NEW";
     static final String MV_RESTART = "MV_RESTART";

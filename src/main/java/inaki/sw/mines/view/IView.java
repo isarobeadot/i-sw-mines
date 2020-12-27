@@ -6,7 +6,7 @@ import inaki.sw.mines.controller.Controller;
  *
  * @author inaki
  */
-interface ViewInterface {
+interface IView {
 
     public void setController(final Controller c);
 

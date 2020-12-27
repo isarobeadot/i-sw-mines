@@ -1,28 +1,28 @@
 package inaki.sw.mines.view.swing;
 
 import inaki.sw.mines.controller.Controller;
+import inaki.sw.mines.view.IStatisticsView;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.text.DecimalFormat;
 import java.util.List;
 import static java.util.logging.Level.SEVERE;
 import static java.util.logging.Logger.getLogger;
+import javax.swing.JFrame;
 import static javax.swing.SwingUtilities.updateComponentTreeUI;
 import static javax.swing.UIManager.setLookAndFeel;
+import javax.swing.UnsupportedLookAndFeelException;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
-import inaki.sw.mines.view.StatisticsViewInterface;
-import java.awt.Dimension;
-import java.text.DecimalFormat;
-import javax.swing.JFrame;
-import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
  * @author inaki
  */
-public class StatisticsView extends JFrame implements StatisticsViewInterface {
+public class StatisticsView extends JFrame implements IStatisticsView {
 
     private boolean disableNimbus;
 
@@ -243,9 +243,11 @@ public class StatisticsView extends JFrame implements StatisticsViewInterface {
                 setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
                 updateComponentTreeUI(this);
                 this.repaint();
-            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+            }
+            catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
                 getLogger(MainView.class.getName()).log(SEVERE, null, ex);
-            } finally {
+            }
+            finally {
                 this.pack();
             }
         }

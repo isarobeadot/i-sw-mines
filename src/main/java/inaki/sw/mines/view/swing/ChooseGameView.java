@@ -1,11 +1,11 @@
 package inaki.sw.mines.view.swing;
 
 import inaki.sw.mines.controller.Controller;
-import inaki.sw.mines.view.ChooseGameViewInterface;
-import static inaki.sw.mines.view.ChooseGameViewInterface.CGV_EASY;
-import static inaki.sw.mines.view.ChooseGameViewInterface.CGV_HARD;
-import static inaki.sw.mines.view.ChooseGameViewInterface.CGV_MEDIUM;
-import static inaki.sw.mines.view.ChooseGameViewInterface.CGV_START;
+import inaki.sw.mines.view.IChooseGameView;
+import static inaki.sw.mines.view.IChooseGameView.CGV_EASY;
+import static inaki.sw.mines.view.IChooseGameView.CGV_HARD;
+import static inaki.sw.mines.view.IChooseGameView.CGV_MEDIUM;
+import static inaki.sw.mines.view.IChooseGameView.CGV_START;
 import java.io.IOException;
 import static java.lang.Math.min;
 import static java.util.logging.Level.SEVERE;
@@ -19,7 +19,7 @@ import javax.swing.UnsupportedLookAndFeelException;
  *
  * @author inaki
  */
-public class ChooseGameView extends JFrame implements ChooseGameViewInterface {
+public class ChooseGameView extends JFrame implements IChooseGameView {
 
     private boolean disableNimbus;
 

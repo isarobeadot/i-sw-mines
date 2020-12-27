@@ -7,7 +7,7 @@ import java.util.List;
  *
  * @author inaki
  */
-public interface StatisticsViewInterface extends ViewInterface {
+public interface IStatisticsView extends IView {
 
     static final String SV_SAVE = "SV_SAVE";
     static final String SV_OK = "SV_OK";

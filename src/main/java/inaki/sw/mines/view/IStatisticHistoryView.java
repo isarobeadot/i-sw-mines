@@ -6,7 +6,7 @@ import inaki.sw.mines.model.StatisticSet;
  *
  * @author inaki
  */
-public interface StatisticHistoryViewInterface extends ViewInterface {
+public interface IStatisticHistoryView extends IView {
 
     static final String SHV_DETAIL = "SHV_DETAIL";
     static final String SHV_NONE = "SHV_NONE";

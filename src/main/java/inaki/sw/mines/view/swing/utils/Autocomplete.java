@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
 import static java.util.logging.Logger.getLogger;
-
 import javax.swing.AbstractAction;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;

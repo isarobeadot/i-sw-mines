@@ -1,7 +1,7 @@
 package inaki.sw.mines.view.swing;
 
 import inaki.sw.mines.controller.Controller;
-import inaki.sw.mines.view.SelectNameViewInterface;
+import inaki.sw.mines.view.ISelectNameView;
 import inaki.sw.mines.view.swing.utils.Autocomplete;
 import java.util.List;
 import static java.util.logging.Level.SEVERE;
@@ -16,7 +16,7 @@ import javax.swing.UnsupportedLookAndFeelException;
  *
  * @author inaki
  */
-public class SelectNameView extends JFrame implements SelectNameViewInterface {
+public class SelectNameView extends JFrame implements ISelectNameView {
 
     private static final String COMMIT_ACTION = "commit";
     Autocomplete autoComplete;
