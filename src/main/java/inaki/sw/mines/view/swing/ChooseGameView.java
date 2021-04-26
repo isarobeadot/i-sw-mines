@@ -272,6 +272,9 @@ public class ChooseGameView extends JFrame implements IChooseGameView {
         jbStatistics.setActionCommand(CGV_STATISTICS);
     }
 
+    /**
+     *
+     */
     @Override
     public void startView() {
         /* Set the Nimbus look and feel */
@@ -292,31 +295,54 @@ public class ChooseGameView extends JFrame implements IChooseGameView {
         this.setVisible(true);
     }
 
+    /**
+     *
+     */
     @Override
     public void hideView() {
         this.setVisible(false);
     }
 
+    /**
+     *
+     * @param b
+     */
     @Override
     public void enableStatistics(boolean b) {
         jbStatistics.setEnabled(b);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int getHorizontal() {
         return (int) jsHorizontal.getValue();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int getVertical() {
         return (int) jsVertical.getValue();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int getMines() {
         return (int) jsMines.getValue();
     }
 
+    /**
+     *
+     * @param disableNimbus
+     */
     @Override
     public void disableNimbus(boolean disableNimbus) {
         this.disableNimbus = disableNimbus;

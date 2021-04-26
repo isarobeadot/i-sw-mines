@@ -94,6 +94,11 @@ public class Controller implements ActionListener {
         this.statistics = readStatisticSet();
     }
 
+    /**
+     * Returns the board instance. (For testing only)
+     *
+     * @return
+     */
     public Board getBoard() {
         return board;
     }

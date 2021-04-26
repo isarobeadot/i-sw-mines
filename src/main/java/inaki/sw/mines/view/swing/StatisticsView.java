@@ -227,6 +227,10 @@ public class StatisticsView extends JFrame implements IStatisticsView {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     *
+     * @param c
+     */
     @Override
     public void setController(Controller c) {
         jbSave.addActionListener(c);
@@ -235,6 +239,9 @@ public class StatisticsView extends JFrame implements IStatisticsView {
         jbOK.setActionCommand(SV_OK);
     }
 
+    /**
+     *
+     */
     @Override
     public void startView() {
         /* Set the Nimbus look and feel */
@@ -257,28 +264,48 @@ public class StatisticsView extends JFrame implements IStatisticsView {
         this.setVisible(true);
     }
 
+    /**
+     *
+     */
     @Override
     public void hideView() {
         this.setVisible(false);
     }
 
+    /**
+     *
+     * @param m
+     * @param s
+     */
     @Override
     public void setTime(int m, int s) {
         String time = (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
         jlTime2.setText(time);
     }
 
+    /**
+     *
+     * @param clikNo
+     */
     @Override
     public void setPrimaryClikNumber(int clikNo) {
         jlClickNo2.setText(clikNo + "");
     }
 
+    /**
+     *
+     * @param ratio
+     */
     @Override
     public void setRatio(double ratio) {
         final DecimalFormat df = new DecimalFormat("#.#");
         jlRatio3.setText(df.format(ratio) + "");
     }
 
+    /**
+     *
+     * @param discoveredHistory
+     */
     @Override
     public void setDiscoveredHistory(List<Integer> discoveredHistory) {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
@@ -297,12 +324,20 @@ public class StatisticsView extends JFrame implements IStatisticsView {
         jpChart.validate();
     }
 
+    /**
+     *
+     * @param readOnly
+     */
     @Override
     public void setReadOnly(boolean readOnly) {
         jpWin.setVisible(!readOnly);
         jbSave.setVisible(!readOnly);
     }
 
+    /**
+     *
+     * @param disableNimbus
+     */
     @Override
     public void disableNimbus(boolean disableNimbus) {
         this.disableNimbus = disableNimbus;

@@ -16,6 +16,10 @@ public interface IStatisticHistoryView extends IView {
     static final String SHV_HARD = "SHV_HARD";
     static final String SHV_CUSTOM = "SHV_CUSTOM";
 
+    /**
+     *
+     * @param set
+     */
     public void setStatistics(StatisticSet set);
 
 }

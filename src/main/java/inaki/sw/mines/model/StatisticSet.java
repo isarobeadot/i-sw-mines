@@ -10,11 +10,18 @@ import java.util.Collection;
  */
 public class StatisticSet extends ArrayList<Statistic> {
 
+    /**
+     *
+     */
     public StatisticSet() {
         super();
     }
 
-    public StatisticSet(Collection<Statistic> iterable) {
-        super(iterable);
+    /**
+     *
+     * @param c
+     */
+    public StatisticSet(Collection<Statistic> c) {
+        super(c);
     }
 }

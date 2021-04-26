@@ -22,34 +22,88 @@ public interface IMainView extends IView {
     static final String MV_CLUE_A_NUMBER = "MV_CLUE_A_NUMBER";
     static final String MV_CLUE_A_FLAG = "MV_CLUE_A_FLAG";
 
+    /**
+     *
+     * @param c
+     */
     @Override
     public void setController(final Controller c);
 
+    /**
+     *
+     */
     @Override
     public void startView();
 
+    /**
+     *
+     */
     @Override
     public void hideView();
 
+    /**
+     *
+     * @return
+     */
     public int getHorizontal();
 
+    /**
+     *
+     * @return
+     */
     public int getVertical();
 
+    /**
+     *
+     * @return
+     */
     public int getMines();
 
+    /**
+     *
+     * @return
+     */
     public int getPrimaryClikNumber();
 
+    /**
+     *
+     * @return
+     */
     public int getSecondaryClikNumber();
 
+    /**
+     *
+     * @param b
+     */
     public void setBoard(final Board b);
 
+    /**
+     *
+     */
     public void solveBoard();
 
+    /**
+     *
+     * @param m
+     * @param s
+     */
     public void updateChronometer(int m, int s);
 
+    /**
+     *
+     * @return
+     */
     public int getDiscoveredPrecentage();
 
+    /**
+     *
+     * @param readOnly
+     */
     public void setReadOnly(boolean readOnly);
 
+    /**
+     *
+     * @param clue
+     */
     public void showClue(final Clue clue);
 }

@@ -21,26 +21,48 @@ public class Chronometer implements Runnable {
     private ActionListener actionlistener;
     private int eventNo = 0;
 
+    /**
+     *
+     * @return
+     */
     public boolean isInstancePaused() {
         return instancePaused;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isInstanceRunning() {
         return instanceRunning;
     }
 
+    /**
+     *
+     * @return
+     */
     public Integer getMinutes() {
         return minutes;
     }
 
+    /**
+     *
+     * @return
+     */
     public Integer getSeconds() {
         return seconds;
     }
 
+    /**
+     *
+     */
     public void pauseChronometer() {
         instancePaused = true;
     }
 
+    /**
+     *
+     */
     public void resumeChronometer() {
         instancePaused = false;
     }
@@ -87,10 +109,17 @@ public class Chronometer implements Runnable {
         }
     }
 
+    /**
+     *
+     * @param actionlistener
+     */
     public void setActionlistener(ActionListener actionlistener) {
         this.actionlistener = actionlistener;
     }
 
+    /**
+     *
+     */
     public void stopChronometer() {
         instanceRunning = false;
     }

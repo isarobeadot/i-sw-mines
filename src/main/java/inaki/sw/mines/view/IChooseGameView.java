@@ -15,20 +15,46 @@ public interface IChooseGameView extends IView {
     static final String CGV_START = "CGV_START";
     static final String CGV_STATISTICS = "CGV_STATISTICS";
 
+    /**
+     *
+     * @param c
+     */
     @Override
     public void setController(final Controller c);
 
+    /**
+     *
+     */
     @Override
     public void startView();
 
+    /**
+     *
+     */
     @Override
     public void hideView();
 
+    /**
+     *
+     * @param b
+     */
     public void enableStatistics(final boolean b);
 
+    /**
+     *
+     * @return
+     */
     public int getHorizontal();
 
+    /**
+     *
+     * @return
+     */
     public int getVertical();
 
+    /**
+     *
+     * @return
+     */
     public int getMines();
 }

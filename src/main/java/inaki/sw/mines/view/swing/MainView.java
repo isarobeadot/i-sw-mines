@@ -159,6 +159,7 @@ public class MainView extends JFrame implements IMainView {
         jtbTop.add(jbClue);
 
         jbChrono.setText("<html> <body> <h3>00:00</h3> </body> </html>");
+        jbChrono.setToolTipText("Pause / Resume");
         jbChrono.setComponentPopupMenu(jpmClue);
         jbChrono.setFocusable(false);
         jbChrono.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -374,6 +375,9 @@ public class MainView extends JFrame implements IMainView {
         jbChrono.setActionCommand(MV_CHRONO);
     }
 
+    /**
+     *
+     */
     @Override
     public void startView() {
         /* Set the Nimbus look and feel */
@@ -401,40 +405,71 @@ public class MainView extends JFrame implements IMainView {
         this.setVisible(true);
     }
 
+    /**
+     *
+     */
     @Override
     public void hideView() {
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int getHorizontal() {
         return board.getWidth();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int getVertical() {
         return board.getHeight();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int getMines() {
         return board.getMines();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int getPrimaryClikNumber() {
         return primaryClikNumber;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int getSecondaryClikNumber() {
         return secondaryClikNumber;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int getDiscoveredPrecentage() {
         return Integer.parseInt(jlDiscovered2.getText().substring(0, jlDiscovered2.getText().length() - 1));
     }
 
+    /**
+     *
+     * @param b
+     */
     @Override
     public void setBoard(final Board b) {
         this.board = b;
@@ -456,6 +491,9 @@ public class MainView extends JFrame implements IMainView {
         this.pack();
     }
 
+    /**
+     *
+     */
     @Override
     public void solveBoard() {
         jbClue.setEnabled(false);
@@ -474,6 +512,11 @@ public class MainView extends JFrame implements IMainView {
         jlFlag2.setText(jlFlag4.getText());
     }
 
+    /**
+     *
+     * @param m
+     * @param s
+     */
     @Override
     public void updateChronometer(int m, int s) {
         String pre = "<html><body><h3>";
@@ -482,6 +525,10 @@ public class MainView extends JFrame implements IMainView {
         jbChrono.setText(pre + time + post);
     }
 
+    /**
+     *
+     * @param readOnly
+     */
     @Override
     public void setReadOnly(boolean readOnly) {
         for (int i = 0; i < board.getHeight(); i++) {
@@ -492,6 +539,10 @@ public class MainView extends JFrame implements IMainView {
         jlPaused.setVisible(readOnly);
     }
 
+    /**
+     *
+     * @param clue
+     */
     @Override
     public void showClue(final Clue clue) {
         switch (clue) {
@@ -507,6 +558,10 @@ public class MainView extends JFrame implements IMainView {
         }
     }
 
+    /**
+     *
+     * @param disableNimbus
+     */
     @Override
     public void disableNimbus(boolean disableNimbus) {
         this.disableNimbus = disableNimbus;

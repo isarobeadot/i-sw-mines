@@ -31,6 +31,11 @@ public class Autocomplete implements DocumentListener {
     private final List<String> keywords;
     private Mode mode = Mode.INSERT;
 
+    /**
+     *
+     * @param textField
+     * @param keywords
+     */
     public Autocomplete(JTextField textField, List<String> keywords) {
         this.textField = textField;
         this.keywords = keywords;
@@ -90,6 +95,9 @@ public class Autocomplete implements DocumentListener {
         }
     }
 
+    /**
+     *
+     */
     public class CommitAction extends AbstractAction {
 
         /**

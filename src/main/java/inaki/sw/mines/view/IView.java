@@ -9,11 +9,25 @@ import inaki.sw.mines.controller.Controller;
  */
 interface IView {
 
+    /**
+     * 
+     * @param c 
+     */
     public void setController(final Controller c);
 
+    /**
+     * 
+     */
     public void startView();
 
+    /**
+     * 
+     */
     public void hideView();
 
+    /**
+     * 
+     * @param disableNimbus 
+     */
     public void disableNimbus(boolean disableNimbus);
 }

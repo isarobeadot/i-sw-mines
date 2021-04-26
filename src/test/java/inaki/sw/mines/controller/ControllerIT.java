@@ -25,17 +25,31 @@ public class ControllerIT {
 
     private static Controller c;
 
+    /**
+     *
+     */
     public ControllerIT() {
     }
 
+    /**
+     *
+     */
     @BeforeAll
     public static void setUpClass() {
     }
 
+    /**
+     *
+     */
     @AfterAll
     public static void tearDownClass() {
     }
 
+    /**
+     *
+     * @throws IOException
+     * @throws InterruptedException
+     */
     @BeforeEach
     public void setUp() throws IOException, InterruptedException {
         c = new Controller();
@@ -44,6 +58,9 @@ public class ControllerIT {
         Thread.sleep(DELAY);
     }
 
+    /**
+     *
+     */
     @AfterEach
     public void tearDown() {
     }

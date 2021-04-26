@@ -31,82 +31,162 @@ public class Statistic {
 
     private Date winDate;
 
+    /**
+     *
+     * @return
+     */
     public List<Integer> getDiscoveredHistory() {
         return discoveredHistory;
     }
 
+    /**
+     *
+     * @param discoveredHistory
+     */
     public void setDiscoveredHistory(List<Integer> discoveredHistory) {
         this.discoveredHistory = discoveredHistory;
     }
 
+    /**
+     *
+     * @return
+     */
     public Integer getHorizontalSize() {
         return horizontalSize;
     }
 
+    /**
+     *
+     * @param horizontalSize
+     */
     public void setHorizontalSize(Integer horizontalSize) {
         this.horizontalSize = horizontalSize;
     }
 
+    /**
+     *
+     * @return
+     */
     public Integer getMineNumber() {
         return mineNumber;
     }
 
+    /**
+     *
+     * @param mineNumber
+     */
     public void setMineNumber(Integer mineNumber) {
         this.mineNumber = mineNumber;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     *
+     * @param name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     *
+     * @return
+     */
     public Integer getPrimaryClikNumber() {
         return primaryClikNumber;
     }
 
+    /**
+     *
+     * @param primaryClikNumber
+     */
     public void setPrimaryClikNumber(Integer primaryClikNumber) {
         this.primaryClikNumber = primaryClikNumber;
     }
 
+    /**
+     *
+     * @return
+     */
     public Integer getTotalMinutes() {
         return totalMinutes;
     }
 
+    /**
+     *
+     * @param totalMinutes
+     */
     public void setTotalMinutes(Integer totalMinutes) {
         this.totalMinutes = totalMinutes;
     }
 
+    /**
+     *
+     * @return
+     */
     public Integer getTotalSeconds() {
         return totalSeconds;
     }
 
+    /**
+     *
+     * @param totalSeconds
+     */
     public void setTotalSeconds(Integer totalSeconds) {
         this.totalSeconds = totalSeconds;
     }
 
+    /**
+     *
+     * @return
+     */
     public GameType getType() {
         return type;
     }
 
+    /**
+     *
+     * @param type
+     */
     public void setType(GameType type) {
         this.type = type;
     }
 
+    /**
+     *
+     * @return
+     */
     public Integer getVerticalSize() {
         return verticalSize;
     }
 
+    /**
+     *
+     * @param verticalSize
+     */
     public void setVerticalSize(Integer verticalSize) {
         this.verticalSize = verticalSize;
     }
 
+    /**
+     *
+     * @return
+     */
     public Date getWinDate() {
         return winDate;
     }
 
+    /**
+     *
+     * @param winDate
+     */
     public void setWinDate(Date winDate) {
         this.winDate = winDate;
     }

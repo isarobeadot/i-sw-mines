@@ -13,23 +13,54 @@ public interface IStatisticsView extends IView {
     static final String SV_SAVE = "SV_SAVE";
     static final String SV_OK = "SV_OK";
 
+    /**
+     *
+     * @param c
+     */
     @Override
     public void setController(final Controller c);
 
+    /**
+     *
+     */
     @Override
     public void startView();
 
+    /**
+     *
+     */
     @Override
     public void hideView();
 
+    /**
+     *
+     * @param m
+     * @param s
+     */
     public void setTime(int m, int s);
 
+    /**
+     *
+     * @param clikNo
+     */
     public void setPrimaryClikNumber(int clikNo);
 
+    /**
+     *
+     * @param ratio
+     */
     public void setRatio(double ratio);
 
+    /**
+     *
+     * @param discoveredHistory
+     */
     public void setDiscoveredHistory(List<Integer> discoveredHistory);
 
+    /**
+     *
+     * @param readOnly
+     */
     public void setReadOnly(boolean readOnly);
 
 }

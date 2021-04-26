@@ -96,11 +96,18 @@ public class StatisticHistoryView extends JFrame implements IStatisticHistoryVie
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     *
+     * @param c
+     */
     @Override
     public void setController(Controller c) {
         this.c = c;
     }
 
+    /**
+     *
+     */
     @Override
     public void startView() {
         /* Set the Nimbus look and feel */
@@ -121,11 +128,18 @@ public class StatisticHistoryView extends JFrame implements IStatisticHistoryVie
         this.setVisible(true);
     }
 
+    /**
+     *
+     */
     @Override
     public void hideView() {
         this.setVisible(false);
     }
 
+    /**
+     *
+     * @param set
+     */
     @Override
     public void setStatistics(StatisticSet set) {
         Object[][] easy = filterAndPrepareData(set, GameType.EASY);
@@ -142,6 +156,10 @@ public class StatisticHistoryView extends JFrame implements IStatisticHistoryVie
         configureTable(jtCustom, custom, columnNamesCustom, typesCustom);
     }
 
+    /**
+     *
+     * @param disableNimbus
+     */
     @Override
     public void disableNimbus(boolean disableNimbus) {
         this.disableNimbus = disableNimbus;

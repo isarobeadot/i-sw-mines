@@ -137,6 +137,10 @@ public class SelectNameView extends JFrame implements ISelectNameView {
     private javax.swing.JTextField jtfSelectName;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     *
+     * @param c
+     */
     @Override
     public void setController(Controller c) {
         jbOK.addActionListener(c);
@@ -145,6 +149,9 @@ public class SelectNameView extends JFrame implements ISelectNameView {
         jtfSelectName.setActionCommand(SNV_OK);
     }
 
+    /**
+     *
+     */
     @Override
     public void startView() {
         /* Set the Nimbus look and feel */
@@ -165,16 +172,27 @@ public class SelectNameView extends JFrame implements ISelectNameView {
         this.setVisible(true);
     }
 
+    /**
+     *
+     */
     @Override
     public void hideView() {
         this.setVisible(false);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String getSelectedName() {
         return this.jtfSelectName.getText();
     }
 
+    /**
+     *
+     * @param names
+     */
     @Override
     public void setSavedNameSet(List<String> names) {
         // Without this, cursor always leaves text field
@@ -192,6 +210,10 @@ public class SelectNameView extends JFrame implements ISelectNameView {
         jtfSelectName.getActionMap().put(COMMIT_ACTION, autoComplete.new CommitAction());
     }
 
+    /**
+     *
+     * @param disableNimbus
+     */
     @Override
     public void disableNimbus(boolean disableNimbus) {
         this.disableNimbus = disableNimbus;

@@ -11,8 +11,16 @@ public interface ISelectNameView extends IView {
 
     static final String SNV_OK = "SNV_OK";
 
+    /**
+     *
+     * @return
+     */
     public String getSelectedName();
 
+    /**
+     *
+     * @param names
+     */
     public void setSavedNameSet(List<String> names);
 
 }
