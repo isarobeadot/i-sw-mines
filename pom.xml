@@ -4,14 +4,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>inaki.sw</groupId>
-    <artifactId>Mines</artifactId>
-    <version>2.3.1</version>
+    <artifactId>mines</artifactId>
+    <version>2.4</version>
     <packaging>jar</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <junit.version>5.7.1</junit.version>
+        <junit.version>5.7.2</junit.version>
     </properties>
     <build>
         <plugins>
@@ -43,6 +43,8 @@
                                     <mainClass>
                                         inaki.sw.mines.Mines
                                     </mainClass>
+                                    <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                                    <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
                                 </manifest>
                             </archive>
                             <descriptorRefs>
@@ -68,7 +70,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.2.0</version>
+                <version>3.3.1</version>
             </plugin>
             <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-deploy-plugin -->
             <plugin>
@@ -89,7 +91,7 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.12.3</version>
+            <version>2.12.5</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
         <dependency>
@@ -104,6 +106,12 @@
             <artifactId>junit-jupiter-engine</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>inaki.sw</groupId>
+            <artifactId>lib</artifactId>
+            <version>0.1</version>
         </dependency>
     </dependencies>
     <reporting>

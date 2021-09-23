@@ -57,4 +57,10 @@ public interface IChooseGameView extends IView {
      * @return
      */
     public int getMines();
+
+    /**
+     * 
+     * @param version 
+     */
+    public void setVersion(String version);
 }

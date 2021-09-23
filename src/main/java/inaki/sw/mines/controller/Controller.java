@@ -1,6 +1,7 @@
 package inaki.sw.mines.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import inaki.sw.lib.utils.VChecker;
 import inaki.sw.mines.model.Board;
 import inaki.sw.mines.model.Chronometer;
 import static inaki.sw.mines.model.Chronometer.C_UPDATE_CHRONO;
@@ -42,17 +43,21 @@ import inaki.sw.mines.view.swing.SelectNameView;
 import inaki.sw.mines.view.swing.StatisticHistoryView;
 import inaki.sw.mines.view.swing.StatisticsView;
 import java.awt.Component;
+import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import static java.util.logging.Logger.getLogger;
 import java.util.stream.Collectors;
+import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import static javax.swing.JOptionPane.showMessageDialog;
 
@@ -66,6 +71,9 @@ public class Controller implements ActionListener {
     private static final Logger LOGGER = getLogger(Controller.class.getName());
 
     private boolean testing = false;
+    private boolean newVersion = false;
+    private final String version = this.getClass().getPackage().getImplementationVersion();
+    ;
     private final IChooseGameView cgv;
     private final IMainView mv;
     private final ISelectNameView snv;
@@ -92,6 +100,7 @@ public class Controller implements ActionListener {
         this.sv = new StatisticsView();
         this.chrono = new Chronometer();
         this.statistics = readStatisticSet();
+        this.newVersion = this.version != null && VChecker.isWebAlive() && VChecker.isNewerVersionAvailable("isw-mines", this.version);
     }
 
     /**
@@ -115,7 +124,22 @@ public class Controller implements ActionListener {
         chrono.setActionlistener(this);
 
         cgv.enableStatistics(!statistics.isEmpty());
+        cgv.setVersion(this.version);
         cgv.startView();
+
+        if (this.newVersion) {
+            final int option = JOptionPane.showConfirmDialog(null, "<html><p>There is a newer version available.</p>"
+                    + "<p>Do you want to download it?</p></html>", "New version", JOptionPane.YES_NO_OPTION);
+            if (option == 0) {
+                // YES
+                try {
+                    Desktop.getDesktop().browse(URI.create("https://inaki-sw.xyz/web/downloads"));
+                }
+                catch (IOException ex) {
+                    JOptionPane.showMessageDialog(null, "An error occurred", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
     }
 
     /**

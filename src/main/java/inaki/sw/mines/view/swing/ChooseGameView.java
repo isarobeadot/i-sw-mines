@@ -161,7 +161,7 @@ public class ChooseGameView extends JFrame implements IChooseGameView {
 
         jlTxtVersion.setText("Version:");
 
-        jlNumVersion.setText("2.3.1");
+        jlNumVersion.setText("?");
 
         jbStatistics.setText("Statistics");
         jbStatistics.setFocusable(false);
@@ -284,9 +284,11 @@ public class ChooseGameView extends JFrame implements IChooseGameView {
                 setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
                 updateComponentTreeUI(this);
                 this.repaint();
-            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+            }
+            catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
                 getLogger(ChooseGameView.class.getName()).log(SEVERE, null, ex);
-            } finally {
+            }
+            finally {
                 this.pack();
             }
         }
@@ -346,6 +348,22 @@ public class ChooseGameView extends JFrame implements IChooseGameView {
     @Override
     public void disableNimbus(boolean disableNimbus) {
         this.disableNimbus = disableNimbus;
+    }
+
+    /**
+     *
+     * @param version
+     */
+    @Override
+    public void setVersion(String version) {
+        if (version == null) {
+            this.jlTxtVersion.setVisible(false);
+            this.jlNumVersion.setVisible(false);
+        } else {
+            this.jlTxtVersion.setVisible(true);
+            this.jlNumVersion.setVisible(true);
+            this.jlNumVersion.setText(version);
+        }
     }
 
 }
