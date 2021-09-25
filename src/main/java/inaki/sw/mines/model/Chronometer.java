@@ -14,7 +14,7 @@ import static java.util.logging.Logger.getLogger;
 public class Chronometer implements Runnable {
 
     private static final Logger LOGGER = getLogger(Chronometer.class.getName());
-    public static final String C_UPDATE_CHRONO = "UPDATE_CHRONO";
+    public static final String C_UPDATE_CHRONO = "C_UPDATE_CHRONO";
     private boolean instancePaused, instanceRunning;
     private final int step = 100;
     private Integer minutes, seconds, miliseconds;

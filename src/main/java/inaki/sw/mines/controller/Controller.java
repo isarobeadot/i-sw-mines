@@ -2,6 +2,7 @@ package inaki.sw.mines.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import inaki.sw.lib.utils.VChecker;
+import static inaki.sw.lib.utils.VChecker.VC_VERSION_AVAILABLE;
 import inaki.sw.mines.model.Board;
 import inaki.sw.mines.model.Chronometer;
 import static inaki.sw.mines.model.Chronometer.C_UPDATE_CHRONO;
@@ -53,7 +54,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import static java.util.logging.Logger.getLogger;
 import java.util.stream.Collectors;
@@ -71,9 +71,7 @@ public class Controller implements ActionListener {
     private static final Logger LOGGER = getLogger(Controller.class.getName());
 
     private boolean testing = false;
-    private boolean newVersion = false;
     private final String version = this.getClass().getPackage().getImplementationVersion();
-    ;
     private final IChooseGameView cgv;
     private final IMainView mv;
     private final ISelectNameView snv;
@@ -87,6 +85,8 @@ public class Controller implements ActionListener {
 
     private final Chronometer chrono;
     private Thread chronoThread;
+    private final VChecker vChecker;
+    private Thread vCheckerThread;
 
     /**
      *
@@ -99,8 +99,8 @@ public class Controller implements ActionListener {
         this.shv = new StatisticHistoryView();
         this.sv = new StatisticsView();
         this.chrono = new Chronometer();
+        this.vChecker = new VChecker("isw-mines", this.version);
         this.statistics = readStatisticSet();
-        this.newVersion = this.version != null && VChecker.isWebAlive() && VChecker.isNewerVersionAvailable("isw-mines", this.version);
     }
 
     /**
@@ -122,28 +122,20 @@ public class Controller implements ActionListener {
         shv.setController(this);
         sv.setController(this);
         chrono.setActionlistener(this);
+        vChecker.setActionlistener(this);
 
         cgv.enableStatistics(!statistics.isEmpty());
         cgv.setVersion(this.version);
         cgv.startView();
 
-        if (this.newVersion) {
-            final int option = JOptionPane.showConfirmDialog(null, "<html><p>There is a newer version available.</p>"
-                    + "<p>Do you want to download it?</p></html>", "New version", JOptionPane.YES_NO_OPTION);
-            if (option == 0) {
-                // YES
-                try {
-                    Desktop.getDesktop().browse(URI.create("https://inaki-sw.xyz/web/downloads"));
-                }
-                catch (IOException ex) {
-                    JOptionPane.showMessageDialog(null, "An error occurred", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            }
+        if (this.version != null) {
+            vCheckerThread = new Thread(vChecker);
+            vCheckerThread.start();
         }
     }
 
     /**
-     * Disables Nimbus L&F. Use this only for testing.
+     * Disables Nimbus LnF. Use this only for testing.
      */
     public void testingConfig() {
         this.testing = true;
@@ -299,6 +291,19 @@ public class Controller implements ActionListener {
                         sv.startView();
                     } else {
                         LOGGER.warning("No statistic found");
+                    }
+                }
+                break;
+            case VC_VERSION_AVAILABLE:
+                final int option = JOptionPane.showConfirmDialog(null, "<html><p>There is a newer version available.</p>"
+                        + "<p>Do you want to download it?</p></html>", "New version", JOptionPane.YES_NO_OPTION);
+                if (option == 0) {
+                    // YES
+                    try {
+                        Desktop.getDesktop().browse(URI.create("https://inaki-sw.xyz/web/downloads"));
+                    }
+                    catch (IOException ex) {
+                        JOptionPane.showMessageDialog(null, "An error occurred", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }
                 break;
