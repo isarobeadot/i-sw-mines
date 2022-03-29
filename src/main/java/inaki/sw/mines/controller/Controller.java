@@ -295,15 +295,15 @@ public class Controller implements ActionListener {
                 }
                 break;
             case VC_VERSION_AVAILABLE:
-                final int option = JOptionPane.showConfirmDialog(null, "<html><p>There is a newer version available.</p>"
+                final int option = JOptionPane.showConfirmDialog((Component) cgv, "<html><p>There is a newer version available.</p>"
                         + "<p>Do you want to download it?</p></html>", "New version", JOptionPane.YES_NO_OPTION);
                 if (option == 0) {
                     // YES
                     try {
-                        Desktop.getDesktop().browse(URI.create("https://inaki-sw.xyz/web/downloads"));
+                        Desktop.getDesktop().browse(URI.create("https://inaki-sw.xyz/web/downloads#isw-mines"));
                     }
                     catch (IOException ex) {
-                        JOptionPane.showMessageDialog(null, "An error occurred", "Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog((Component) cgv, "An error occurred", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }
                 break;
