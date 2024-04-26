@@ -15,6 +15,7 @@ public interface IStatisticHistoryView extends IView {
     static final String SHV_MEDIUM = "SHV_MEDIUM";
     static final String SHV_HARD = "SHV_HARD";
     static final String SHV_CUSTOM = "SHV_CUSTOM";
+    static final String SHV_OK = "SHV_OK";
 
     /**
      *

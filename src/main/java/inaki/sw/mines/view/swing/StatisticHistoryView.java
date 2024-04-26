@@ -60,6 +60,8 @@ public class StatisticHistoryView extends JFrame implements IStatisticHistoryVie
         jtHard = new javax.swing.JTable();
         jspCustom = new javax.swing.JScrollPane();
         jtCustom = new javax.swing.JTable();
+        jpBottom = new javax.swing.JPanel();
+        jbOK = new javax.swing.JButton();
 
         setTitle("I-SW Mines");
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/icon/isw-mines-96.png")).getImage());
@@ -82,15 +84,38 @@ public class StatisticHistoryView extends JFrame implements IStatisticHistoryVie
 
         jtpMain.addTab("Custom", jspCustom);
 
+        jbOK.setText("OK");
+
+        javax.swing.GroupLayout jpBottomLayout = new javax.swing.GroupLayout(jpBottom);
+        jpBottom.setLayout(jpBottomLayout);
+        jpBottomLayout.setHorizontalGroup(
+            jpBottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpBottomLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jbOK)
+                .addContainerGap())
+        );
+        jpBottomLayout.setVerticalGroup(
+            jpBottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpBottomLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jbOK)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jtpMain, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .addComponent(jpBottom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jtpMain, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jtpMain, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jpBottom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -103,6 +128,8 @@ public class StatisticHistoryView extends JFrame implements IStatisticHistoryVie
     @Override
     public void setController(Controller c) {
         this.c = c;
+        jbOK.addActionListener(c);
+        jbOK.setActionCommand(SHV_OK);
     }
 
     /**
@@ -215,6 +242,8 @@ public class StatisticHistoryView extends JFrame implements IStatisticHistoryVie
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jbOK;
+    private javax.swing.JPanel jpBottom;
     private javax.swing.JScrollPane jspCustom;
     private javax.swing.JScrollPane jspEasy;
     private javax.swing.JScrollPane jspHard;

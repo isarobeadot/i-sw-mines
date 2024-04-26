@@ -35,6 +35,7 @@ import static inaki.sw.mines.view.IStatisticHistoryView.SHV_DETAIL;
 import static inaki.sw.mines.view.IStatisticHistoryView.SHV_EASY;
 import static inaki.sw.mines.view.IStatisticHistoryView.SHV_HARD;
 import static inaki.sw.mines.view.IStatisticHistoryView.SHV_MEDIUM;
+import static inaki.sw.mines.view.IStatisticHistoryView.SHV_OK;
 import inaki.sw.mines.view.IStatisticsView;
 import static inaki.sw.mines.view.IStatisticsView.SV_OK;
 import static inaki.sw.mines.view.IStatisticsView.SV_SAVE;
@@ -293,6 +294,9 @@ public class Controller implements ActionListener {
                         LOGGER.warning("No statistic found");
                     }
                 }
+                break;
+            case SHV_OK:
+                shv.hideView();
                 break;
             case VC_VERSION_AVAILABLE:
                 final int option = JOptionPane.showConfirmDialog((Component) cgv, "<html><p>There is a newer version available.</p>"
