@@ -15,9 +15,12 @@ public class Chronometer implements Runnable {
 
     private static final Logger LOGGER = getLogger(Chronometer.class.getName());
     public static final String C_UPDATE_CHRONO = "C_UPDATE_CHRONO";
-    private boolean instancePaused, instanceRunning;
-    private final int step = 100;
-    private Integer minutes, seconds, miliseconds;
+    private boolean instancePaused;
+    private boolean instanceRunning;
+    private static final int STEP = 100;
+    private Integer minutes;
+    private Integer seconds;
+    private Integer miliseconds;
     private ActionListener actionlistener;
     private int eventNo = 0;
 
@@ -55,6 +58,22 @@ public class Chronometer implements Runnable {
 
     /**
      *
+     * @return
+     */
+    public Integer getMiliseconds() {
+        return miliseconds;
+    }
+
+    /**
+     *
+     * @param miliseconds
+     */
+    public void setMiliseconds(Integer miliseconds) {
+        this.miliseconds = miliseconds;
+    }
+
+    /**
+     *
      */
     public void pauseChronometer() {
         instancePaused = true;
@@ -81,9 +100,9 @@ public class Chronometer implements Runnable {
             while (instanceRunning) {
                 try {
                     // Wait for an step
-                    Thread.sleep(step);
+                    Thread.sleep(STEP);
                     if (!instancePaused) {
-                        miliseconds += step;
+                        miliseconds += STEP;
 
                         // One more second
                         if (miliseconds == 1000) {
@@ -101,6 +120,8 @@ public class Chronometer implements Runnable {
                 }
                 catch (InterruptedException ex) {
                     LOGGER.log(Level.SEVERE, "Chronometer interrupted: {0}", ex);
+                    // Restore interrupted state...
+                    Thread.currentThread().interrupt();
                 }
             }
             LOGGER.info("Chronometer stopped");

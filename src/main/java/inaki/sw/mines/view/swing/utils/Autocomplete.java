@@ -22,10 +22,10 @@ public class Autocomplete implements DocumentListener {
 
     private static final Logger LOGGER = getLogger(Autocomplete.class.getName());
 
-    private static enum Mode {
+    private enum Mode {
         INSERT,
         COMPLETION
-    };
+    }
 
     private final JTextField textField;
     private final List<String> keywords;
@@ -44,10 +44,12 @@ public class Autocomplete implements DocumentListener {
 
     @Override
     public void changedUpdate(DocumentEvent ev) {
+        // empty
     }
 
     @Override
     public void removeUpdate(DocumentEvent ev) {
+        // empty
     }
 
     @Override

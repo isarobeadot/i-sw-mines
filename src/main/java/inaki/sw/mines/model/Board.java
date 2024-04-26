@@ -18,7 +18,8 @@ public class Board {
 
     public static final int MINE = -1;
     private static final Logger LOGGER = getLogger(Board.class.getName());
-    private final int height, width;
+    private final int height;
+    private final int width;
     private final int mines;
     private final int[][] board;
 

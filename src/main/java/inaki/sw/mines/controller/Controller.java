@@ -85,9 +85,7 @@ public class Controller implements ActionListener {
     private StatisticSet statistics = new StatisticSet();
 
     private final Chronometer chrono;
-    private Thread chronoThread;
     private final VChecker vChecker;
-    private Thread vCheckerThread;
 
     /**
      *
@@ -130,7 +128,7 @@ public class Controller implements ActionListener {
         cgv.startView();
 
         if (this.version != null) {
-            vCheckerThread = new Thread(vChecker);
+            Thread vCheckerThread = new Thread(vChecker);
             vCheckerThread.start();
         }
     }
@@ -220,7 +218,7 @@ public class Controller implements ActionListener {
                 sv.startView();
                 break;
             case MV_START_CHRONO:
-                chronoThread = new Thread(chrono);
+                Thread chronoThread = new Thread(chrono);
                 chronoThread.start();
                 discoveredHistory.add(0);
                 break;

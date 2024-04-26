@@ -117,6 +117,7 @@ public class MainView extends JFrame implements IMainView {
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/icon/isw-mines-96.png")).getImage());
         addWindowFocusListener(new java.awt.event.WindowFocusListener() {
             public void windowGainedFocus(java.awt.event.WindowEvent evt) {
+                formWindowGainedFocus(evt);
             }
             public void windowLostFocus(java.awt.event.WindowEvent evt) {
                 formWindowLostFocus(evt);
@@ -128,7 +129,6 @@ public class MainView extends JFrame implements IMainView {
             }
         });
 
-        jtbTop.setFloatable(false);
         jtbTop.setRollover(true);
 
         jbNew.setText("<html>\n<body>\n<h3>New</h3>\n</body>\n</html>");
@@ -316,27 +316,31 @@ public class MainView extends JFrame implements IMainView {
         jbChrono.doClick();
     }//GEN-LAST:event_formWindowLostFocus
 
+    private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
+        // empty
+    }//GEN-LAST:event_formWindowGainedFocus
+
     private void jbActionPerformed(ActionEvent evt) {
         String[] s = evt.getActionCommand().split("x");
-        int _m = parseInt(s[0]);
-        int _n = parseInt(s[1]);
-        uncover(_m, _n);
+        int m = parseInt(s[0]);
+        int n = parseInt(s[1]);
+        uncover(m, n);
     }
 
     private void jbMouseReleased(MouseEvent evt) {
         String[] s = ((JButton) evt.getComponent()).getActionCommand().split("x");
-        int _m = parseInt(s[0]);
-        int _n = parseInt(s[1]);
+        int m = parseInt(s[0]);
+        int n = parseInt(s[1]);
         if (evt.getButton() == BUTTON1) {
             /* Uncover the surrounding, only if current is uncovered, has a
             * number and on the surrounding are marked exactly the number of
             * cells that current's number indicates */
             primaryClikNumber += 1;
-            uncoverSurrounding(_m, _n);
+            uncoverSurrounding(m, n);
         } else if (evt.getButton() == BUTTON3) {
             /* Mark a cell */
             secondaryClikNumber += 1;
-            mark(_m, _n);
+            mark(m, n);
         }
     }
 
@@ -410,6 +414,7 @@ public class MainView extends JFrame implements IMainView {
      */
     @Override
     public void hideView() {
+        // empty
     }
 
     /**
@@ -612,7 +617,7 @@ public class MainView extends JFrame implements IMainView {
             if (discovered == board.getHeight() * board.getWidth() - board.getMines()) {
                 c.actionPerformed(new ActionEvent(this, 0, MV_WIN));
             }
-            final float p = (float) discovered / (float) (board.getHeight() * board.getWidth() - board.getMines()) * 100f;
+            final float p = discovered / (float) (board.getHeight() * board.getWidth() - board.getMines()) * 100f;
             jlDiscovered2.setText((int) p + "%");
             switch (board.getBoard(_m, _n)) {
                 case -1:
@@ -747,7 +752,7 @@ public class MainView extends JFrame implements IMainView {
     }
 
     private void showClue1() {
-        final Map<Integer, JButton> hm = new HashMap();
+        final Map<Integer, JButton> hm = new HashMap<>();
         for (int i = 0; i < board.getHeight(); i++) {
             for (int j = 0; j < board.getWidth(); j++) {
                 if (jbBoardButtons[i][j].isEnabled() && board.getBoard(i, j) == 0) {
@@ -761,7 +766,7 @@ public class MainView extends JFrame implements IMainView {
     }
 
     private void showClue2() {
-        final Map<Integer, JButton> hm = new HashMap();
+        final Map<Integer, JButton> hm = new HashMap<>();
         for (int i = 0; i < board.getHeight(); i++) {
             for (int j = 0; j < board.getWidth(); j++) {
                 if (jbBoardButtons[i][j].isEnabled() && board.getBoard(i, j) > 0) {
@@ -775,7 +780,7 @@ public class MainView extends JFrame implements IMainView {
     }
 
     private void showClue3() {
-        final Map<Integer, JButton> hm = new HashMap();
+        final Map<Integer, JButton> hm = new HashMap<>();
         for (int i = 0; i < board.getHeight(); i++) {
             for (int j = 0; j < board.getWidth(); j++) {
                 if (jbBoardButtons[i][j].isEnabled() && board.getBoard(i, j) == -1 && !jbBoardButtons[i][j].getText().equals(":)")) {
