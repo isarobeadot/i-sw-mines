@@ -406,6 +406,7 @@ public class MainView extends JFrame implements IMainView {
         this.primaryClikNumber = 0;
         this.secondaryClikNumber = 0;
         this.jlPaused.setVisible(false);
+        this.jtbTop.setFloatable(false);
         this.setVisible(true);
     }
 
