@@ -1,6 +1,7 @@
 package inaki.sw.mines.view.swing;
 
 import inaki.sw.mines.controller.Controller;
+import inaki.sw.mines.model.Board;
 import inaki.sw.mines.view.IChooseGameView;
 import static inaki.sw.mines.view.IChooseGameView.CGV_EASY;
 import static inaki.sw.mines.view.IChooseGameView.CGV_HARD;
@@ -49,13 +50,16 @@ public class ChooseGameView extends JFrame implements IChooseGameView {
 
         jpDefault.setBorder(javax.swing.BorderFactory.createTitledBorder("Default Sizes"));
 
-        jbEasy.setText("<html>\n<body style=\"text-align:center;color:green;\">\n<h1>8 x 8</h1>\n<h2>10 mines</h2>\n</body>\n </html>");
+        jbEasy.setForeground(Board.colorByValue(Board.BOARD_2));
+        jbEasy.setText("<html>\n<body style=\"text-align:center;\">\n<h1>8 x 8</h1>\n<h2>10 mines</h2>\n</body>\n </html>");
         jbEasy.setFocusable(false);
 
-        jbMedium.setText("<html>\n<body style=\"text-align:center;color:blue;\">\n<h1>16 x 16</h1>\n<h2>40 mines</h2>\n</body>\n </html>");
+        jbMedium.setForeground(Board.colorByValue(Board.BOARD_1));
+        jbMedium.setText("<html>\n<body style=\"text-align:center;\">\n<h1>16 x 16</h1>\n<h2>40 mines</h2>\n</body>\n </html>");
         jbMedium.setFocusable(false);
 
-        jbHard.setText("<html>\n<body style=\"text-align:center;color:red;\">\n<h1>30 x 16</h1>\n<h2>99 mines</h2>\n</body>\n </html>");
+        jbHard.setForeground(Board.colorByValue(Board.BOARD_3));
+        jbHard.setText("<html>\n<body style=\"text-align:center;\">\n<h1>30 x 16</h1>\n<h2>99 mines</h2>\n</body>\n </html>");
         jbHard.setFocusable(false);
 
         javax.swing.GroupLayout jpDefaultLayout = new javax.swing.GroupLayout(jpDefault);

@@ -4,9 +4,7 @@ import inaki.sw.mines.controller.Controller;
 import inaki.sw.mines.model.Board;
 import inaki.sw.mines.model.Clue;
 import inaki.sw.mines.view.IMainView;
-import static java.awt.Color.black;
-import static java.awt.Color.decode;
-import static java.awt.Color.red;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -313,7 +311,7 @@ public class MainView extends JFrame implements IMainView {
     }//GEN-LAST:event_jmiClue3ActionPerformed
 
     private void formWindowLostFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowLostFocus
-        jbChrono.doClick();
+        c.actionPerformed(new ActionEvent(this,0,MV_CHRONO_PAUSE));
     }//GEN-LAST:event_formWindowLostFocus
 
     private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
@@ -494,6 +492,7 @@ public class MainView extends JFrame implements IMainView {
         jmiClue1.setEnabled(true);
         jmiClue2.setEnabled(true);
         jmiClue3.setEnabled(true);
+        checkTotalFlagNumber();
         this.pack();
     }
 
@@ -508,10 +507,10 @@ public class MainView extends JFrame implements IMainView {
         jmiClue3.setEnabled(false);
         for (int i = 0; i < board.getHeight(); i++) {
             for (int j = 0; j < board.getWidth(); j++) {
-                if (board.getBoard(i, j) != -1) {
-                    uncover(i, j);
+                if (board.getValue(i, j) == Board.BOARD_MINE) {
+                    jbBoardButtons[i][j].setText(MV_FLAG_TXT);
                 } else {
-                    jbBoardButtons[i][j].setText(":)");
+                    uncover(i, j);
                 }
             }
         }
@@ -609,7 +608,7 @@ public class MainView extends JFrame implements IMainView {
     }
 
     private void uncover(final int _m, final int _n) {
-        if (!jbBoardButtons[_m][_n].getText().equals(":)") && jbBoardButtons[_m][_n].isEnabled()) {
+        if (!jbBoardButtons[_m][_n].getText().equals(MV_FLAG_TXT) && jbBoardButtons[_m][_n].isEnabled()) {
             jbBoardButtons[_m][_n].setEnabled(false);
             int discovered = countDiscoveredCells();
             if (discovered == 1) {
@@ -620,17 +619,17 @@ public class MainView extends JFrame implements IMainView {
             }
             final float p = discovered / (float) (board.getHeight() * board.getWidth() - board.getMines()) * 100f;
             jlDiscovered2.setText((int) p + "%");
-            switch (board.getBoard(_m, _n)) {
-                case -1:
+            switch (board.getValue(_m, _n)) {
+                case Board.BOARD_MINE:
                     for (int i = 0; i < board.getHeight(); i++) {
                         for (int j = 0; j < board.getWidth(); j++) {
-                            if (board.getBoard(i, j) == -1) {
+                            if (board.getValue(i, j) == Board.BOARD_MINE) {
                                 jbBoardButtons[i][j].setText(":(");
-                                jbBoardButtons[i][j].setForeground(decode("#000000"));
+                                jbBoardButtons[i][j].setForeground(Color.black);
                             }
-                            if (jbBoardButtons[i][j].getText().equals(":)")) {
+                            if (jbBoardButtons[i][j].getText().equals(MV_FLAG_TXT)) {
                                 jbBoardButtons[i][j].setText("X");
-                                jbBoardButtons[i][j].setForeground(decode("#FF6600"));
+                                jbBoardButtons[i][j].setForeground(Board.colorByValue(Board.BOARD_WARNING));
                             }
                             jbBoardButtons[i][j].setEnabled(false);
                         }
@@ -641,7 +640,7 @@ public class MainView extends JFrame implements IMainView {
                     jmiClue3.setEnabled(false);
                     c.actionPerformed(new ActionEvent(this, 0, MV_LOST));
                     break;
-                case 0:
+                case Board.BOARD_0:
                     final int m1 = max(0, _m - 1);
                     final int m2 = min(board.getHeight() - 1, _m + 1);
                     final int n1 = max(0, _n - 1);
@@ -654,40 +653,19 @@ public class MainView extends JFrame implements IMainView {
                         }
                     }
                     break;
-                case 1:
-                    jbBoardButtons[_m][_n].setText(board.getBoard(_m, _n) + "");
-                    jbBoardButtons[_m][_n].setForeground(decode("#2222FF"));
-                    break;
-                case 2:
-                    jbBoardButtons[_m][_n].setText(board.getBoard(_m, _n) + "");
-                    jbBoardButtons[_m][_n].setForeground(decode("#008800"));
-                    break;
-                case 3:
-                    jbBoardButtons[_m][_n].setText(board.getBoard(_m, _n) + "");
-                    jbBoardButtons[_m][_n].setForeground(decode("#FF0000"));
-                    break;
-                case 4:
-                    jbBoardButtons[_m][_n].setText(board.getBoard(_m, _n) + "");
-                    jbBoardButtons[_m][_n].setForeground(decode("#000088"));
-                    break;
-                case 5:
-                    jbBoardButtons[_m][_n].setText(board.getBoard(_m, _n) + "");
-                    jbBoardButtons[_m][_n].setForeground(decode("#800000"));
-                    break;
-                case 6:
-                    jbBoardButtons[_m][_n].setText(board.getBoard(_m, _n) + "");
-                    jbBoardButtons[_m][_n].setForeground(decode("#0099CC"));
-                    break;
-                case 7:
-                    jbBoardButtons[_m][_n].setText(board.getBoard(_m, _n) + "");
-                    jbBoardButtons[_m][_n].setForeground(decode("#990099"));
-                    break;
-                case 8:
-                    jbBoardButtons[_m][_n].setText(board.getBoard(_m, _n) + "");
-                    jbBoardButtons[_m][_n].setForeground(decode("#CC9900"));
+                case Board.BOARD_1:
+                case Board.BOARD_2:
+                case Board.BOARD_3:
+                case Board.BOARD_4:
+                case Board.BOARD_5:
+                case Board.BOARD_6:
+                case Board.BOARD_7:
+                case Board.BOARD_8:
+                    jbBoardButtons[_m][_n].setText(board.getValue(_m, _n) + "");
+                    jbBoardButtons[_m][_n].setForeground(Board.colorByValue(board.getValue(_m, _n)));
                     break;
                 default:
-                    jbBoardButtons[_m][_n].setText(board.getBoard(_m, _n) + "");
+                    jbBoardButtons[_m][_n].setText(board.getValue(_m, _n) + "");
                     break;
             }
         }
@@ -696,34 +674,78 @@ public class MainView extends JFrame implements IMainView {
     private void mark(final int _m, final int _n) {
         if (jbBoardButtons[_m][_n].isEnabled()) {
             /* Comprobamos si esta etiquetada o no */
-            if (jbBoardButtons[_m][_n].getText().equals(":)")) {
-                // Si lo esta, la desetiquetamos
-                jbBoardButtons[_m][_n].setText(" ");
-                jlFlag2.setText((parseInt(jlFlag2.getText()) - 1) + "");
-            } else {
-                // Si no, la etiquetamos
-                jbBoardButtons[_m][_n].setText(":)");
-                jlFlag2.setText((parseInt(jlFlag2.getText()) + 1) + "");
-            }
+            markUnmark(_m, _n);
+            /* Comprobamos si hemos puesto demasiadas banderas al rededor de un numero */
+            checkSurroundingFlagNumber(_m, _n);
             /* Comprobamos si hemos puesto demasiadas banderas en el tablero */
-            if (parseInt(jlFlag2.getText()) > parseInt(jlFlag4.getText())) {
-                jlFlag1.setForeground(red);
-                jlFlag2.setForeground(red);
-                jlFlag3.setForeground(red);
-                jlFlag4.setForeground(red);
-            } else {
-                jlFlag1.setForeground(black);
-                jlFlag2.setForeground(black);
-                jlFlag3.setForeground(black);
-                jlFlag4.setForeground(black);
+            checkTotalFlagNumber();
+        }
+    }
+
+    private void markUnmark(final int _m, final int _n) {
+        if (jbBoardButtons[_m][_n].getText().equals(MV_FLAG_TXT)) {
+            // Si lo esta, la desetiquetamos
+            jbBoardButtons[_m][_n].setText(" ");
+            jlFlag2.setText((parseInt(jlFlag2.getText()) - 1) + "");
+        } else {
+            // Si no, la etiquetamos
+            jbBoardButtons[_m][_n].setText(MV_FLAG_TXT);
+            jlFlag2.setText((parseInt(jlFlag2.getText()) + 1) + "");
+        }
+    }
+
+    private void checkSurroundingFlagNumber(final int _m, final int _n) {
+        final int m1 = max(0, _m - 1);
+        final int m2 = min(board.getHeight() - 1, _m + 1);
+        final int n1 = max(0, _n - 1);
+        final int n2 = min(board.getWidth() - 1, _n + 1);
+        for (int _i = m1; _i <= m2; _i++) {
+            for (int _j = n1; _j <= n2; _j++) {
+                if (!jbBoardButtons[_i][_j].isEnabled()) {
+                    if (surroundingFlagNumberExceeded(_i, _j)) {
+                        jbBoardButtons[_i][_j].setForeground(Board.colorByValue(Board.BOARD_WARNING));
+                    } else {
+                        jbBoardButtons[_i][_j].setForeground(Board.colorByValue(board.getValue(_i, _j)));
+                    }
+                }
             }
+        }
+    }
+
+    private boolean surroundingFlagNumberExceeded(final int _m, final int _n) {
+        final int m1 = max(0, _m - 1);
+        final int m2 = min(board.getHeight() - 1, _m + 1);
+        final int n1 = max(0, _n - 1);
+        final int n2 = min(board.getWidth() - 1, _n + 1);
+        int flags = 0;
+        for (int _i = m1; _i <= m2; _i++) {
+            for (int _j = n1; _j <= n2; _j++) {
+                if ((_i != _m || _j != _n) && jbBoardButtons[_i][_j].getText().equals(MV_FLAG_TXT)) {
+                    flags++;
+                }
+            }
+        }
+        return flags > board.getValue(_m, _n);
+    }
+
+    private void checkTotalFlagNumber() {
+        if (parseInt(jlFlag2.getText()) > parseInt(jlFlag4.getText())) {
+            jlFlag1.setForeground(Color.red);
+            jlFlag2.setForeground(Color.red);
+            jlFlag3.setForeground(Color.red);
+            jlFlag4.setForeground(Color.red);
+        } else {
+            jlFlag1.setForeground(Color.black);
+            jlFlag2.setForeground(Color.black);
+            jlFlag3.setForeground(Color.black);
+            jlFlag4.setForeground(Color.black);
         }
     }
 
     private void uncoverSurrounding(final int _m, final int _n) {
         if (!jbBoardButtons[_m][_n].isEnabled()) {
-            final int number = board.getBoard(_m, _n);
-            if (number > 0) {
+            final int number = board.getValue(_m, _n);
+            if (number > Board.BOARD_0) {
                 final int m1 = max(0, _m - 1);
                 final int m2 = min(board.getHeight() - 1, _m + 1);
                 final int n1 = max(0, _n - 1);
@@ -732,7 +754,7 @@ public class MainView extends JFrame implements IMainView {
                 int marked = 0;
                 for (int _i = m1; _i <= m2; _i++) {
                     for (int _j = n1; _j <= n2; _j++) {
-                        if (jbBoardButtons[_i][_j].getText().equals(":)")) {
+                        if (jbBoardButtons[_i][_j].getText().equals(MV_FLAG_TXT)) {
                             marked++;
                         }
                     }
@@ -756,7 +778,7 @@ public class MainView extends JFrame implements IMainView {
         final Map<Integer, JButton> hm = new HashMap<>();
         for (int i = 0; i < board.getHeight(); i++) {
             for (int j = 0; j < board.getWidth(); j++) {
-                if (jbBoardButtons[i][j].isEnabled() && board.getBoard(i, j) == 0) {
+                if (jbBoardButtons[i][j].isEnabled() && board.getValue(i, j) == Board.BOARD_0) {
                     hm.put(hm.size(), jbBoardButtons[i][j]);
                 }
             }
@@ -770,7 +792,7 @@ public class MainView extends JFrame implements IMainView {
         final Map<Integer, JButton> hm = new HashMap<>();
         for (int i = 0; i < board.getHeight(); i++) {
             for (int j = 0; j < board.getWidth(); j++) {
-                if (jbBoardButtons[i][j].isEnabled() && board.getBoard(i, j) > 0) {
+                if (jbBoardButtons[i][j].isEnabled() && board.getValue(i, j) > Board.BOARD_0) {
                     hm.put(hm.size(), jbBoardButtons[i][j]);
                 }
             }
@@ -784,7 +806,7 @@ public class MainView extends JFrame implements IMainView {
         final Map<Integer, JButton> hm = new HashMap<>();
         for (int i = 0; i < board.getHeight(); i++) {
             for (int j = 0; j < board.getWidth(); j++) {
-                if (jbBoardButtons[i][j].isEnabled() && board.getBoard(i, j) == -1 && !jbBoardButtons[i][j].getText().equals(":)")) {
+                if (jbBoardButtons[i][j].isEnabled() && board.getValue(i, j) == Board.BOARD_MINE && !jbBoardButtons[i][j].getText().equals(MV_FLAG_TXT)) {
                     hm.put(hm.size(), jbBoardButtons[i][j]);
                 }
             }

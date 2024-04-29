@@ -1,5 +1,6 @@
 package inaki.sw.mines.model;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
@@ -16,7 +17,19 @@ import static java.util.logging.Logger.getLogger;
  */
 public class Board {
 
-    public static final int MINE = -1;
+    public static final int BOARD_MINE = -1;
+    public static final int BOARD_WARNING = -2;
+    public static final int BOARD_ERROR = -3;
+    public static final int BOARD_0 = 0;
+    public static final int BOARD_1 = 1;
+    public static final int BOARD_2 = 2;
+    public static final int BOARD_3 = 3;
+    public static final int BOARD_4 = 4;
+    public static final int BOARD_5 = 5;
+    public static final int BOARD_6 = 6;
+    public static final int BOARD_7 = 7;
+    public static final int BOARD_8 = 8;
+
     private static final Logger LOGGER = getLogger(Board.class.getName());
     private final int height;
     private final int width;
@@ -93,20 +106,25 @@ public class Board {
      * @param w the width index of the board
      * @return the value of the board at specified index
      */
-    public int getBoard(final int h, final int w) {
+    public int getValue(final int h, final int w) {
         return this.board[h][w];
     }
 
     /**
      * Generates a random board.
+     *
+     * @param debug debug mode enabled or disabled
      */
-    public void generate() {
+    public void generate(final boolean debug) {
         if (height * width < mines) {
             LOGGER.warning("There are more mines than holes to place them");
             exit(-1);
         } else {
             placeMines();
             placeNumbers();
+            if (debug) {
+                printBoard();
+            }
         }
     }
 
@@ -114,8 +132,12 @@ public class Board {
      * Prints the board trough the standard output.
      */
     public void printBoard() {
+        for (int j = 0; j < width; j++) {
+            out.print("\t["+j + "]");
+        }
+        out.println("");
         for (int i = 0; i < height; i++) {
-            out.print(i + ":\t");
+            out.print("["+i + "]\t");
             for (int j = 0; j < width; j++) {
                 out.print(board[i][j] + "\t");
             }
@@ -128,13 +150,13 @@ public class Board {
      * Places mines randomly through the board.
      */
     private void placeMines() {
-        for (int i = 0; i < mines; i++) {
+        int i = 0;
+        while (i < mines) {
             final int _m = current().nextInt(0, height);
             final int _n = current().nextInt(0, width);
-            if (board[_m][_n] == MINE) {
-                i--;
-            } else {
-                board[_m][_n] = MINE;
+            if (board[_m][_n] != BOARD_MINE) {
+                board[_m][_n] = BOARD_MINE;
+                i++;
             }
         }
     }
@@ -160,6 +182,33 @@ public class Board {
                     board[i][j] = bombs;
                 }
             }
+        }
+    }
+
+    public static Color colorByValue(final int number) {
+        switch (number) {
+            case BOARD_1:
+                return Color.decode("#2222FF");
+            case BOARD_2:
+                return Color.decode("#008800");
+            case BOARD_3:
+                return Color.decode("#EE0000");
+            case BOARD_4:
+                return Color.decode("#000088");
+            case BOARD_5:
+                return Color.decode("#800000");
+            case BOARD_6:
+                return Color.decode("#0099CC");
+            case BOARD_7:
+                return Color.decode("#990099");
+            case BOARD_8:
+                return Color.decode("#CC9900");
+            case BOARD_WARNING:
+                return Color.decode("#FF6600");
+            case BOARD_ERROR:
+                return Color.decode("#FF0000");
+            default:
+                return Color.decode("#000000");
         }
     }
 }

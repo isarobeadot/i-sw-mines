@@ -53,7 +53,7 @@ public class ControllerIT {
     @BeforeEach
     public void setUp() throws IOException, InterruptedException {
         c = new Controller();
-        c.testingConfig();
+        c.debugConfig();
         c.startController();
         Thread.sleep(DELAY);
     }

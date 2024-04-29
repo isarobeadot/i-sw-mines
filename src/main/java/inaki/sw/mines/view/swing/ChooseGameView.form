@@ -86,19 +86,28 @@
       <SubComponents>
         <Component class="javax.swing.JButton" name="jbEasy">
           <Properties>
-            <Property name="text" type="java.lang.String" value="&lt;html&gt;&#xa;&lt;body style=&quot;text-align:center;color:green;&quot;&gt;&#xa;&lt;h1&gt;8 x 8&lt;/h1&gt;&#xa;&lt;h2&gt;10 mines&lt;/h2&gt;&#xa;&lt;/body&gt;&#xa; &lt;/html&gt;"/>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="Board.colorByValue(Board.BOARD_2)" type="code"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="&lt;html&gt;&#xa;&lt;body style=&quot;text-align:center;&quot;&gt;&#xa;&lt;h1&gt;8 x 8&lt;/h1&gt;&#xa;&lt;h2&gt;10 mines&lt;/h2&gt;&#xa;&lt;/body&gt;&#xa; &lt;/html&gt;"/>
             <Property name="focusable" type="boolean" value="false"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="jbMedium">
           <Properties>
-            <Property name="text" type="java.lang.String" value="&lt;html&gt;&#xa;&lt;body style=&quot;text-align:center;color:blue;&quot;&gt;&#xa;&lt;h1&gt;16 x 16&lt;/h1&gt;&#xa;&lt;h2&gt;40 mines&lt;/h2&gt;&#xa;&lt;/body&gt;&#xa; &lt;/html&gt;"/>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="Board.colorByValue(Board.BOARD_1)" type="code"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="&lt;html&gt;&#xa;&lt;body style=&quot;text-align:center;&quot;&gt;&#xa;&lt;h1&gt;16 x 16&lt;/h1&gt;&#xa;&lt;h2&gt;40 mines&lt;/h2&gt;&#xa;&lt;/body&gt;&#xa; &lt;/html&gt;"/>
             <Property name="focusable" type="boolean" value="false"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="jbHard">
           <Properties>
-            <Property name="text" type="java.lang.String" value="&lt;html&gt;&#xa;&lt;body style=&quot;text-align:center;color:red;&quot;&gt;&#xa;&lt;h1&gt;30 x 16&lt;/h1&gt;&#xa;&lt;h2&gt;99 mines&lt;/h2&gt;&#xa;&lt;/body&gt;&#xa; &lt;/html&gt;"/>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="Board.colorByValue(Board.BOARD_3)" type="code"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="&lt;html&gt;&#xa;&lt;body style=&quot;text-align:center;&quot;&gt;&#xa;&lt;h1&gt;30 x 16&lt;/h1&gt;&#xa;&lt;h2&gt;99 mines&lt;/h2&gt;&#xa;&lt;/body&gt;&#xa; &lt;/html&gt;"/>
             <Property name="focusable" type="boolean" value="false"/>
           </Properties>
         </Component>

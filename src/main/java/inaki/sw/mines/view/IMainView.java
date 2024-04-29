@@ -14,6 +14,7 @@ public interface IMainView extends IView {
     static final String MV_NEW = "MV_NEW";
     static final String MV_RESTART = "MV_RESTART";
     static final String MV_CHRONO = "MV_CHRONO";
+    static final String MV_CHRONO_PAUSE = "MV_CHRONO_PAUSE";
     static final String MV_SOLVE = "MV_SOLVE";
     static final String MV_LOST = "MV_LOST";
     static final String MV_WIN = "MV_WIN";
@@ -21,6 +22,8 @@ public interface IMainView extends IView {
     static final String MV_CLUE_WHITE_AREA = "MV_CLUE_WHITE_AREA";
     static final String MV_CLUE_A_NUMBER = "MV_CLUE_A_NUMBER";
     static final String MV_CLUE_A_FLAG = "MV_CLUE_A_FLAG";
+    
+    static final String MV_FLAG_TXT = "<html><body>&para;</body></html";
 
     /**
      *

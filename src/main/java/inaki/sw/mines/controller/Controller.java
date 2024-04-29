@@ -18,6 +18,7 @@ import static inaki.sw.mines.view.IChooseGameView.CGV_START;
 import static inaki.sw.mines.view.IChooseGameView.CGV_STATISTICS;
 import inaki.sw.mines.view.IMainView;
 import static inaki.sw.mines.view.IMainView.MV_CHRONO;
+import static inaki.sw.mines.view.IMainView.MV_CHRONO_PAUSE;
 import static inaki.sw.mines.view.IMainView.MV_CLUE_A_FLAG;
 import static inaki.sw.mines.view.IMainView.MV_CLUE_A_NUMBER;
 import static inaki.sw.mines.view.IMainView.MV_CLUE_WHITE_AREA;
@@ -71,7 +72,7 @@ public class Controller implements ActionListener {
 
     private static final Logger LOGGER = getLogger(Controller.class.getName());
 
-    private boolean testing = false;
+    private boolean debug = false;
     private final String version = this.getClass().getPackage().getImplementationVersion();
     private final IChooseGameView cgv;
     private final IMainView mv;
@@ -136,8 +137,8 @@ public class Controller implements ActionListener {
     /**
      * Disables Nimbus LnF. Use this only for testing.
      */
-    public void testingConfig() {
-        this.testing = true;
+    public void debugConfig() {
+        this.debug = true;
         cgv.disableNimbus(true);
         mv.disableNimbus(true);
         snv.disableNimbus(true);
@@ -199,6 +200,12 @@ public class Controller implements ActionListener {
                     }
                 }
                 break;
+            case MV_CHRONO_PAUSE:
+                if (chrono.isInstanceRunning()) {
+                    chrono.pauseChronometer();
+                    mv.setReadOnly(true);
+                }
+                break;
             case MV_SOLVE:
                 mv.solveBoard();
                 break;
@@ -243,7 +250,7 @@ public class Controller implements ActionListener {
                 sv.hideView();
                 break;
             case SNV_OK:
-                String name = this.testing ? "test" : snv.getSelectedName();
+                String name = this.debug ? "test" : snv.getSelectedName();
                 snv.hideView();
                 Statistic s = new Statistic();
                 s.setDiscoveredHistory(discoveredHistory);
@@ -318,7 +325,7 @@ public class Controller implements ActionListener {
     private void doSTART() {
         cgv.hideView();
         if (board != null) {
-            board.generate();
+            board.generate(this.debug);
         }
         mv.setBoard(board);
         mv.startView();
