@@ -1,6 +1,6 @@
 package inaki.sw.mines.view;
 
-import inaki.sw.mines.model.StatisticSet;
+import inaki.sw.mines.model.StatisticList;
 
 /**
  *
@@ -21,6 +21,6 @@ public interface IStatisticHistoryView extends IView {
      *
      * @param set
      */
-    public void setStatistics(StatisticSet set);
+    public void setStatistics(StatisticList set);
 
 }

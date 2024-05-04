@@ -2,8 +2,12 @@ package inaki.sw.mines.view.cmd;
 
 import inaki.sw.mines.controller.Controller;
 import inaki.sw.mines.model.Statistic;
-import inaki.sw.mines.model.StatisticSet;
+import inaki.sw.mines.model.StatisticList;
 import inaki.sw.mines.view.IStatisticHistoryView;
+import inaki.sw.mines.view.cmd.utils.Ansi;
+import inaki.sw.mines.view.cmd.utils.table.Cell;
+import inaki.sw.mines.view.cmd.utils.table.Row;
+import inaki.sw.mines.view.cmd.utils.table.Table;
 import java.awt.event.ActionEvent;
 import static java.awt.event.KeyEvent.VK_S;
 import java.io.BufferedReader;
@@ -20,11 +24,11 @@ import java.util.logging.Logger;
 public class StatisticHistoryViewCMD implements IStatisticHistoryView {
 
     private Controller c;
-    private StatisticSet statisticSet;
+    private StatisticList statisticSet;
     private String version;
 
     @Override
-    public void setStatistics(StatisticSet set) {
+    public void setStatistics(StatisticList set) {
         this.statisticSet = set;
     }
 
@@ -51,7 +55,7 @@ public class StatisticHistoryViewCMD implements IStatisticHistoryView {
 
     @Override
     public void hideView() {
-        System.out.print(ANSI_CLS + ANSI_HOME);
+        System.out.print(Ansi.CLS + Ansi.HOME);
     }
 
     @Override
@@ -65,36 +69,56 @@ public class StatisticHistoryViewCMD implements IStatisticHistoryView {
     }
 
     private void showTitle() {
-        System.out.print(ANSI_CLS + ANSI_HOME);
-        String s = ANSI_FG_CYAN + ANSI_BOLD + "\n" + "+-";
+        System.out.print(Ansi.CLS + Ansi.HOME);
+        String s = Ansi.FG_CYAN + Ansi.BOLD + "\n" + "+-";
         String title = TITLE.toUpperCase() + (version.equals("") ? "" : " v" + version);
         for (int i = 0; i < title.length(); i++) {
             s += "-";
         }
         s += "-+\n";
-        System.out.println(s + "| " + title + " |" + s + ANSI_RESET);
+        System.out.println(s + "| " + title + " |" + s + Ansi.RESET);
     }
 
     private void showStatistics() {
-        System.out.println("Date\t\t\t\tType\tName\tTime\tSize\tMines");
-        for (Statistic s : statisticSet) {
-            String type;
+        Table table = new Table();
+        table.setFirstRowAsHeader(true);
+        table.setDistanceBetweenCells(2);
+
+        Row header = new Row();
+        header.add(new Cell("Date"));
+        header.add(new Cell("Type"));
+        header.add(new Cell("Name"));
+        header.add(new Cell("Time"));
+        header.add(new Cell("Size"));
+        header.add(new Cell("Mines"));
+        table.add(header);
+
+        statisticSet.forEach(s -> {
+            String typeColor;
             switch (s.getType()) {
                 case EASY:
-                    type = ANSI_FG_GREEN + s.getType() + ANSI_RESET;
+                    typeColor = Ansi.FG_GREEN;
                     break;
                 case MEDIUM:
-                    type = ANSI_FG_BLUE + s.getType() + ANSI_RESET;
+                    typeColor = Ansi.FG_BLUE;
                     break;
                 case HARD:
-                    type = ANSI_FG_RED + s.getType() + ANSI_RESET;
+                    typeColor = Ansi.FG_RED;
                     break;
                 default:
-                    type = s.getType().name();
+                    typeColor = "";
                     break;
             }
-            System.out.println(s.getWinDate() + "\t" + type + "\t" + s.getName() + "\t" + s.getTotalMinutes() + ":" + s.getTotalSeconds() + "\t" + s.getHorizontalSize() + "x" + s.getVerticalSize() + "\t" + s.getMineNumber());
-        }
+            Row row = new Row();
+            row.add(new Cell(s.getWinDate().toString()));
+            row.add(new Cell(s.getType().name(), typeColor));
+            row.add(new Cell(s.getName()));
+            row.add(new Cell(s.getTotalMinutes() + ":" + s.getTotalSeconds()));
+            row.add(new Cell(s.getHorizontalSize() + "x" + s.getVerticalSize()));
+            row.add(new Cell(s.getMineNumber() + ""));
+            table.add(row);
+        });
+        table.print();
     }
 
     private String readOption() {

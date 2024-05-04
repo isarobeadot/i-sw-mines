@@ -2,6 +2,7 @@ package inaki.sw.mines.view.cmd;
 
 import inaki.sw.mines.controller.Controller;
 import inaki.sw.mines.view.IChooseGameView;
+import inaki.sw.mines.view.cmd.utils.Ansi;
 import java.awt.event.ActionEvent;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -34,14 +35,14 @@ public class ChooseGameViewCMD implements IChooseGameView {
     public void startView() {
         showTitle();
 
-        System.out.println("1.-\t" + ANSI_FG_GREEN + "8 x 8 (10 mines)" + ANSI_RESET);
-        System.out.println("2.-\t" + ANSI_FG_BLUE + "16 x 16 (40 mines)" + ANSI_RESET);
-        System.out.println("3.-\t" + ANSI_FG_RED + "30 x 16 (99 mines)" + ANSI_RESET);
-        System.out.println("4.-\t" + "Custom" + ANSI_RESET);
+        System.out.println("1.-\t" + Ansi.FG_GREEN + "8 x 8 (10 mines)" + Ansi.RESET);
+        System.out.println("2.-\t" + Ansi.FG_BLUE + "16 x 16 (40 mines)" + Ansi.RESET);
+        System.out.println("3.-\t" + Ansi.FG_RED + "30 x 16 (99 mines)" + Ansi.RESET);
+        System.out.println("4.-\t" + "Custom" + Ansi.RESET);
         if (statisticsEnabled) {
-            System.out.println("5.-\t" + "Statistics" + ANSI_RESET);
+            System.out.println("5.-\t" + "Statistics" + Ansi.RESET);
         }
-        System.out.println("ENTER.-\t" + "Exit" + ANSI_RESET);
+        System.out.println("ENTER.-\t" + "Exit" + Ansi.RESET);
         System.out.print("\nType an option: ");
 
         switch (readOption(0)) {
@@ -84,7 +85,7 @@ public class ChooseGameViewCMD implements IChooseGameView {
 
     @Override
     public void hideView() {
-        System.out.print(ANSI_CLS + ANSI_HOME);
+        System.out.print(Ansi.CLS + Ansi.HOME);
     }
 
     @Override
@@ -118,14 +119,14 @@ public class ChooseGameViewCMD implements IChooseGameView {
     }
 
     private void showTitle() {
-        System.out.print(ANSI_CLS + ANSI_HOME);
-        String s = ANSI_FG_CYAN + ANSI_BOLD + "\n" + "+-";
+        System.out.print(Ansi.CLS + Ansi.HOME);
+        String s = Ansi.FG_CYAN + Ansi.BOLD + "\n" + "+-";
         String title = TITLE.toUpperCase() + (version.equals("") ? "" : " v" + version);
         for (int i = 0; i < title.length(); i++) {
             s += "-";
         }
         s += "-+\n";
-        System.out.println(s + "| " + title + " |" + s + ANSI_RESET);
+        System.out.println(s + "| " + title + " |" + s + Ansi.RESET);
     }
 
     private int readOption(int def) {
@@ -142,7 +143,7 @@ public class ChooseGameViewCMD implements IChooseGameView {
     private void badOperation() {
         showTitle();
 
-        System.err.println(ANSI_FG_RED + "Wrong Option" + ANSI_RESET);
+        System.err.println(Ansi.FG_RED + "Wrong Option" + Ansi.RESET);
         System.out.println("\nPress ENTER to continue...");
         try {
             in.readLine();

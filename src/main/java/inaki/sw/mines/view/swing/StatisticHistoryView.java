@@ -2,7 +2,7 @@ package inaki.sw.mines.view.swing;
 
 import inaki.sw.mines.controller.Controller;
 import inaki.sw.mines.model.GameType;
-import inaki.sw.mines.model.StatisticSet;
+import inaki.sw.mines.model.StatisticList;
 import inaki.sw.mines.view.IStatisticHistoryView;
 import java.awt.event.ActionEvent;
 import java.util.Date;
@@ -170,7 +170,7 @@ public class StatisticHistoryView extends JFrame implements IStatisticHistoryVie
      * @param set
      */
     @Override
-    public void setStatistics(StatisticSet set) {
+    public void setStatistics(StatisticList set) {
         Object[][] easy = filterAndPrepareData(set, GameType.EASY);
         Object[][] medium = filterAndPrepareData(set, GameType.MEDIUM);
         Object[][] hard = filterAndPrepareData(set, GameType.HARD);
@@ -203,7 +203,7 @@ public class StatisticHistoryView extends JFrame implements IStatisticHistoryVie
         this.disableNimbus = disableNimbus;
     }
 
-    private Object[][] filterAndPrepareData(StatisticSet set, GameType type) {
+    private Object[][] filterAndPrepareData(StatisticList set, GameType type) {
         return set.stream().sorted((s1, s2) -> (Integer.valueOf(s1.getTotalMinutes() * 60 + s1.getTotalSeconds())).compareTo(s2.getTotalMinutes() * 60 + s2.getTotalSeconds())).filter(s -> s.getType().equals(type)).map(s -> {
             Object[] o = {s.getWinDate(), s.getName(), s.getTotalMinutes() + ":" + (s.getTotalSeconds() < 10 ? "0" : "") + s.getTotalSeconds()};
             return o;

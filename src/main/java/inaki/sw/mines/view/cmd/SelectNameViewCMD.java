@@ -2,6 +2,7 @@ package inaki.sw.mines.view.cmd;
 
 import inaki.sw.mines.controller.Controller;
 import inaki.sw.mines.view.ISelectNameView;
+import inaki.sw.mines.view.cmd.utils.Ansi;
 import java.awt.event.ActionEvent;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -46,7 +47,7 @@ public class SelectNameViewCMD implements ISelectNameView {
 
     @Override
     public void hideView() {
-        System.out.print(ANSI_CLS + ANSI_HOME);
+        System.out.print(Ansi.CLS + Ansi.HOME);
     }
 
     @Override
@@ -60,14 +61,14 @@ public class SelectNameViewCMD implements ISelectNameView {
     }
 
     private void showTitle() {
-        System.out.print(ANSI_CLS + ANSI_HOME);
-        String s = ANSI_FG_CYAN + ANSI_BOLD + "\n" + "+-";
+        System.out.print(Ansi.CLS + Ansi.HOME);
+        String s = Ansi.FG_CYAN + Ansi.BOLD + "\n" + "+-";
         String title = TITLE.toUpperCase() + (version.equals("") ? "" : " v" + version);
         for (int i = 0; i < title.length(); i++) {
             s += "-";
         }
         s += "-+\n";
-        System.out.println(s + "| " + title + " |" + s + ANSI_RESET);
+        System.out.println(s + "| " + title + " |" + s + Ansi.RESET);
     }
 
     private String readName() {

@@ -8,12 +8,12 @@ import java.util.Collection;
  * @author inaki
  * @since 2.1 or before
  */
-public class StatisticSet extends ArrayList<Statistic> {
+public class StatisticList extends ArrayList<Statistic> {
 
     /**
      *
      */
-    public StatisticSet() {
+    public StatisticList() {
         super();
     }
 
@@ -21,7 +21,7 @@ public class StatisticSet extends ArrayList<Statistic> {
      *
      * @param c
      */
-    public StatisticSet(Collection<Statistic> c) {
+    public StatisticList(Collection<Statistic> c) {
         super(c);
     }
 }

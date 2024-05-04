@@ -9,7 +9,7 @@ import static inaki.sw.mines.model.Chronometer.C_UPDATE_CHRONO;
 import inaki.sw.mines.model.Clue;
 import inaki.sw.mines.model.GameType;
 import inaki.sw.mines.model.Statistic;
-import inaki.sw.mines.model.StatisticSet;
+import inaki.sw.mines.model.StatisticList;
 import inaki.sw.mines.view.IChooseGameView;
 import static inaki.sw.mines.view.IChooseGameView.CGV_EASY;
 import static inaki.sw.mines.view.IChooseGameView.CGV_HARD;
@@ -89,7 +89,7 @@ public class Controller implements ActionListener {
     private List<Integer> discoveredHistory = new ArrayList<>();
     private Board board;
     private GameType type;
-    private StatisticSet statistics = new StatisticSet();
+    private StatisticList statistics = new StatisticList();
 
     private final Chronometer chrono;
     private final VChecker vChecker;
@@ -369,11 +369,11 @@ public class Controller implements ActionListener {
         discoveredHistory = new ArrayList<>();
     }
 
-    private StatisticSet readStatisticSet() {
+    private StatisticList readStatisticSet() {
         ObjectMapper mapper = new ObjectMapper();
-        StatisticSet set = new StatisticSet();
+        StatisticList set = new StatisticList();
         try {
-            set = mapper.readValue(new File("statistics.json"), StatisticSet.class);
+            set = mapper.readValue(new File("statistics.json"), StatisticList.class);
             set.forEach(s -> {
                 // Since 2.5
                 if (s.getViewMode() == null) {
@@ -391,7 +391,7 @@ public class Controller implements ActionListener {
         return set;
     }
 
-    private void saveStatisticSet(StatisticSet set) {
+    private void saveStatisticSet(StatisticList set) {
         ObjectMapper mapper = new ObjectMapper();
         try {
             mapper.writeValue(new File("statistics.json"), set);
@@ -401,10 +401,10 @@ public class Controller implements ActionListener {
         }
     }
 
-    private Statistic findStatisticByTypeAndDate(StatisticSet statistics, GameType type, String dateTime) {
-        StatisticSet tmpSet = statistics.stream()
+    private Statistic findStatisticByTypeAndDate(StatisticList statistics, GameType type, String dateTime) {
+        StatisticList tmpSet = statistics.stream()
                 .filter(x -> x.getType().equals(type) && dateTime.equals(x.getWinDate().getTime() + ""))
-                .collect(Collectors.toCollection(StatisticSet::new));
+                .collect(Collectors.toCollection(StatisticList::new));
         if (tmpSet.size() == 1) {
             return tmpSet.get(0);
         }

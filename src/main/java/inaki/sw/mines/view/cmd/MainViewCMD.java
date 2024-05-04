@@ -7,6 +7,7 @@ import static inaki.sw.mines.model.Clue.FLAG;
 import static inaki.sw.mines.model.Clue.NUMBER;
 import static inaki.sw.mines.model.Clue.WHITE_AREA;
 import inaki.sw.mines.view.IMainView;
+import inaki.sw.mines.view.cmd.utils.Ansi;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import static java.awt.event.KeyEvent.VK_C;
@@ -162,7 +163,7 @@ public class MainViewCMD implements IMainView {
 
     @Override
     public void hideView() {
-        System.out.print(ANSI_CLS + ANSI_HOME);
+        System.out.print(Ansi.CLS + Ansi.HOME);
     }
 
     @Override
@@ -257,14 +258,14 @@ public class MainViewCMD implements IMainView {
     }
 
     private void showTitle() {
-        System.out.print(ANSI_CLS + ANSI_HOME);
-        String s = ANSI_FG_CYAN + ANSI_BOLD + "\n" + "+-";
+        System.out.print(Ansi.CLS + Ansi.HOME);
+        String s = Ansi.FG_CYAN + Ansi.BOLD + "\n" + "+-";
         String title = TITLE.toUpperCase() + (version.equals("") ? "" : " v" + version) + " | " + time;
         for (int i = 0; i < title.length(); i++) {
             s += "-";
         }
         s += "-+\n";
-        System.out.println(s + "| " + title + " |" + s + ANSI_RESET);
+        System.out.println(s + "| " + title + " |" + s + Ansi.RESET);
     }
 
     private void initializeIndicators() {
@@ -322,16 +323,16 @@ public class MainViewCMD implements IMainView {
             System.out.print(j + " " + (board.getWidth() > 9 && j < 10 ? " " : ""));
         }
 
-        System.out.println("\n" + (flags > board.getMines() ? ANSI_FG_RED : "") + "Flags: " + flags + "/" + board.getMines() + ANSI_RESET + ", Discovered: " + (int) discoveredPercentage + "%");
+        System.out.println("\n" + (flags > board.getMines() ? Ansi.FG_RED : "") + "Flags: " + flags + "/" + board.getMines() + Ansi.RESET + ", Discovered: " + (int) discoveredPercentage + "%");
 
         if (gameStatus.equals(GameStatus.LOST)) {
-            System.out.println("\n" + ANSI_FG_RED + "You lost the game :(" + ANSI_RESET);
+            System.out.println("\n" + Ansi.FG_RED + "You lost the game :(" + Ansi.RESET);
         } else if (gameStatus.equals(GameStatus.WON)) {
-            System.out.println("\n" + ANSI_FG_GREEN + "You won game :)" + ANSI_RESET);
+            System.out.println("\n" + Ansi.FG_GREEN + "You won game :)" + Ansi.RESET);
         }
 
         for (String warning : flagExceededWarning) {
-            System.out.println(ANSI_BOLD + ANSI_FG_YELLOW + warning + ANSI_RESET);
+            System.out.println(Ansi.BOLD + Ansi.FG_YELLOW + warning + Ansi.RESET);
         }
     }
 
@@ -344,28 +345,28 @@ public class MainViewCMD implements IMainView {
                     case Board.BOARD_0:
                         return " ";
                     case Board.BOARD_1:
-                        return ANSI_BOLD + ANSI_FG_BLUE + value + ANSI_RESET;
+                        return Ansi.BOLD + Ansi.FG_BLUE + value + Ansi.RESET;
                     case Board.BOARD_2:
-                        return ANSI_FG_GREEN + value + ANSI_RESET;
+                        return Ansi.FG_GREEN + value + Ansi.RESET;
                     case Board.BOARD_3:
-                        return ANSI_FG_RED + value + ANSI_RESET;
+                        return Ansi.FG_RED + value + Ansi.RESET;
                     case Board.BOARD_4:
-                        return ANSI_FG_BLUE + value + ANSI_RESET;
+                        return Ansi.FG_BLUE + value + Ansi.RESET;
                     case Board.BOARD_5:
-                        return ANSI_BOLD + ANSI_FG_RED + value + ANSI_RESET;
+                        return Ansi.BOLD + Ansi.FG_RED + value + Ansi.RESET;
                     case Board.BOARD_6:
-                        return ANSI_FG_CYAN + value + ANSI_RESET;
+                        return Ansi.FG_CYAN + value + Ansi.RESET;
                     case Board.BOARD_7:
-                        return ANSI_FG_PURPLE + value + ANSI_RESET;
+                        return Ansi.FG_PURPLE + value + Ansi.RESET;
                     case Board.BOARD_8:
-                        return ANSI_FG_YELLOW + value + ANSI_RESET;
+                        return Ansi.FG_YELLOW + value + Ansi.RESET;
                     default:
                         return value + "";
                 }
             case FLAG:
                 return "F";
             case FLAG_FAILED:
-                return ANSI_BOLD + ANSI_FG_YELLOW + "X" + ANSI_RESET;
+                return Ansi.BOLD + Ansi.FG_YELLOW + "X" + Ansi.RESET;
             case HIDDEN:
             default:
                 return "?";
@@ -410,7 +411,7 @@ public class MainViewCMD implements IMainView {
             clues.add("3=A flag");
         }
         if (clues.isEmpty()) {
-            clues.add(ANSI_FG_YELLOW + "No clue is available" + ANSI_RESET);
+            clues.add(Ansi.FG_YELLOW + "No clue is available" + Ansi.RESET);
         }
         clues.add("ENTER=Return");
         String clueMenu = Arrays.toString(clues.toArray());
