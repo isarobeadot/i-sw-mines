@@ -94,7 +94,7 @@ public class Chronometer implements Runnable {
             minutes = 0;
             seconds = 0;
             miliseconds = 0;
-            LOGGER.info("Chronometer started");
+            LOGGER.fine("Chronometer started");
             actionlistener.actionPerformed(new ActionEvent(this, eventNo, C_UPDATE_CHRONO));
             eventNo++;
             while (instanceRunning) {
@@ -124,9 +124,9 @@ public class Chronometer implements Runnable {
                     Thread.currentThread().interrupt();
                 }
             }
-            LOGGER.info("Chronometer stopped");
+            LOGGER.fine("Chronometer stopped");
         } else {
-            LOGGER.info("There is an instance running");
+            LOGGER.fine("There is an instance running");
         }
     }
 

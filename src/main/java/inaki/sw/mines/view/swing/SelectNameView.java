@@ -161,9 +161,11 @@ public class SelectNameView extends JFrame implements ISelectNameView {
                 setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
                 updateComponentTreeUI(this);
                 this.repaint();
-            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+            }
+            catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
                 getLogger(ChooseGameView.class.getName()).log(SEVERE, null, ex);
-            } finally {
+            }
+            finally {
                 this.pack();
             }
         }
@@ -208,6 +210,15 @@ public class SelectNameView extends JFrame implements ISelectNameView {
         // when given a suggestion
         jtfSelectName.getInputMap().put(KeyStroke.getKeyStroke("TAB"), COMMIT_ACTION);
         jtfSelectName.getActionMap().put(COMMIT_ACTION, autoComplete.new CommitAction());
+    }
+
+    /**
+     *
+     * @param version
+     */
+    @Override
+    public void setVersion(String version) {
+        // empty
     }
 
     /**

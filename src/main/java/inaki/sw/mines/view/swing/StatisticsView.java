@@ -336,6 +336,15 @@ public class StatisticsView extends JFrame implements IStatisticsView {
 
     /**
      *
+     * @param version
+     */
+    @Override
+    public void setVersion(String version) {
+        // empty
+    }
+
+    /**
+     *
      * @param disableNimbus
      */
     @Override

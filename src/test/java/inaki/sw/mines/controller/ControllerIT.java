@@ -5,6 +5,7 @@ import inaki.sw.mines.view.IChooseGameView;
 import inaki.sw.mines.view.IMainView;
 import inaki.sw.mines.view.ISelectNameView;
 import inaki.sw.mines.view.IStatisticsView;
+import inaki.sw.mines.view.ViewMode;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import org.junit.jupiter.api.AfterAll;
@@ -52,8 +53,7 @@ public class ControllerIT {
      */
     @BeforeEach
     public void setUp() throws IOException, InterruptedException {
-        c = new Controller();
-        c.debugConfig();
+        c = new Controller(ViewMode.DEBUG);
         c.startController();
         Thread.sleep(DELAY);
     }

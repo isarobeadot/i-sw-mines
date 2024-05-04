@@ -144,9 +144,11 @@ public class StatisticHistoryView extends JFrame implements IStatisticHistoryVie
                 setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
                 updateComponentTreeUI(this);
                 this.repaint();
-            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+            }
+            catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
                 getLogger(ChooseGameView.class.getName()).log(SEVERE, null, ex);
-            } finally {
+            }
+            finally {
                 this.pack();
             }
         }
@@ -181,6 +183,15 @@ public class StatisticHistoryView extends JFrame implements IStatisticHistoryVie
         configureTable(jtMedium, medium, columnNames, types);
         configureTable(jtHard, hard, columnNames, types);
         configureTable(jtCustom, custom, columnNamesCustom, typesCustom);
+    }
+
+    /**
+     *
+     * @param version
+     */
+    @Override
+    public void setVersion(String version) {
+        // empty
     }
 
     /**

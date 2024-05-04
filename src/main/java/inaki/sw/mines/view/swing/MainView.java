@@ -311,7 +311,7 @@ public class MainView extends JFrame implements IMainView {
     }//GEN-LAST:event_jmiClue3ActionPerformed
 
     private void formWindowLostFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowLostFocus
-        c.actionPerformed(new ActionEvent(this,0,MV_CHRONO_PAUSE));
+        c.actionPerformed(new ActionEvent(this, 0, MV_CHRONO_PAUSE));
     }//GEN-LAST:event_formWindowLostFocus
 
     private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
@@ -561,6 +561,15 @@ public class MainView extends JFrame implements IMainView {
                 showClue3();
                 break;
         }
+    }
+
+    /**
+     *
+     * @param version
+     */
+    @Override
+    public void setVersion(String version) {
+        // empty
     }
 
     /**

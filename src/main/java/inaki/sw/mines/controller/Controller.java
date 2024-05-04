@@ -40,6 +40,12 @@ import static inaki.sw.mines.view.IStatisticHistoryView.SHV_OK;
 import inaki.sw.mines.view.IStatisticsView;
 import static inaki.sw.mines.view.IStatisticsView.SV_OK;
 import static inaki.sw.mines.view.IStatisticsView.SV_SAVE;
+import inaki.sw.mines.view.ViewMode;
+import inaki.sw.mines.view.cmd.ChooseGameViewCMD;
+import inaki.sw.mines.view.cmd.MainViewCMD;
+import inaki.sw.mines.view.cmd.SelectNameViewCMD;
+import inaki.sw.mines.view.cmd.StatisticHistoryViewCMD;
+import inaki.sw.mines.view.cmd.StatisticsViewCMD;
 import inaki.sw.mines.view.swing.ChooseGameView;
 import inaki.sw.mines.view.swing.MainView;
 import inaki.sw.mines.view.swing.SelectNameView;
@@ -72,13 +78,13 @@ public class Controller implements ActionListener {
 
     private static final Logger LOGGER = getLogger(Controller.class.getName());
 
-    private boolean debug = false;
+    private final ViewMode viewMode;
     private final String version = this.getClass().getPackage().getImplementationVersion();
-    private final IChooseGameView cgv;
-    private final IMainView mv;
-    private final ISelectNameView snv;
-    private final IStatisticHistoryView shv;
-    private final IStatisticsView sv;
+    private IChooseGameView cgv;
+    private IMainView mv;
+    private ISelectNameView snv;
+    private IStatisticHistoryView shv;
+    private IStatisticsView sv;
 
     private List<Integer> discoveredHistory = new ArrayList<>();
     private Board board;
@@ -89,15 +95,30 @@ public class Controller implements ActionListener {
     private final VChecker vChecker;
 
     /**
-     *
+     * @param viewMode View mode
      * @throws IOException
      */
-    public Controller() throws IOException {
-        this.cgv = new ChooseGameView();
-        this.mv = new MainView();
-        this.snv = new SelectNameView();
-        this.shv = new StatisticHistoryView();
-        this.sv = new StatisticsView();
+    public Controller(ViewMode viewMode) throws IOException {
+        if (!viewMode.equals(ViewMode.CMD)) {
+            try {
+                this.cgv = new ChooseGameView();
+                this.mv = new MainView();
+                this.snv = new SelectNameView();
+                this.shv = new StatisticHistoryView();
+                this.sv = new StatisticsView();
+            }
+            catch (java.awt.HeadlessException ex) {
+                viewMode = ViewMode.CMD;
+            }
+        }
+        if (viewMode.equals(ViewMode.CMD)) {
+            this.cgv = new ChooseGameViewCMD();
+            this.mv = new MainViewCMD();
+            this.snv = new SelectNameViewCMD();
+            this.shv = new StatisticHistoryViewCMD();
+            this.sv = new StatisticsViewCMD();
+        }
+        this.viewMode = viewMode;
         this.chrono = new Chronometer();
         this.vChecker = new VChecker("isw-mines", this.version);
         this.statistics = readStatisticSet();
@@ -116,16 +137,24 @@ public class Controller implements ActionListener {
      * Starts the controller.
      */
     public void startController() {
+        if (viewMode.equals(ViewMode.DEBUG)) {
+            debugConfig();
+        }
+
         cgv.setController(this);
+        cgv.setVersion(version);
         mv.setController(this);
+        mv.setVersion(version);
         snv.setController(this);
+        snv.setVersion(version);
         shv.setController(this);
+        shv.setVersion(version);
         sv.setController(this);
+        sv.setVersion(version);
         chrono.setActionlistener(this);
         vChecker.setActionlistener(this);
 
         cgv.enableStatistics(!statistics.isEmpty());
-        cgv.setVersion(this.version);
         cgv.startView();
 
         if (this.version != null) {
@@ -137,8 +166,7 @@ public class Controller implements ActionListener {
     /**
      * Disables Nimbus LnF. Use this only for testing.
      */
-    public void debugConfig() {
-        this.debug = true;
+    private void debugConfig() {
         cgv.disableNimbus(true);
         mv.disableNimbus(true);
         snv.disableNimbus(true);
@@ -153,7 +181,7 @@ public class Controller implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String[] actions = e.getActionCommand().split(",");
-        LOGGER.info(Arrays.toString(actions));
+        LOGGER.fine(Arrays.toString(actions));
         switch (actions[0]) {
             case CGV_EASY:
                 board = new Board(8, 8, 10);
@@ -211,7 +239,9 @@ public class Controller implements ActionListener {
                 break;
             case MV_LOST:
                 chrono.stopChronometer();
-                showMessageDialog((Component) mv, "You lost the game :(", "Game lost", ERROR_MESSAGE);
+                if (!this.viewMode.equals(ViewMode.CMD)) {
+                    showMessageDialog((Component) mv, "You lost the game :(", "Game lost", ERROR_MESSAGE);
+                }
                 break;
             case MV_WIN:
                 chrono.stopChronometer();
@@ -250,7 +280,7 @@ public class Controller implements ActionListener {
                 sv.hideView();
                 break;
             case SNV_OK:
-                String name = this.debug ? "test" : snv.getSelectedName();
+                String name = viewMode.equals(ViewMode.DEBUG) ? "test" : snv.getSelectedName();
                 snv.hideView();
                 Statistic s = new Statistic();
                 s.setDiscoveredHistory(discoveredHistory);
@@ -262,6 +292,7 @@ public class Controller implements ActionListener {
                 s.setTotalSeconds(chrono.getSeconds());
                 s.setType(type);
                 s.setVerticalSize(mv.getVertical());
+                s.setViewMode(viewMode);
                 s.setWinDate(new Date());
                 statistics.add(s);
                 saveStatisticSet(statistics);
@@ -312,7 +343,11 @@ public class Controller implements ActionListener {
                         Desktop.getDesktop().browse(URI.create("https://inaki-sw.xyz/web/downloads#isw-mines"));
                     }
                     catch (IOException ex) {
-                        JOptionPane.showMessageDialog((Component) cgv, "An error occurred", "Error", JOptionPane.ERROR_MESSAGE);
+                        if (this.viewMode.equals(ViewMode.CMD)) {
+                            // TODO
+                        } else {
+                            JOptionPane.showMessageDialog((Component) cgv, "An error occurred", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
                     }
                 }
                 break;
@@ -325,7 +360,7 @@ public class Controller implements ActionListener {
     private void doSTART() {
         cgv.hideView();
         if (board != null) {
-            board.generate(this.debug);
+            board.generate(viewMode.equals(ViewMode.DEBUG));
         }
         mv.setBoard(board);
         mv.startView();
@@ -339,6 +374,16 @@ public class Controller implements ActionListener {
         StatisticSet set = new StatisticSet();
         try {
             set = mapper.readValue(new File("statistics.json"), StatisticSet.class);
+            set.forEach(s -> {
+                // Since 2.5
+                if (s.getViewMode() == null) {
+                    if ("test".equals(s.getName())) {
+                        s.setViewMode(ViewMode.DEBUG);
+                    } else {
+                        s.setViewMode(ViewMode.SWING);
+                    }
+                }
+            });
         }
         catch (IOException ex) {
             LOGGER.warning(ex.getMessage());

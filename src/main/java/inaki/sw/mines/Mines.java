@@ -1,6 +1,7 @@
 package inaki.sw.mines;
 
 import inaki.sw.mines.controller.Controller;
+import inaki.sw.mines.view.ViewMode;
 import java.io.IOException;
 
 /**
@@ -15,10 +16,21 @@ public class Mines {
      * @throws IOException
      */
     public static void main(String[] args) throws IOException {
-        final Controller c = new Controller();
-        if (args.length > 0 && args[0].equals("--debug")) {
-            c.debugConfig();
+        ViewMode viewMode = ViewMode.SWING;
+        if (args.length > 0) {
+            switch (args[0]) {
+                case "--debug":
+                    viewMode = ViewMode.DEBUG;
+                    break;
+                case "--cmd":
+                    viewMode = ViewMode.CMD;
+                    break;
+                default:
+                    viewMode = ViewMode.SWING;
+                    break;
+            }
         }
+        final Controller c = new Controller(viewMode);
         c.startController();
     }
 

@@ -44,7 +44,7 @@ public class ChooseGameView extends JFrame implements IChooseGameView {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("I-SW Mines");
+        setTitle(TITLE);
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/icon/isw-mines-96.png")).getImage());
         setResizable(false);
 

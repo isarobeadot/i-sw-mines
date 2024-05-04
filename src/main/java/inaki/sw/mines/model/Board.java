@@ -133,11 +133,11 @@ public class Board {
      */
     public void printBoard() {
         for (int j = 0; j < width; j++) {
-            out.print("\t["+j + "]");
+            out.print("\t[" + j + "]");
         }
         out.println("");
         for (int i = 0; i < height; i++) {
-            out.print("["+i + "]\t");
+            out.print("[" + i + "]\t");
             for (int j = 0; j < width; j++) {
                 out.print(board[i][j] + "\t");
             }

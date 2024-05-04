@@ -1,5 +1,6 @@
 package inaki.sw.mines.model;
 
+import inaki.sw.mines.view.ViewMode;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -28,6 +29,8 @@ public class Statistic {
     private GameType type;
 
     private Integer verticalSize;
+
+    private ViewMode viewMode;
 
     private Date winDate;
 
@@ -179,6 +182,22 @@ public class Statistic {
      *
      * @return
      */
+    public ViewMode getViewMode() {
+        return viewMode;
+    }
+
+    /**
+     *
+     * @param viewMode
+     */
+    public void setViewMode(ViewMode viewMode) {
+        this.viewMode = viewMode;
+    }
+
+    /**
+     *
+     * @return
+     */
     public Date getWinDate() {
         return winDate;
     }
@@ -212,7 +231,7 @@ public class Statistic {
 
     @Override
     public String toString() {
-        return "Statistic{" + "horizontalSize=" + horizontalSize + ", mineNumber=" + mineNumber + ", name=" + name + ", primaryClikNumber=" + primaryClikNumber + ", totalMinutes=" + totalMinutes + ", totalSeconds=" + totalSeconds + ", type=" + type + ", verticalSize=" + verticalSize + ", winDate=" + winDate + '}';
+        return "Statistic{" + "horizontalSize=" + horizontalSize + ", mineNumber=" + mineNumber + ", name=" + name + ", primaryClikNumber=" + primaryClikNumber + ", totalMinutes=" + totalMinutes + ", totalSeconds=" + totalSeconds + ", type=" + type + ", verticalSize=" + verticalSize + ", viewMode=" + viewMode + ", winDate=" + winDate + '}';
     }
 
 }

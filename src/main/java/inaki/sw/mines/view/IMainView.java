@@ -22,7 +22,7 @@ public interface IMainView extends IView {
     static final String MV_CLUE_WHITE_AREA = "MV_CLUE_WHITE_AREA";
     static final String MV_CLUE_A_NUMBER = "MV_CLUE_A_NUMBER";
     static final String MV_CLUE_A_FLAG = "MV_CLUE_A_FLAG";
-    
+
     static final String MV_FLAG_TXT = "<html><body>&para;</body></html";
 
     /**
