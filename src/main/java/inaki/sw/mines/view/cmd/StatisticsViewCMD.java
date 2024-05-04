@@ -103,6 +103,10 @@ public class StatisticsViewCMD implements IStatisticsView {
     }
 
     private void showStatistics() {
+        if (!readOnly) {
+            System.out.println(Ansi.FG_GREEN + "You won game :)" + Ansi.RESET + "\n");
+        }
+
         System.out.println("Elapsed time: " + time);
         System.out.println("Number of clicks: " + primaryClikNumber);
         System.out.println("Ratio: Discovered " + ratio + " cells by each click");

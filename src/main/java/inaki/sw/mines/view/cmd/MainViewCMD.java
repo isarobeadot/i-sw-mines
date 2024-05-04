@@ -297,6 +297,11 @@ public class MainViewCMD implements IMainView {
     }
 
     private void showBoard() {
+        if (gameStatus.equals(GameStatus.PAUSED)) {
+            System.out.println(" PAUSED ");
+            return;
+        }
+        
         System.out.print("    " + (board.getHeight() > 9 ? " " : ""));
         for (int j = 0; j < board.getWidth(); j++) {
             System.out.print(j + " " + (board.getWidth() > 9 && j < 10 ? " " : ""));
