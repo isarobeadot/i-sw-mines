@@ -16,6 +16,7 @@ public class TableTests {
 
     private static final int MAX_COLS = 100;
     private static final int MAX_ROWS = 100;
+    private static final int CELL_DISTANCE = 5;
 
     private Table table;
     private static Random rand;
@@ -74,31 +75,57 @@ public class TableTests {
     }
 
     @Test
-    void testPrint() {
+    void testPrintWithFirstRowAsHeaderTrueAndOuterBordersTrue() {
         System.out.println(new Object() {
         }.getClass().getEnclosingMethod().getName());
 
-        Row row1 = new Row();
-        row1.add(new Cell("ab"));
-        row1.add(new Cell("cde"));
-        row1.add(new Cell("fg"));
+        someCustomRows();
 
-        Row row2 = new Row();
-        row2.add(new Cell("awrefg"));
-        row2.add(new Cell("er"));
-        row2.add(new Cell("hdeshsd"));
-
-        Row row3 = new Row();
-        row3.add(new Cell("hgj"));
-        row3.add(new Cell("evvtrawl"));
-        row3.add(new Cell("sra"));
-
-        table.add(row1);
-        table.add(row2);
-        table.add(row3);
-
-        table.setDistanceBetweenCells(2);
+        table.setDistanceBetweenCells(CELL_DISTANCE);
         table.setFirstRowAsHeader(true);
+        table.setOuterBorders(true);
+
+        table.print();
+    }
+
+    @Test
+    void testPrintWithFirstRowAsHeaderFalseAndOuterBordersTrue() {
+        System.out.println(new Object() {
+        }.getClass().getEnclosingMethod().getName());
+
+        someCustomRows();
+
+        table.setDistanceBetweenCells(CELL_DISTANCE);
+        table.setFirstRowAsHeader(false);
+        table.setOuterBorders(true);
+
+        table.print();
+    }
+
+    @Test
+    void testPrintWithFirstRowAsHeaderTrueAndOuterBordersFalse() {
+        System.out.println(new Object() {
+        }.getClass().getEnclosingMethod().getName());
+
+        someCustomRows();
+
+        table.setDistanceBetweenCells(CELL_DISTANCE);
+        table.setFirstRowAsHeader(true);
+        table.setOuterBorders(false);
+
+        table.print();
+    }
+
+    @Test
+    void testPrintWithFirstRowAsHeaderFalseAndOuterBordersFalse() {
+        System.out.println(new Object() {
+        }.getClass().getEnclosingMethod().getName());
+
+        someCustomRows();
+
+        table.setDistanceBetweenCells(CELL_DISTANCE);
+        table.setFirstRowAsHeader(false);
+        table.setOuterBorders(false);
 
         table.print();
     }
@@ -117,6 +144,27 @@ public class TableTests {
         }
         table.add(row);
         return cols;
+    }
+
+    private void someCustomRows() {
+        Row row1 = new Row();
+        row1.add(new Cell("ab"));
+        row1.add(new Cell("cde"));
+        row1.add(new Cell("fg"));
+
+        Row row2 = new Row();
+        row2.add(new Cell("awrefg"));
+        row2.add(new Cell("er"));
+        row2.add(new Cell("hdeshsd"));
+
+        Row row3 = new Row();
+        row3.add(new Cell("hgj"));
+        row3.add(new Cell("evvtrawl"));
+        row3.add(new Cell("sra"));
+
+        table.add(row1);
+        table.add(row2);
+        table.add(row3);
     }
 
 }

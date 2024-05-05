@@ -15,6 +15,7 @@ public class Table {
     private final List<Integer> colSizes;
     private int distanceBetweenCells;
     private boolean firstRowAsHeader;
+    private boolean outerBorders;
 
     /**
      *
@@ -46,37 +47,57 @@ public class Table {
 
     public void print() {
         for (int i = 0; i < rows.size(); i++) {
-            if (firstRowAsHeader && i == 1) {
-                printHeaderSeparator();
-            }
+            printRowSeparator(i);
             printRow(i);
+        }
+        if (outerBorders) {
+            printRowSeparator(rows.size());
         }
     }
 
-    private void printHeaderSeparator() {
-        colSizes.forEach(size -> {
-            for (int i = 0; i < size; i++) {
-                System.out.print("=");
+    private void printRowSeparator(int idx) {
+        if (checkFirstRowAsHeader(idx) || checkOuterBorders(idx)) {
+            if (outerBorders) {
+                System.out.print("+-");
             }
-        });
-        for (int i = 0; i < (colSizes.size() - 1) * distanceBetweenCells; i++) {
-            System.out.print("=");
+            colSizes.forEach(size -> {
+                for (int i = 0; i < size; i++) {
+                    System.out.print(outerBorders ? "-" : "=");
+                }
+            });
+            for (int i = 0; i < (colSizes.size() - 1) * distanceBetweenCells; i++) {
+                System.out.print(outerBorders ? "-" : "=");
+            }
+            if (outerBorders) {
+                System.out.print("-+");
+            }
+            System.out.println();
         }
-        System.out.println();
+    }
+
+    private boolean checkFirstRowAsHeader(int idx) {
+        return firstRowAsHeader && idx == 1;
+    }
+
+    private boolean checkOuterBorders(int idx) {
+        return outerBorders && (idx == 0 || idx == rows.size());
     }
 
     private void printRow(int idx) {
+        if (outerBorders) {
+            System.out.print("| ");
+        }
         Row row = rows.get(idx);
         for (int j = 0; j < row.size(); j++) {
             Cell cell = row.get(j);
-            int separation = colSizes.get(j) - cell.width() + distanceBetweenCells;
+            int separation = colSizes.get(j) - cell.width() + (j == row.size() - 1 ? 1 : distanceBetweenCells);
             String separator = "";
             for (int k = 0; k < separation; k++) {
                 separator += " ";
             }
             System.out.print(cell + separator);
         }
-        System.out.println();
+        System.out.println(outerBorders ? "|" : "");
     }
 
     public int rows() {
@@ -89,6 +110,10 @@ public class Table {
 
     public void setFirstRowAsHeader(boolean firstRowAsHeader) {
         this.firstRowAsHeader = firstRowAsHeader;
+    }
+
+    public void setOuterBorders(boolean outerBorders) {
+        this.outerBorders = outerBorders;
     }
 
 }

@@ -72,6 +72,6 @@ public class Cell {
 
     @Override
     public String toString() {
-        return (textColor == null ? "" : textColor) + value + Ansi.RESET;
+        return textColor == null ? value : (textColor + value + Ansi.RESET);
     }
 }
