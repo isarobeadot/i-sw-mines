@@ -8,8 +8,8 @@ import static java.util.logging.Level.SEVERE;
 import static java.util.logging.Logger.getLogger;
 import javax.swing.JFrame;
 import javax.swing.KeyStroke;
-import static javax.swing.SwingUtilities.updateComponentTreeUI;
-import static javax.swing.UIManager.setLookAndFeel;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 /**
@@ -154,15 +154,15 @@ public class SelectNameView extends JFrame implements ISelectNameView {
      */
     @Override
     public void startView() {
-        /* Set the Nimbus look and feel */
+        /* Set the look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code ">
         if (!disableNimbus) {
             try {
-                setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-                updateComponentTreeUI(this);
+                UIManager.setLookAndFeel(new javax.swing.plaf.nimbus.NimbusLookAndFeel());
+                SwingUtilities.updateComponentTreeUI(this);
                 this.repaint();
             }
-            catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+            catch (UnsupportedLookAndFeelException ex) {
                 getLogger(ChooseGameView.class.getName()).log(SEVERE, null, ex);
             }
             finally {

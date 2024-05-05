@@ -11,8 +11,8 @@ import static java.util.logging.Logger.getLogger;
 import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
-import static javax.swing.SwingUtilities.updateComponentTreeUI;
-import static javax.swing.UIManager.setLookAndFeel;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
 
@@ -137,15 +137,15 @@ public class StatisticHistoryView extends JFrame implements IStatisticHistoryVie
      */
     @Override
     public void startView() {
-        /* Set the Nimbus look and feel */
+        /* Set the look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code ">
         if (!disableNimbus) {
             try {
-                setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-                updateComponentTreeUI(this);
+                UIManager.setLookAndFeel(new javax.swing.plaf.nimbus.NimbusLookAndFeel());
+                SwingUtilities.updateComponentTreeUI(this);
                 this.repaint();
             }
-            catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+            catch (UnsupportedLookAndFeelException ex) {
                 getLogger(ChooseGameView.class.getName()).log(SEVERE, null, ex);
             }
             finally {
