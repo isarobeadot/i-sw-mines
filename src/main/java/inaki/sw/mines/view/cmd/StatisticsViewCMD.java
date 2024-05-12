@@ -1,6 +1,7 @@
 package inaki.sw.mines.view.cmd;
 
 import inaki.sw.mines.controller.Controller;
+import inaki.sw.mines.model.GameType;
 import inaki.sw.mines.view.IStatisticsView;
 import inaki.sw.mines.view.cmd.utils.Ansi;
 import java.awt.event.ActionEvent;
@@ -25,6 +26,7 @@ public class StatisticsViewCMD implements IStatisticsView {
     private String time;
     private int primaryClikNumber;
     private double ratio;
+    private GameType gameType;
     private List<Integer> discoveredHistory;
 
     @Override
@@ -76,6 +78,15 @@ public class StatisticsViewCMD implements IStatisticsView {
         this.discoveredHistory = discoveredHistory;
     }
 
+    /**
+     *
+     * @param type
+     */
+    @Override
+    public void setGameType(GameType type) {
+       gameType = type;
+    }
+
     @Override
     public void setReadOnly(boolean readOnly) {
         this.readOnly = readOnly;
@@ -107,6 +118,7 @@ public class StatisticsViewCMD implements IStatisticsView {
             System.out.println(Ansi.FG_GREEN + "You won game :)" + Ansi.RESET + "\n");
         }
 
+        System.out.println("Game type: " + gameType.name());
         System.out.println("Elapsed time: " + time);
         System.out.println("Number of clicks: " + primaryClikNumber);
         System.out.println("Ratio: Discovered " + ratio + " cells by each click");

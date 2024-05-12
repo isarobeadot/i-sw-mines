@@ -1,6 +1,7 @@
 package inaki.sw.mines.view;
 
 import inaki.sw.mines.controller.Controller;
+import inaki.sw.mines.model.GameType;
 import java.util.List;
 
 /**
@@ -56,6 +57,12 @@ public interface IStatisticsView extends IView {
      * @param discoveredHistory
      */
     public void setDiscoveredHistory(List<Integer> discoveredHistory);
+
+    /**
+     *
+     * @param type
+     */
+    public void setGameType(GameType type);
 
     /**
      *

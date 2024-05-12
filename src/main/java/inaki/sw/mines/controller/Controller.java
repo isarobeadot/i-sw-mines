@@ -252,6 +252,7 @@ public class Controller implements ActionListener {
                 sv.setPrimaryClikNumber(mv.getPrimaryClikNumber());
                 sv.setRatio(Double.valueOf(mv.getHorizontal() * mv.getVertical() - mv.getMines()) / Double.valueOf(mv.getPrimaryClikNumber()));
                 sv.setDiscoveredHistory(discoveredHistory);
+                sv.setGameType(type);
                 sv.startView();
                 break;
             case MV_START_CHRONO:
@@ -325,6 +326,7 @@ public class Controller implements ActionListener {
                         sv.setRatio(Double.valueOf(sDetail.getHorizontalSize() * sDetail.getVerticalSize() - sDetail.getMineNumber())
                                 / Double.valueOf(sDetail.getPrimaryClikNumber()));
                         sv.setDiscoveredHistory(sDetail.getDiscoveredHistory());
+                        sv.setGameType(sDetail.getType());
                         sv.startView();
                     } else {
                         LOGGER.warning("No statistic found");

@@ -1,6 +1,7 @@
 package inaki.sw.mines.view.swing;
 
 import inaki.sw.mines.controller.Controller;
+import inaki.sw.mines.model.GameType;
 import inaki.sw.mines.view.IStatisticsView;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -46,6 +47,8 @@ public class StatisticsView extends JFrame implements IStatisticsView {
         jpWin = new javax.swing.JPanel();
         jlWin = new javax.swing.JLabel();
         jpTime = new javax.swing.JPanel();
+        jlGameType1 = new javax.swing.JLabel();
+        jlGameType2 = new javax.swing.JLabel();
         jlTime1 = new javax.swing.JLabel();
         jlTime2 = new javax.swing.JLabel();
         jpClicks = new javax.swing.JPanel();
@@ -84,6 +87,10 @@ public class StatisticsView extends JFrame implements IStatisticsView {
 
         jpTime.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
+        jlGameType1.setText("Game type:");
+
+        jlGameType2.setText("type");
+
         jlTime1.setText("Elapsed time:");
 
         jlTime2.setText("0:0");
@@ -94,15 +101,25 @@ public class StatisticsView extends JFrame implements IStatisticsView {
             jpTimeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpTimeLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jlTime1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jlTime2)
+                .addGroup(jpTimeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpTimeLayout.createSequentialGroup()
+                        .addComponent(jlTime1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jlTime2))
+                    .addGroup(jpTimeLayout.createSequentialGroup()
+                        .addComponent(jlGameType1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jlGameType2)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jpTimeLayout.setVerticalGroup(
             jpTimeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpTimeLayout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(jpTimeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlGameType1)
+                    .addComponent(jlGameType2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpTimeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlTime1)
                     .addComponent(jlTime2))
@@ -326,6 +343,15 @@ public class StatisticsView extends JFrame implements IStatisticsView {
 
     /**
      *
+     * @param type
+     */
+    @Override
+    public void setGameType(GameType type) {
+        jlGameType2.setText(type.name());
+    }
+
+    /**
+     *
      * @param readOnly
      */
     @Override
@@ -357,6 +383,8 @@ public class StatisticsView extends JFrame implements IStatisticsView {
     private javax.swing.JButton jbSave;
     private javax.swing.JLabel jlClickNo1;
     private javax.swing.JLabel jlClickNo2;
+    private javax.swing.JLabel jlGameType1;
+    private javax.swing.JLabel jlGameType2;
     private javax.swing.JLabel jlRatio1;
     private javax.swing.JLabel jlRatio2;
     private javax.swing.JLabel jlRatio3;
