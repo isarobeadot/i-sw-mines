@@ -16,6 +16,8 @@ public class Table {
     private int distanceBetweenCells;
     private boolean firstRowAsHeader;
     private boolean outerBorders;
+    private boolean rowNumbersLeft;
+    private boolean rowNumbersRight;
 
     /**
      *
@@ -57,6 +59,12 @@ public class Table {
 
     private void printRowSeparator(int idx) {
         if (checkFirstRowAsHeader(idx) || checkOuterBorders(idx)) {
+            if (rowNumbersLeft) {
+                int totalChars = String.valueOf(this.rows.size()).length();
+                for (int i = 0; i < totalChars + 3; i++) {
+                    System.out.print(" ");
+                }
+            }
             if (outerBorders) {
                 System.out.print("+-");
             }
@@ -84,6 +92,14 @@ public class Table {
     }
 
     private void printRow(int idx) {
+        if (rowNumbersLeft) {
+            int totalChars = String.valueOf(this.rows.size()).length();
+            int currentChars = String.valueOf(idx).length();
+            for (int i = 0; i < totalChars - currentChars; i++) {
+                System.out.print(" ");
+            }
+            System.out.print((firstRowAsHeader && idx == 0) ? "    " : ("(" + idx + ") "));
+        }
         if (outerBorders) {
             System.out.print("| ");
         }
@@ -97,7 +113,15 @@ public class Table {
             }
             System.out.print(cell + separator);
         }
-        System.out.println(outerBorders ? "|" : "");
+        System.out.print(outerBorders ? "|" : "");
+        if (rowNumbersRight) {
+            if (outerBorders) {
+                System.out.print((firstRowAsHeader && idx == 0) ? "" : (" (" + idx + ")"));
+            } else {
+                System.out.print((firstRowAsHeader && idx == 0) ? "" : ("(" + idx + ")"));
+            }
+        }
+        System.out.println();
     }
 
     public int rows() {
@@ -114,6 +138,14 @@ public class Table {
 
     public void setOuterBorders(boolean outerBorders) {
         this.outerBorders = outerBorders;
+    }
+
+    public void setRowNumbersLeft(boolean rowNumbersLeft) {
+        this.rowNumbersLeft = rowNumbersLeft;
+    }
+
+    public void setRowNumbersRight(boolean rowNumbersRight) {
+        this.rowNumbersRight = rowNumbersRight;
     }
 
 }

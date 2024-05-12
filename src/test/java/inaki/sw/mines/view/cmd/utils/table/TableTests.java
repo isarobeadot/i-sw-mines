@@ -75,57 +75,129 @@ public class TableTests {
     }
 
     @Test
-    void testPrintWithFirstRowAsHeaderTrueAndOuterBordersTrue() {
+    void testPrintWithFirstRowAsHeaderTrueAndOuterBordersTrueAndRowNumbersFalse() {
         System.out.println(new Object() {
         }.getClass().getEnclosingMethod().getName());
 
-        someCustomRows();
+        someCustomRows(0);
 
         table.setDistanceBetweenCells(CELL_DISTANCE);
         table.setFirstRowAsHeader(true);
         table.setOuterBorders(true);
+        table.setRowNumbersLeft(false);
+        table.setRowNumbersRight(false);
 
         table.print();
     }
 
     @Test
-    void testPrintWithFirstRowAsHeaderFalseAndOuterBordersTrue() {
+    void testPrintWithFirstRowAsHeaderFalseAndOuterBordersTrueAndRowNumbersFalse() {
         System.out.println(new Object() {
         }.getClass().getEnclosingMethod().getName());
 
-        someCustomRows();
+        someCustomRows(0);
 
         table.setDistanceBetweenCells(CELL_DISTANCE);
         table.setFirstRowAsHeader(false);
         table.setOuterBorders(true);
+        table.setRowNumbersLeft(false);
+        table.setRowNumbersRight(false);
 
         table.print();
     }
 
     @Test
-    void testPrintWithFirstRowAsHeaderTrueAndOuterBordersFalse() {
+    void testPrintWithFirstRowAsHeaderTrueAndOuterBordersFalseAndRowNumbersFalse() {
         System.out.println(new Object() {
         }.getClass().getEnclosingMethod().getName());
 
-        someCustomRows();
+        someCustomRows(0);
 
         table.setDistanceBetweenCells(CELL_DISTANCE);
         table.setFirstRowAsHeader(true);
         table.setOuterBorders(false);
+        table.setRowNumbersLeft(false);
+        table.setRowNumbersRight(false);
 
         table.print();
     }
 
     @Test
-    void testPrintWithFirstRowAsHeaderFalseAndOuterBordersFalse() {
+    void testPrintWithFirstRowAsHeaderFalseAndOuterBordersFalseAndRowNumbersFalse() {
         System.out.println(new Object() {
         }.getClass().getEnclosingMethod().getName());
 
-        someCustomRows();
+        someCustomRows(0);
 
         table.setDistanceBetweenCells(CELL_DISTANCE);
         table.setFirstRowAsHeader(false);
         table.setOuterBorders(false);
+        table.setRowNumbersLeft(false);
+        table.setRowNumbersRight(false);
+
+        table.print();
+    }
+
+    @Test
+    void testPrintWithFirstRowAsHeaderTrueAndOuterBordersTrueAndRowNumbersTrue() {
+        System.out.println(new Object() {
+        }.getClass().getEnclosingMethod().getName());
+
+        someCustomRows(3);
+
+        table.setDistanceBetweenCells(CELL_DISTANCE);
+        table.setFirstRowAsHeader(true);
+        table.setOuterBorders(true);
+        table.setRowNumbersLeft(true);
+        table.setRowNumbersRight(true);
+
+        table.print();
+    }
+
+    @Test
+    void testPrintWithFirstRowAsHeaderFalseAndOuterBordersTrueAndRowNumbersTrue() {
+        System.out.println(new Object() {
+        }.getClass().getEnclosingMethod().getName());
+
+        someCustomRows(3);
+
+        table.setDistanceBetweenCells(CELL_DISTANCE);
+        table.setFirstRowAsHeader(false);
+        table.setOuterBorders(true);
+        table.setRowNumbersLeft(true);
+        table.setRowNumbersRight(true);
+
+        table.print();
+    }
+
+    @Test
+    void testPrintWithFirstRowAsHeaderTrueAndOuterBordersFalseAndRowNumbersTrue() {
+        System.out.println(new Object() {
+        }.getClass().getEnclosingMethod().getName());
+
+        someCustomRows(3);
+
+        table.setDistanceBetweenCells(CELL_DISTANCE);
+        table.setFirstRowAsHeader(true);
+        table.setOuterBorders(false);
+        table.setRowNumbersLeft(true);
+        table.setRowNumbersRight(true);
+
+        table.print();
+    }
+
+    @Test
+    void testPrintWithFirstRowAsHeaderFalseAndOuterBordersFalseAndRowNumbersTrue() {
+        System.out.println(new Object() {
+        }.getClass().getEnclosingMethod().getName());
+
+        someCustomRows(3);
+
+        table.setDistanceBetweenCells(CELL_DISTANCE);
+        table.setFirstRowAsHeader(false);
+        table.setOuterBorders(false);
+        table.setRowNumbersLeft(true);
+        table.setRowNumbersRight(true);
 
         table.print();
     }
@@ -146,7 +218,7 @@ public class TableTests {
         return cols;
     }
 
-    private void someCustomRows() {
+    private void someCustomRows(int repeat) {
         Row row1 = new Row();
         row1.add(new Cell("ab"));
         row1.add(new Cell("cde"));
@@ -165,6 +237,12 @@ public class TableTests {
         table.add(row1);
         table.add(row2);
         table.add(row3);
+
+        for (int i = 0; i < repeat; i++) {
+            table.add(row1);
+            table.add(row2);
+            table.add(row3);
+        }
     }
 
 }
