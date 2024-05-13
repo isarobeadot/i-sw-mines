@@ -2,6 +2,9 @@ package inaki.sw.mines.view.cmd;
 
 import inaki.sw.mines.controller.Controller;
 import inaki.sw.mines.model.GameType;
+import static inaki.sw.mines.model.GameType.EASY;
+import static inaki.sw.mines.model.GameType.HARD;
+import static inaki.sw.mines.model.GameType.MEDIUM;
 import inaki.sw.mines.view.IStatisticsView;
 import inaki.sw.mines.view.cmd.utils.Ansi;
 import java.awt.event.ActionEvent;
@@ -84,7 +87,7 @@ public class StatisticsViewCMD implements IStatisticsView {
      */
     @Override
     public void setGameType(GameType type) {
-       gameType = type;
+        gameType = type;
     }
 
     @Override
@@ -118,7 +121,23 @@ public class StatisticsViewCMD implements IStatisticsView {
             System.out.println(Ansi.FG_GREEN + "You won game :)" + Ansi.RESET + "\n");
         }
 
-        System.out.println("Game type: " + gameType.name());
+        String typeColor;
+        switch (gameType) {
+            case EASY:
+                typeColor = Ansi.FG_GREEN;
+                break;
+            case MEDIUM:
+                typeColor = Ansi.FG_BLUE;
+                break;
+            case HARD:
+                typeColor = Ansi.FG_RED;
+                break;
+            default:
+                typeColor = "";
+                break;
+        }
+
+        System.out.println("Game type: " + typeColor + gameType.name() + Ansi.RESET);
         System.out.println("Elapsed time: " + time);
         System.out.println("Number of clicks: " + primaryClikNumber);
         System.out.println("Ratio: Discovered " + ratio + " cells by each click");

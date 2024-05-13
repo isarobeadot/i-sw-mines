@@ -4,6 +4,7 @@ import inaki.sw.mines.controller.Controller;
 import inaki.sw.mines.model.Statistic;
 import inaki.sw.mines.model.StatisticList;
 import inaki.sw.mines.view.IStatisticHistoryView;
+import static inaki.sw.mines.view.IStatisticHistoryView.SHV_DETAIL;
 import inaki.sw.mines.view.cmd.utils.Ansi;
 import inaki.sw.mines.view.cmd.utils.table.Cell;
 import inaki.sw.mines.view.cmd.utils.table.Row;
@@ -13,6 +14,7 @@ import static java.awt.event.KeyEvent.VK_S;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -50,7 +52,42 @@ public class StatisticHistoryViewCMD implements IStatisticHistoryView {
         s = s.toUpperCase();
         if ("".equals(s)) {
             c.actionPerformed(new ActionEvent(this, VK_S, SHV_OK));
+            return;
         }
+
+        int option = 0;
+        try {
+            option = Integer.parseInt(s);
+        }
+        catch (NumberFormatException e) {
+            // empty
+        }
+        if (option < 1 || option > statisticSet.size()) {
+            startView();
+            return;
+        }
+
+        Statistic statistic = statisticSet.get(option - 1);
+        String tab;
+        switch (statistic.getType()) {
+            case EASY:
+                tab = SHV_EASY;
+                break;
+            case MEDIUM:
+                tab = SHV_MEDIUM;
+                break;
+            case HARD:
+                tab = SHV_HARD;
+                break;
+            case CUSTOM:
+                tab = SHV_CUSTOM;
+                break;
+            default:
+                tab = SHV_NONE;
+        }
+        c.actionPerformed(new ActionEvent(this, option, SHV_DETAIL + "," + tab + "," + ((Date) statistic.getWinDate()).getTime()));
+
+        startView();
     }
 
     @Override
@@ -83,6 +120,7 @@ public class StatisticHistoryViewCMD implements IStatisticHistoryView {
         Table table = new Table();
         table.setFirstRowAsHeader(true);
         table.setDistanceBetweenCells(2);
+        table.setRowNumbersLeft(true);
 
         Row header = new Row();
         header.add(new Cell("Date"));
@@ -122,7 +160,11 @@ public class StatisticHistoryViewCMD implements IStatisticHistoryView {
     }
 
     private String readOption() {
-        System.out.println("\nENTER=Back");
+        System.out.println();
+        if (!statisticSet.isEmpty()) {
+            System.out.print("1-" + statisticSet.size() + "=Select a row, ");
+        }
+        System.out.println("ENTER=Back");
         System.out.print("Type an option: ");
 
         try {
