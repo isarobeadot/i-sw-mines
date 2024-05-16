@@ -7,6 +7,9 @@ import static inaki.sw.mines.model.GameType.HARD;
 import static inaki.sw.mines.model.GameType.MEDIUM;
 import inaki.sw.mines.view.IStatisticsView;
 import inaki.sw.mines.view.cmd.utils.Ansi;
+import inaki.sw.mines.view.cmd.utils.table.Cell;
+import inaki.sw.mines.view.cmd.utils.table.Row;
+import inaki.sw.mines.view.cmd.utils.table.Table;
 import java.awt.event.ActionEvent;
 import static java.awt.event.KeyEvent.VK_S;
 import java.io.BufferedReader;
@@ -141,7 +144,23 @@ public class StatisticsViewCMD implements IStatisticsView {
         System.out.println("Elapsed time: " + time);
         System.out.println("Number of clicks: " + primaryClikNumber);
         System.out.println("Ratio: Discovered " + ratio + " cells by each click");
-        // TODO discoveredHistory
+
+        System.out.println("\nDiscovered history:");
+        Table table = new Table();
+        Row r1 = new Row();
+        Row r2 = new Row();
+        r1.add(new Cell("t(s)"));
+        r2.add(new Cell("%"));
+        for(int i=0;i<discoveredHistory.size();i++){
+            r1.add(new Cell(String.valueOf(i)));
+            r2.add(new Cell(String.valueOf(discoveredHistory.get(i))));
+        }
+        table.add(r1);
+        table.add(r2);
+        table.setFirstRowAsHeader(true);
+        table.setDistanceBetweenCells(2);
+        table.print();
+
     }
 
     private String readOption() {
