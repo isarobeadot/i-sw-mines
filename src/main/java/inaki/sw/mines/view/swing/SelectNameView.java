@@ -48,7 +48,7 @@ public class SelectNameView extends JFrame implements ISelectNameView {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("I-SW Mines");
-        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/icon/isw-mines-96.png")).getImage());
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/inaki/sw/mines/icon/isw-mines-96.png")).getImage());
         setResizable(false);
 
         jlSelectName.setText("Select your name:");

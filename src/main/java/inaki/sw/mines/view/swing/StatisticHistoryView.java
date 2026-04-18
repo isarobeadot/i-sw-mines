@@ -64,7 +64,7 @@ public class StatisticHistoryView extends JFrame implements IStatisticHistoryVie
         jbOK = new javax.swing.JButton();
 
         setTitle("I-SW Mines");
-        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/icon/isw-mines-96.png")).getImage());
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/inaki/sw/mines/icon/isw-mines-96.png")).getImage());
 
         jtpMain.setFocusable(false);
 

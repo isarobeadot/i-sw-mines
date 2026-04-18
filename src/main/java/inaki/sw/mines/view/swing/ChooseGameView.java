@@ -45,7 +45,7 @@ public class ChooseGameView extends JFrame implements IChooseGameView {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle(TITLE);
-        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/icon/isw-mines-96.png")).getImage());
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/inaki/sw/mines/icon/isw-mines-96.png")).getImage());
         setResizable(false);
 
         jpDefault.setBorder(javax.swing.BorderFactory.createTitledBorder("Default Sizes"));

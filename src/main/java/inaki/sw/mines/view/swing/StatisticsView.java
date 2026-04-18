@@ -64,7 +64,7 @@ public class StatisticsView extends JFrame implements IStatisticsView {
         jbSave = new javax.swing.JButton();
 
         setTitle("I-SW Mines");
-        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/icon/isw-mines-96.png")).getImage());
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/inaki/sw/mines/icon/isw-mines-96.png")).getImage());
 
         jlWin.setText("<html><body><h2>Congratulations! You won the game!</h2></body></html>");
 
