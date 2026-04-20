@@ -186,29 +186,29 @@ public class Board {
     }
 
     public static Color colorByValue(final int number) {
-        switch (number) {
-            case BOARD_1:
-                return Color.decode("#2222FF");
-            case BOARD_2:
-                return Color.decode("#008800");
-            case BOARD_3:
-                return Color.decode("#EE0000");
-            case BOARD_4:
-                return Color.decode("#000088");
-            case BOARD_5:
-                return Color.decode("#800000");
-            case BOARD_6:
-                return Color.decode("#0099CC");
-            case BOARD_7:
-                return Color.decode("#990099");
-            case BOARD_8:
-                return Color.decode("#CC9900");
-            case BOARD_WARNING:
-                return Color.decode("#FF6600");
-            case BOARD_ERROR:
-                return Color.decode("#FF0000");
-            default:
-                return Color.decode("#000000");
-        }
+        return switch (number) {
+            case BOARD_1 ->
+                Color.decode("#2222FF");
+            case BOARD_2 ->
+                Color.decode("#008800");
+            case BOARD_3 ->
+                Color.decode("#EE0000");
+            case BOARD_4 ->
+                Color.decode("#000088");
+            case BOARD_5 ->
+                Color.decode("#800000");
+            case BOARD_6 ->
+                Color.decode("#0099CC");
+            case BOARD_7 ->
+                Color.decode("#990099");
+            case BOARD_8 ->
+                Color.decode("#CC9900");
+            case BOARD_WARNING ->
+                Color.decode("#FF6600");
+            case BOARD_ERROR ->
+                Color.decode("#FF0000");
+            default ->
+                Color.decode("#000000");
+        };
     }
 }

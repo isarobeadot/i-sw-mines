@@ -228,22 +228,18 @@ public class StatisticHistoryView extends JFrame implements IStatisticHistoryVie
             int row = table.getSelectedRow();
             if (row >= 0) {
                 String tab;
-                switch (jtpMain.getSelectedIndex()) {
-                    case 0:
-                        tab = SHV_EASY;
-                        break;
-                    case 1:
-                        tab = SHV_MEDIUM;
-                        break;
-                    case 2:
-                        tab = SHV_HARD;
-                        break;
-                    case 3:
-                        tab = SHV_CUSTOM;
-                        break;
-                    default:
-                        tab = SHV_NONE;
-                }
+                tab = switch (jtpMain.getSelectedIndex()) {
+                    case 0 ->
+                        SHV_EASY;
+                    case 1 ->
+                        SHV_MEDIUM;
+                    case 2 ->
+                        SHV_HARD;
+                    case 3 ->
+                        SHV_CUSTOM;
+                    default ->
+                        SHV_NONE;
+                };
                 c.actionPerformed(new ActionEvent(this, eventNo, SHV_DETAIL + "," + tab + "," + ((Date) table.getValueAt(row, 0)).getTime()));
                 eventNo++;
             }

@@ -96,7 +96,7 @@ public class MainViewCMD implements IMainView {
         }
 
         switch (s.charAt(0)) {
-            case VK_C:
+            case VK_C -> {
                 if (gameStatus.equals(GameStatus.NEW) || gameStatus.equals(GameStatus.PLAYING)) {
                     Clue clue = readOptionClue();
                     if (clue == null) {
@@ -104,22 +104,19 @@ public class MainViewCMD implements IMainView {
                         break;
                     }
                     switch (clue) {
-                        case FLAG:
+                        case FLAG ->
                             c.actionPerformed(new ActionEvent(this, VK_C, MV_CLUE_A_FLAG));
-                            break;
-                        case NUMBER:
+                        case NUMBER ->
                             c.actionPerformed(new ActionEvent(this, VK_C, MV_CLUE_A_NUMBER));
-                            break;
-                        case WHITE_AREA:
+                        case WHITE_AREA ->
                             c.actionPerformed(new ActionEvent(this, VK_C, MV_CLUE_WHITE_AREA));
-                            break;
-                        default:
-                            break;
+                        default -> {
+                        }
                     }
                 }
                 startView();
-                break;
-            case VK_F:
+            }
+            case VK_F -> {
                 if (gameStatus.equals(GameStatus.NEW) || gameStatus.equals(GameStatus.PLAYING)) {
                     System.out.print("Row: ");
                     final int mf = readOptionCoordinate(-1);
@@ -129,22 +126,22 @@ public class MainViewCMD implements IMainView {
                     mark(mf, nf);
                 }
                 startView();
-                break;
-            case VK_N:
+            }
+            case VK_N -> {
                 c.actionPerformed(new ActionEvent(this, VK_N, MV_NEW));
                 startView();
-                break;
-            case VK_P:
+            }
+            case VK_P -> {
                 if (gameStatus.equals(GameStatus.PLAYING) || gameStatus.equals(GameStatus.PAUSED)) {
                     c.actionPerformed(new ActionEvent(this, VK_P, MV_CHRONO));
                 }
                 startView();
-                break;
-            case VK_R:
+            }
+            case VK_R -> {
                 c.actionPerformed(new ActionEvent(this, VK_R, MV_RESTART));
                 startView();
-                break;
-            case VK_V:
+            }
+            case VK_V -> {
                 if (gameStatus.equals(GameStatus.NEW) || gameStatus.equals(GameStatus.PLAYING)) {
                     System.out.print("Row: ");
                     final int mv = readOptionCoordinate(-1);
@@ -154,10 +151,9 @@ public class MainViewCMD implements IMainView {
                     uncover(mv, nv);
                 }
                 startView();
-                break;
-            default:
+            }
+            default ->
                 startView();
-                break;
         }
     }
 
@@ -233,17 +229,14 @@ public class MainViewCMD implements IMainView {
     @Override
     public void showClue(Clue clue) {
         switch (clue) {
-            case WHITE_AREA:
+            case WHITE_AREA ->
                 showClue1();
-                break;
-            case NUMBER:
+            case NUMBER ->
                 showClue2();
-                break;
-            case FLAG:
+            case FLAG ->
                 showClue3();
-                break;
-            default:
-                break;
+            default -> {
+            }
         }
     }
 
@@ -301,7 +294,7 @@ public class MainViewCMD implements IMainView {
             System.out.println(" PAUSED ");
             return;
         }
-        
+
         System.out.print("    " + (board.getHeight() > 9 ? " " : ""));
         for (int j = 0; j < board.getWidth(); j++) {
             System.out.print(j + " " + (board.getWidth() > 9 && j < 10 ? " " : ""));
@@ -344,30 +337,31 @@ public class MainViewCMD implements IMainView {
     private String valueByNumber(BoardCellStatus status, int value) {
         switch (status) {
             case DISCOVERED:
-                switch (value) {
-                    case Board.BOARD_MINE:
-                        return "*";
-                    case Board.BOARD_0:
-                        return " ";
-                    case Board.BOARD_1:
-                        return Ansi.BOLD + Ansi.FG_BLUE + value + Ansi.RESET;
-                    case Board.BOARD_2:
-                        return Ansi.FG_GREEN + value + Ansi.RESET;
-                    case Board.BOARD_3:
-                        return Ansi.FG_RED + value + Ansi.RESET;
-                    case Board.BOARD_4:
-                        return Ansi.FG_BLUE + value + Ansi.RESET;
-                    case Board.BOARD_5:
-                        return Ansi.BOLD + Ansi.FG_RED + value + Ansi.RESET;
-                    case Board.BOARD_6:
-                        return Ansi.FG_CYAN + value + Ansi.RESET;
-                    case Board.BOARD_7:
-                        return Ansi.FG_PURPLE + value + Ansi.RESET;
-                    case Board.BOARD_8:
-                        return Ansi.FG_YELLOW + value + Ansi.RESET;
-                    default:
-                        return value + "";
-                }
+                return switch (value) {
+                    case Board.BOARD_MINE ->
+                        "*";
+                    case Board.BOARD_0 ->
+                        " ";
+                    case Board.BOARD_1 ->
+                        Ansi.BOLD + Ansi.FG_BLUE + value + Ansi.RESET;
+                    case Board.BOARD_2 ->
+                        Ansi.FG_GREEN + value + Ansi.RESET;
+                    case Board.BOARD_3 ->
+                        Ansi.FG_RED + value + Ansi.RESET;
+                    case Board.BOARD_4 ->
+                        Ansi.FG_BLUE + value + Ansi.RESET;
+                    case Board.BOARD_5 ->
+                        Ansi.BOLD + Ansi.FG_RED + value + Ansi.RESET;
+                    case Board.BOARD_6 ->
+                        Ansi.FG_CYAN + value + Ansi.RESET;
+                    case Board.BOARD_7 ->
+                        Ansi.FG_PURPLE + value + Ansi.RESET;
+                    case Board.BOARD_8 ->
+                        Ansi.FG_YELLOW + value + Ansi.RESET;
+                    default ->
+                        value + "";
+                };
+
             case FLAG:
                 return "F";
             case FLAG_FAILED:
@@ -380,18 +374,14 @@ public class MainViewCMD implements IMainView {
 
     private String readOptionMain() {
         switch (gameStatus) {
-            case NEW:
+            case NEW ->
                 System.out.println("\nN=New, R=Restart, C=Clue, V=Reveal cell, F=Put flag, ENTER=Exit");
-                break;
-            case PLAYING:
+            case PLAYING ->
                 System.out.println("\nN=New, R=Restart, C=Clue, P=Pause, V=Reveal cell, F=Put flag");
-                break;
-            case PAUSED:
+            case PAUSED ->
                 System.out.println("\nN=New, R=Restart, P=Continue, ENTER=Exit");
-                break;
-            default:
+            default ->
                 System.out.println("\nN=New, R=Restart, ENTER=Exit");
-                break;
         }
         System.out.print("Type an option: ");
 
@@ -426,16 +416,16 @@ public class MainViewCMD implements IMainView {
         final String s;
         try {
             s = in.readLine();
-            switch (s) {
-                case "1":
-                    return Clue.WHITE_AREA;
-                case "2":
-                    return Clue.NUMBER;
-                case "3":
-                    return Clue.FLAG;
-                default:
-                    return null;
-            }
+            return switch (s) {
+                case "1" ->
+                    Clue.WHITE_AREA;
+                case "2" ->
+                    Clue.NUMBER;
+                case "3" ->
+                    Clue.FLAG;
+                default ->
+                    null;
+            };
         }
         catch (IOException ex) {
             Logger.getLogger(ChooseGameViewCMD.class.getName()).log(Level.SEVERE, null, ex);
@@ -480,7 +470,7 @@ public class MainViewCMD implements IMainView {
             }
             discoveredPercentage = discovered / (float) (board.getHeight() * board.getWidth() - board.getMines()) * 100f;
             switch (board.getValue(_m, _n)) {
-                case Board.BOARD_MINE:
+                case Board.BOARD_MINE -> {
                     for (int i = 0; i < board.getHeight(); i++) {
                         for (int j = 0; j < board.getWidth(); j++) {
                             if (board.getValue(i, j) != Board.BOARD_MINE && boardCells[i][j].equals(BoardCellStatus.FLAG)) {
@@ -492,8 +482,8 @@ public class MainViewCMD implements IMainView {
                     }
                     gameStatus = GameStatus.LOST;
                     c.actionPerformed(new ActionEvent(this, 0, MV_LOST));
-                    break;
-                case Board.BOARD_0:
+                }
+                case Board.BOARD_0 -> {
                     final int m1 = max(0, _m - 1);
                     final int m2 = min(board.getHeight() - 1, _m + 1);
                     final int n1 = max(0, _n - 1);
@@ -505,20 +495,13 @@ public class MainViewCMD implements IMainView {
                             }
                         }
                     }
-                    break;
-                case Board.BOARD_1:
-                case Board.BOARD_2:
-                case Board.BOARD_3:
-                case Board.BOARD_4:
-                case Board.BOARD_5:
-                case Board.BOARD_6:
-                case Board.BOARD_7:
-                case Board.BOARD_8:
-                    // empty
-                    break;
-                default:
-                    break;
+                }
+                case Board.BOARD_1, Board.BOARD_2, Board.BOARD_3, Board.BOARD_4, Board.BOARD_5, Board.BOARD_6, Board.BOARD_7, Board.BOARD_8 -> {
+                }
+                default -> {
+                }
             }
+            // empty
         } else if (_m >= 0 && _n >= 0 && _m < board.getHeight() && _n < board.getWidth() && boardCells[_m][_n].equals(BoardCellStatus.DISCOVERED)) {
             uncoverSurrounding(_m, _n);
         }

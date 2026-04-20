@@ -46,20 +46,17 @@ public class ChooseGameViewCMD implements IChooseGameView {
         System.out.print("\nType an option: ");
 
         switch (readOption(0)) {
-            case 0:
+            case 0 -> {
                 System.out.println("Bye!");
                 System.exit(0);
-                break;
-            case 1:
+            }
+            case 1 ->
                 c.actionPerformed(new ActionEvent(this, 1, CGV_EASY));
-                break;
-            case 2:
+            case 2 ->
                 c.actionPerformed(new ActionEvent(this, 1, CGV_MEDIUM));
-                break;
-            case 3:
+            case 3 ->
                 c.actionPerformed(new ActionEvent(this, 1, CGV_HARD));
-                break;
-            case 4:
+            case 4 -> {
                 System.out.print("Horizontal (default 10): ");
                 horizontal = betweenRange(readOption(10), 4, 30);
                 System.out.print("Vertical (default 10): ");
@@ -67,19 +64,19 @@ public class ChooseGameViewCMD implements IChooseGameView {
                 System.out.print("Mines (default 10): ");
                 mines = betweenRange(readOption(10), 1, horizontal * vertical - 10);
                 c.actionPerformed(new ActionEvent(this, 1, CGV_START));
-                break;
-            case 5:
+            }
+            case 5 -> {
                 if (statisticsEnabled) {
                     c.actionPerformed(new ActionEvent(this, 1, CGV_STATISTICS));
                 } else {
                     badOperation();
                 }
                 startView();
-                break;
-            default:
+            }
+            default -> {
                 badOperation();
                 startView();
-                break;
+            }
         }
     }
 

@@ -251,43 +251,38 @@ public class MainView extends JFrame implements IMainView {
 
     private void formKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyTyped
         switch (evt.getKeyChar()) {
-            case VK_C:
+            case VK_C -> {
                 cheatSOLVE = 0;
                 jbClue.doClick();
-                break;
-            case VK_E:
+            }
+            case VK_E -> {
                 if (cheatSOLVE == 4) {
                     c.actionPerformed(new ActionEvent(this, 0, MV_SOLVE));
                 }
                 cheatSOLVE = 0;
-                break;
-            case VK_L:
+            }
+            case VK_L ->
                 cheatSOLVE = (cheatSOLVE == 2) ? 3 : 0;
-                break;
-            case VK_N:
+            case VK_N -> {
                 cheatSOLVE = 0;
                 jbNew.doClick();
-                break;
-            case VK_O:
+            }
+            case VK_O ->
                 cheatSOLVE = (cheatSOLVE == 1) ? 2 : 0;
-                break;
-            case VK_P:
+            case VK_P -> {
                 jbChrono.doClick();
                 cheatSOLVE = 0;
-                break;
-            case VK_R:
+            }
+            case VK_R -> {
                 cheatSOLVE = 0;
                 jbRestart.doClick();
-                break;
-            case VK_S:
+            }
+            case VK_S ->
                 cheatSOLVE = 1;
-                break;
-            case VK_V:
+            case VK_V ->
                 cheatSOLVE = (cheatSOLVE == 3) ? 4 : 0;
-                break;
-            default:
+            default ->
                 cheatSOLVE = 0;
-                break;
         }
     }//GEN-LAST:event_formKeyTyped
 
@@ -551,15 +546,12 @@ public class MainView extends JFrame implements IMainView {
     @Override
     public void showClue(final Clue clue) {
         switch (clue) {
-            case WHITE_AREA:
+            case WHITE_AREA ->
                 showClue1();
-                break;
-            case NUMBER:
+            case NUMBER ->
                 showClue2();
-                break;
-            case FLAG:
+            case FLAG ->
                 showClue3();
-                break;
         }
     }
 
@@ -629,7 +621,7 @@ public class MainView extends JFrame implements IMainView {
             final float p = discovered / (float) (board.getHeight() * board.getWidth() - board.getMines()) * 100f;
             jlDiscovered2.setText((int) p + "%");
             switch (board.getValue(_m, _n)) {
-                case Board.BOARD_MINE:
+                case Board.BOARD_MINE -> {
                     for (int i = 0; i < board.getHeight(); i++) {
                         for (int j = 0; j < board.getWidth(); j++) {
                             if (board.getValue(i, j) == Board.BOARD_MINE) {
@@ -648,8 +640,8 @@ public class MainView extends JFrame implements IMainView {
                     jmiClue2.setEnabled(false);
                     jmiClue3.setEnabled(false);
                     c.actionPerformed(new ActionEvent(this, 0, MV_LOST));
-                    break;
-                case Board.BOARD_0:
+                }
+                case Board.BOARD_0 -> {
                     final int m1 = max(0, _m - 1);
                     final int m2 = min(board.getHeight() - 1, _m + 1);
                     final int n1 = max(0, _n - 1);
@@ -661,21 +653,13 @@ public class MainView extends JFrame implements IMainView {
                             }
                         }
                     }
-                    break;
-                case Board.BOARD_1:
-                case Board.BOARD_2:
-                case Board.BOARD_3:
-                case Board.BOARD_4:
-                case Board.BOARD_5:
-                case Board.BOARD_6:
-                case Board.BOARD_7:
-                case Board.BOARD_8:
+                }
+                case Board.BOARD_1, Board.BOARD_2, Board.BOARD_3, Board.BOARD_4, Board.BOARD_5, Board.BOARD_6, Board.BOARD_7, Board.BOARD_8 -> {
                     jbBoardButtons[_m][_n].setText(board.getValue(_m, _n) + "");
                     jbBoardButtons[_m][_n].setForeground(Board.colorByValue(board.getValue(_m, _n)));
-                    break;
-                default:
+                }
+                default ->
                     jbBoardButtons[_m][_n].setText(board.getValue(_m, _n) + "");
-                    break;
             }
         }
     }

@@ -183,41 +183,41 @@ public class Controller implements ActionListener {
         String[] actions = e.getActionCommand().split(",");
         LOGGER.fine(Arrays.toString(actions));
         switch (actions[0]) {
-            case CGV_EASY:
+            case CGV_EASY -> {
                 board = new Board(8, 8, 10);
                 type = GameType.EASY;
                 doSTART();
-                break;
-            case CGV_MEDIUM:
+            }
+            case CGV_MEDIUM -> {
                 board = new Board(16, 16, 40);
                 type = GameType.MEDIUM;
                 doSTART();
-                break;
-            case CGV_HARD:
+            }
+            case CGV_HARD -> {
                 board = new Board(30, 16, 99);
                 type = GameType.HARD;
                 doSTART();
-                break;
-            case CGV_START:
+            }
+            case CGV_START -> {
                 board = new Board(cgv.getHorizontal(), cgv.getVertical(),
                         cgv.getMines());
                 type = GameType.CUSTOM;
                 doSTART();
-                break;
-            case CGV_STATISTICS:
+            }
+            case CGV_STATISTICS -> {
                 shv.setStatistics(statistics);
                 shv.startView();
-                break;
-            case MV_NEW:
+            }
+            case MV_NEW -> {
                 cgv.enableStatistics(!statistics.isEmpty());
                 cgv.startView();
-                break;
-            case MV_RESTART:
+            }
+            case MV_RESTART -> {
                 board = new Board(mv.getHorizontal(), mv.getVertical(),
                         mv.getMines());
                 doSTART();
-                break;
-            case MV_CHRONO:
+            }
+            case MV_CHRONO -> {
                 if (chrono.isInstanceRunning()) {
                     if (chrono.isInstancePaused()) {
                         chrono.resumeChronometer();
@@ -227,23 +227,22 @@ public class Controller implements ActionListener {
                         mv.setReadOnly(true);
                     }
                 }
-                break;
-            case MV_CHRONO_PAUSE:
+            }
+            case MV_CHRONO_PAUSE -> {
                 if (chrono.isInstanceRunning()) {
                     chrono.pauseChronometer();
                     mv.setReadOnly(true);
                 }
-                break;
-            case MV_SOLVE:
+            }
+            case MV_SOLVE ->
                 mv.solveBoard();
-                break;
-            case MV_LOST:
+            case MV_LOST -> {
                 chrono.stopChronometer();
                 if (!this.viewMode.equals(ViewMode.CMD)) {
                     showMessageDialog((Component) mv, "You lost the game :(", "Game lost", ERROR_MESSAGE);
                 }
-                break;
-            case MV_WIN:
+            }
+            case MV_WIN -> {
                 chrono.stopChronometer();
                 mv.solveBoard();
                 discoveredHistory.add(100);
@@ -254,33 +253,29 @@ public class Controller implements ActionListener {
                 sv.setDiscoveredHistory(discoveredHistory);
                 sv.setGameType(type);
                 sv.startView();
-                break;
-            case MV_START_CHRONO:
+            }
+            case MV_START_CHRONO -> {
                 Thread chronoThread = new Thread(chrono);
                 chronoThread.start();
                 discoveredHistory.add(0);
-                break;
-            case MV_CLUE_WHITE_AREA:
+            }
+            case MV_CLUE_WHITE_AREA ->
                 mv.showClue(Clue.WHITE_AREA);
-                break;
-            case MV_CLUE_A_NUMBER:
+            case MV_CLUE_A_NUMBER ->
                 mv.showClue(Clue.NUMBER);
-                break;
-            case MV_CLUE_A_FLAG:
+            case MV_CLUE_A_FLAG ->
                 mv.showClue(Clue.FLAG);
-                break;
-            case C_UPDATE_CHRONO:
+            case C_UPDATE_CHRONO -> {
                 mv.updateChronometer(chrono.getMinutes(), chrono.getSeconds());
                 discoveredHistory.add(mv.getDiscoveredPrecentage());
-                break;
-            case SV_SAVE:
+            }
+            case SV_SAVE -> {
                 snv.setSavedNameSet(statistics.stream().map(s -> s.getName()).collect(Collectors.toList()));
                 snv.startView();
-                break;
-            case SV_OK:
+            }
+            case SV_OK ->
                 sv.hideView();
-                break;
-            case SNV_OK:
+            case SNV_OK -> {
                 String name = viewMode.equals(ViewMode.DEBUG) ? "test" : snv.getSelectedName();
                 snv.hideView();
                 Statistic s = new Statistic();
@@ -298,26 +293,21 @@ public class Controller implements ActionListener {
                 statistics.add(s);
                 saveStatisticSet(statistics);
                 sv.setReadOnly(true);
-                break;
-            case SHV_DETAIL:
+            }
+            case SHV_DETAIL -> {
                 if (actions.length == 3) {
                     Statistic sDetail = null;
                     switch (actions[1]) {
-                        case SHV_EASY:
+                        case SHV_EASY ->
                             sDetail = findStatisticByTypeAndDate(statistics, GameType.EASY, actions[2]);
-                            break;
-                        case SHV_MEDIUM:
+                        case SHV_MEDIUM ->
                             sDetail = findStatisticByTypeAndDate(statistics, GameType.MEDIUM, actions[2]);
-                            break;
-                        case SHV_HARD:
+                        case SHV_HARD ->
                             sDetail = findStatisticByTypeAndDate(statistics, GameType.HARD, actions[2]);
-                            break;
-                        case SHV_CUSTOM:
+                        case SHV_CUSTOM ->
                             sDetail = findStatisticByTypeAndDate(statistics, GameType.CUSTOM, actions[2]);
-                            break;
-                        default:
+                        default ->
                             LOGGER.warning("No statistic type found");
-                            break;
                     }
                     if (sDetail != null) {
                         sv.setReadOnly(true);
@@ -332,11 +322,10 @@ public class Controller implements ActionListener {
                         LOGGER.warning("No statistic found");
                     }
                 }
-                break;
-            case SHV_OK:
+            }
+            case SHV_OK ->
                 shv.hideView();
-                break;
-            case VC_VERSION_AVAILABLE:
+            case VC_VERSION_AVAILABLE -> {
                 final int option = JOptionPane.showConfirmDialog((Component) cgv, "<html><p>There is a newer version available.</p>"
                         + "<p>Do you want to download it?</p></html>", "New version", JOptionPane.YES_NO_OPTION);
                 if (option == 0) {
@@ -352,10 +341,9 @@ public class Controller implements ActionListener {
                         }
                     }
                 }
-                break;
-            default:
+            }
+            default ->
                 LOGGER.warning("Action not supported");
-                break;
         }
     }
 

@@ -125,20 +125,16 @@ public class StatisticsViewCMD implements IStatisticsView {
         }
 
         String typeColor;
-        switch (gameType) {
-            case EASY:
-                typeColor = Ansi.FG_GREEN;
-                break;
-            case MEDIUM:
-                typeColor = Ansi.FG_BLUE;
-                break;
-            case HARD:
-                typeColor = Ansi.FG_RED;
-                break;
-            default:
-                typeColor = "";
-                break;
-        }
+        typeColor = switch (gameType) {
+            case EASY ->
+                Ansi.FG_GREEN;
+            case MEDIUM ->
+                Ansi.FG_BLUE;
+            case HARD ->
+                Ansi.FG_RED;
+            default ->
+                "";
+        };
 
         System.out.println("Game type: " + typeColor + gameType.name() + Ansi.RESET);
         System.out.println("Elapsed time: " + time);
@@ -151,7 +147,7 @@ public class StatisticsViewCMD implements IStatisticsView {
         Row r2 = new Row();
         r1.add(new Cell("t(s)"));
         r2.add(new Cell("%"));
-        for(int i=0;i<discoveredHistory.size();i++){
+        for (int i = 0; i < discoveredHistory.size(); i++) {
             r1.add(new Cell(String.valueOf(i)));
             r2.add(new Cell(String.valueOf(discoveredHistory.get(i))));
         }

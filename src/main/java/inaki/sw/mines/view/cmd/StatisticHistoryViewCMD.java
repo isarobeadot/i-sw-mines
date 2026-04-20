@@ -69,22 +69,18 @@ public class StatisticHistoryViewCMD implements IStatisticHistoryView {
 
         Statistic statistic = statisticSet.get(option - 1);
         String tab;
-        switch (statistic.getType()) {
-            case EASY:
-                tab = SHV_EASY;
-                break;
-            case MEDIUM:
-                tab = SHV_MEDIUM;
-                break;
-            case HARD:
-                tab = SHV_HARD;
-                break;
-            case CUSTOM:
-                tab = SHV_CUSTOM;
-                break;
-            default:
-                tab = SHV_NONE;
-        }
+        tab = switch (statistic.getType()) {
+            case EASY ->
+                SHV_EASY;
+            case MEDIUM ->
+                SHV_MEDIUM;
+            case HARD ->
+                SHV_HARD;
+            case CUSTOM ->
+                SHV_CUSTOM;
+            default ->
+                SHV_NONE;
+        };
         c.actionPerformed(new ActionEvent(this, option, SHV_DETAIL + "," + tab + "," + ((Date) statistic.getWinDate()).getTime()));
 
         startView();
@@ -133,20 +129,16 @@ public class StatisticHistoryViewCMD implements IStatisticHistoryView {
 
         statisticSet.forEach(s -> {
             String typeColor;
-            switch (s.getType()) {
-                case EASY:
-                    typeColor = Ansi.FG_GREEN;
-                    break;
-                case MEDIUM:
-                    typeColor = Ansi.FG_BLUE;
-                    break;
-                case HARD:
-                    typeColor = Ansi.FG_RED;
-                    break;
-                default:
-                    typeColor = "";
-                    break;
-            }
+            typeColor = switch (s.getType()) {
+                case EASY ->
+                    Ansi.FG_GREEN;
+                case MEDIUM ->
+                    Ansi.FG_BLUE;
+                case HARD ->
+                    Ansi.FG_RED;
+                default ->
+                    "";
+            };
             Row row = new Row();
             row.add(new Cell(s.getWinDate().toString()));
             row.add(new Cell(s.getType().name(), typeColor));

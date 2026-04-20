@@ -18,17 +18,14 @@ public class Mines {
     public static void main(String[] args) throws IOException {
         ViewMode viewMode = ViewMode.SWING;
         if (args.length > 0) {
-            switch (args[0]) {
-                case "--debug":
-                    viewMode = ViewMode.DEBUG;
-                    break;
-                case "--cmd":
-                    viewMode = ViewMode.CMD;
-                    break;
-                default:
-                    viewMode = ViewMode.SWING;
-                    break;
-            }
+            viewMode = switch (args[0]) {
+                case "--debug" ->
+                    ViewMode.DEBUG;
+                case "--cmd" ->
+                    ViewMode.CMD;
+                default ->
+                    ViewMode.SWING;
+            };
         }
         final Controller c = new Controller(viewMode);
         c.startController();
