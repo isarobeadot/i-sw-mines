@@ -1,6 +1,17 @@
 @echo off
+setlocal
 
-set /p version=Version: 
+for /f "tokens=3 delims=<>" %%a in ('findstr /i "<version>" pom.xml') do (
+    set version=%%a
+    goto :found
+)
+:found
+
+if "%version%"=="" (
+    set /p version=Version: 
+)
+
+call mvn clean package -B
 
 del /q target\mines-%version%.jar
 rmdir /s /q target\archive-tmp
@@ -24,6 +35,8 @@ jpackage --input target/ ^
 	--win-menu-group I-SW ^
 	--win-shortcut ^
 	--win-shortcut-prompt ^
-    --type msi
+    --type msi ^
+    --dest target
 
-pause
+if "%CI%"=="" pause
+endlocal

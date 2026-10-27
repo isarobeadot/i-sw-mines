@@ -1,5 +1,7 @@
 #!/bin/sh
 
+mvn clean package -B
+
 version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
 
 rm -f target/mines-$version.jar
@@ -21,4 +23,5 @@ jpackage --input target/ \
     --description "The old minesweeper game, for Linux and Windows." \
     --linux-package-name isw-mines \
     --linux-menu-group Utility \
-    --type deb
+    --type deb \
+    --dest target

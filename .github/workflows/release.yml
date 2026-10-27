@@ -1,0 +1,112 @@
+name: Build and Release Installers
+
+on:
+  push:
+    tags:
+      # Coincide con patrones como 1.0, 1.0.1, 2.0, etc.
+      - '[0-9]+.[0-9]+*'
+
+jobs:
+  build-installers:
+    name: Build (${{ matrix.os }} - ${{ matrix.format }})
+    runs-on: ${{ matrix.os }}
+    
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # 1. Formato DEB (Ubuntu/Linux)
+          - os: ubuntu-latest
+            format: deb
+            script-path: ./jpackage-deb.sh
+            artifact-path: target/*.deb
+            
+          # 2. Formato RPM (Ubuntu/Linux con herramientas rpm)
+          - os: ubuntu-latest
+            format: rpm
+            script-path: ./jpackage-rpm.sh
+            artifact-path: target/*.rpm
+            
+          # 3. Formato MSI (Windows)
+          - os: windows-latest
+            format: msi
+            script-path: ./jpackage-msi.bat
+            artifact-path: target/*.msi
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@c1e323688fd81a25caa38c78aa6df2d33d3e20d9 # v4.8.0
+        with:
+          java-version: '21'
+          distribution: 'zulu'
+
+      - name: Create Maven settings.xml for GitHub Packages
+        run: |
+          mkdir -p ~/.m2
+          cat << EOF > ~/.m2/settings.xml
+          <settings>
+            <servers>
+              <server>
+                <id>github</id>
+                <username>${{ github.actor }}</username>
+                <password>${{ secrets.GITHUB_TOKEN }}</password>
+              </server>
+            </servers>
+          </settings>
+          EOF
+        shell: bash
+
+      # --- DEPENDENCIAS NECESARIAS PARA JPACKAGE EN LINUX ---
+      - name: Install jpackage dependencies (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fakeroot rpm
+
+      # --- EJECUCIÓN DE SCRIPTS EN LINUX (.deb o .rpm) ---
+      - name: Run jpackage Linux script
+        if: runner.os == 'Linux'
+        run: |
+          chmod +x ${{ matrix.script-path }}
+          ${{ matrix.script-path }}
+
+      # --- EJECUCIÓN DE SCRIPT EN WINDOWS (.msi) ---
+      - name: Run jpackage Windows script
+        if: runner.os == 'Windows'
+        shell: cmd
+        run: |
+          # Llama al script batch nativo de Windows
+          call ${{ matrix.script-path }}
+
+      # 1. Subimos cada instalador como un artefacto temporal de GitHub
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: installer-${{ matrix.format }}
+          path: ${{ matrix.artifact-path }}
+          if-no-files-found: error
+
+  # 2. Job unificado que junta todo y crea la Release de GitHub una sola vez
+  publish-release:
+    needs: build-installers
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download all workflow artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: all-installers
+          merge-multiple: true
+
+      # --- SUBIDA AUTOMÁTICA A GITHUB RELEASE ---
+      - name: Create GitHub Release and Upload Assets
+        uses: softprops/action-gh-release@v2
+        with:
+          files: all-installers/*
+          # Opcional: crea la release automáticamente como borrador o la marca como latest
+          # draft: false
+          # prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

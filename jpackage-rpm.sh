@@ -1,5 +1,7 @@
 #!/bin/sh
 
+mvn clean package -B
+
 version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
 
 rm -f target/mines-$version.jar
@@ -11,7 +13,14 @@ rm -rf target/maven-archiver
 rm -rf target/maven-status
 rm -rf target/test-classes
 
-$HOME/java/jdk-21.0.2/bin/jpackage --input target/ \
+if [ "$CI" = "true" ]; then
+    JPACKAGE_CMD="jpackage"
+else
+    # Ruta en tu máquina local
+    JPACKAGE_CMD="$HOME/java/jdk-21.0.2/bin/jpackage"
+fi
+
+"$JPACKAGE_CMD" --input target/ \
     --name "I-SW Mines" \
     --vendor "I-SW - I. Software" \
     --main-jar mines-$version-jar-with-dependencies.jar \
@@ -22,4 +31,5 @@ $HOME/java/jdk-21.0.2/bin/jpackage --input target/ \
     --linux-package-name isw-mines \
     --linux-menu-group Utility \
     --linux-rpm-license-type MIT \
-    --type rpm
+    --type rpm \
+    --dest target
