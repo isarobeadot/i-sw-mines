@@ -2,6 +2,7 @@ package inaki.sw.mines.view.cmd.utils.table;
 
 import java.util.Random;
 import org.junit.jupiter.api.AfterAll;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -87,7 +88,7 @@ public class TableTests {
         table.setRowNumbersLeft(false);
         table.setRowNumbersRight(false);
 
-        table.print();
+        assertDoesNotThrow(() -> table.print());
     }
 
     @Test
@@ -103,7 +104,7 @@ public class TableTests {
         table.setRowNumbersLeft(false);
         table.setRowNumbersRight(false);
 
-        table.print();
+        assertDoesNotThrow(() -> table.print());
     }
 
     @Test
@@ -119,7 +120,7 @@ public class TableTests {
         table.setRowNumbersLeft(false);
         table.setRowNumbersRight(false);
 
-        table.print();
+        assertDoesNotThrow(() -> table.print());
     }
 
     @Test
@@ -135,7 +136,7 @@ public class TableTests {
         table.setRowNumbersLeft(false);
         table.setRowNumbersRight(false);
 
-        table.print();
+        assertDoesNotThrow(() -> table.print());
     }
 
     @Test
@@ -151,7 +152,7 @@ public class TableTests {
         table.setRowNumbersLeft(true);
         table.setRowNumbersRight(true);
 
-        table.print();
+        assertDoesNotThrow(() -> table.print());
     }
 
     @Test
@@ -167,7 +168,7 @@ public class TableTests {
         table.setRowNumbersLeft(true);
         table.setRowNumbersRight(true);
 
-        table.print();
+        assertDoesNotThrow(() -> table.print());
     }
 
     @Test
@@ -183,7 +184,7 @@ public class TableTests {
         table.setRowNumbersLeft(true);
         table.setRowNumbersRight(true);
 
-        table.print();
+        assertDoesNotThrow(() -> table.print());
     }
 
     @Test
@@ -199,7 +200,7 @@ public class TableTests {
         table.setRowNumbersLeft(true);
         table.setRowNumbersRight(true);
 
-        table.print();
+        assertDoesNotThrow(() -> table.print());
     }
 
     private int addEmptyRows(int rows) {

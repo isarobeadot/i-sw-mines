@@ -137,6 +137,7 @@ public class ChooseGameViewCMD implements IChooseGameView {
         }
     }
 
+    @SuppressWarnings("java:S2677")
     private void badOperation() {
         showTitle();
 
